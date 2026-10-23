@@ -1,0 +1,26 @@
+<!doctype html>
+<!-- Source for assets/briopost-link-card.png, the 1200 x 630 preview shown when briopost.com is shared in a text, post or chat.
+     The logo leads; everything sits in the centre so square crops (WhatsApp, some chat apps) still show it whole.
+     Re-render with: python scripts/render-link-card.py -->
+<html lang="en"><head><meta charset="utf-8"><title>Briopost link card</title>
+<style>
+@font-face{font-family:Bricolage;src:url(../assets/bricolage-bold.ttf) format('truetype');font-weight:800}
+@font-face{font-family:Inter;src:url(../assets/inter.ttf) format('truetype');font-weight:400}
+*{box-sizing:border-box;margin:0}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{font-family:Inter,Arial,sans-serif;color:#f6f4ef;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse 760px 470px at 50% 44%,#2c3066 0,transparent 72%),#121433}
+.brand{display:flex;align-items:center;gap:34px}
+.brand img{width:188px;height:188px;filter:drop-shadow(0 26px 44px rgba(5,6,24,.55))}
+.wordmark{font-family:Bricolage;font-weight:800;font-size:150px;letter-spacing:-.045em;line-height:1;margin-top:-14px}
+.wordmark span{font-family:Inter;font-weight:400;letter-spacing:-.05em}
+h1{font-family:Bricolage;font-weight:800;font-size:46px;letter-spacing:-.03em;margin-top:44px}
+.accent{color:#ff5b2e}
+.status{display:flex;align-items:center;gap:12px;font-size:23px;color:#c9cbea;margin-top:22px}
+.status i{width:10px;height:10px;border-radius:50%;background:#ff5b2e}
+</style></head>
+<body>
+  <div class="brand"><img src="../assets/briopost-icon.svg" alt=""><span class="wordmark">brio<span>post</span></span></div>
+  <h1>Your next post starts <span class="accent">here.</span> Soon.</h1>
+  <div class="status"><i></i>briopost.com · Coming soon</div>
+</body></html>
