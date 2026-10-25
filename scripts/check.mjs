@@ -8,7 +8,7 @@ for(const file of files(root)){
     const text=readFileSync(file,'utf8');
     if(/C:[\\/]+Users[\\/]|127\.0\.0\.1|localhost/i.test(text))throw new Error('Private/local text found in '+file);
     const refs=file.endsWith('.html')?[...text.matchAll(/(?:src|href)="([^"#]+)(?:#[^"]*)?"/g)].map(m=>m[1]):file.endsWith('.css')?[...text.matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g)].map(m=>m[1]):[];
-    for(const ref of refs){if(/^(?:https?:|data:|#)/.test(ref)||ref==='/')continue;if(!existsSync(resolve(dirname(file),ref)))throw new Error('Missing asset: '+ref+' in '+file);}
+    for(const ref of refs){if(/^(?:https?:|data:|mailto:|#)/.test(ref)||ref==='/')continue;if(!existsSync(resolve(dirname(file),ref)))throw new Error('Missing asset: '+ref+' in '+file);}
     if(file.endsWith('.js'))execFileSync(process.execPath,['--check',file],{stdio:'inherit'});
   }
 }
