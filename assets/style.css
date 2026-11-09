@@ -3,18 +3,18 @@
 
 /* Self-hosted fonts (SIL Open Font License, see INTER-LICENSE.txt and BRICOLAGE-LICENSE.txt). Variable fonts cut to Latin
    by scripts/build-fonts.py: Inter 400-800, Bricolage Grotesque 500-800. No third-party font requests. */
-@font-face{font-family:Bricolage;src:url(bricolage-var.woff2) format('woff2');font-weight:500 800;font-display:swap}
-@font-face{font-family:Inter;src:url(inter-var.woff2) format('woff2');font-weight:400 800;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url(bricolage-var.woff2) format('woff2');font-weight:500 800;font-display:swap}
+@font-face{font-family:var(--brand-font-body);src:url(inter-var.woff2) format('woff2');font-weight:400 800;font-display:swap}
 
 :root{
-  --navy:#121433;--deep:#0c0e26;--panel:#171a40;--panel-2:#1f2358;
+  --navy:var(--brand-midnight);--deep:var(--brand-deep);--panel:#171a40;--panel-2:#1f2358;
   --line:#454b8f;--line-soft:#2a2e63;--field-line:#5c62a3;
-  --orange:#ff5b2e;--orange-hover:#ff7a56;--paper:#f6f4ef;
-  --muted:#b4b7e0;--ink-3:#8a8ec0;--purple:#7c81c4;
+  --orange:var(--brand-spark);--orange-hover:#ff7a56;--paper:var(--brand-paper);
+  --muted:#b4b7e0;--ink-3:#8a8ec0;--purple:var(--brand-haze);
   --error:#ffb4a3;--ok:#4cc38a;
   --icon-edge:rgb(255 255 255/22%);
   --shadow:0 1px 2px rgb(0 0 0/35%),0 10px 28px rgb(0 0 0/35%);
-  color-scheme:dark;font-family:Inter,Arial,sans-serif;background:var(--navy);color:var(--paper);
+  color-scheme:dark;font-family:var(--brand-font-body);background:var(--navy);color:var(--paper);
   scroll-behavior:smooth;scrollbar-color:var(--purple) var(--navy);-webkit-font-smoothing:antialiased
 }
 *{box-sizing:border-box}
@@ -25,7 +25,7 @@ button{cursor:pointer}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:6px}
 ::selection{background:var(--orange);color:var(--navy)}
 h1,h2,h3,p{margin:0}
-h1,h2,h3,.wordmark{font-family:Bricolage,Arial,sans-serif;font-weight:800}
+h1,h2,h3,.wordmark{font-family:var(--brand-font-heading);font-weight:800}
 h1,h2{letter-spacing:-.035em;text-wrap:balance}
 p{line-height:1.75}
 [hidden]{display:none!important}
@@ -38,7 +38,7 @@ p{line-height:1.75}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
 .brand img{width:42px;height:42px;border-radius:22.5%;box-shadow:0 0 0 1px var(--icon-edge)}
 .wordmark{font-size:31px;letter-spacing:-.04em}
-.wordmark span{font-family:Inter,sans-serif;font-weight:400}
+.wordmark span{font-family:var(--brand-font-body);font-weight:400}
 .status{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px}
 .status i{width:7px;height:7px;border-radius:50%;background:var(--orange);flex:none}
 .header-actions{display:flex;align-items:center;gap:22px}
@@ -90,7 +90,7 @@ p{line-height:1.75}
 /* How it works */
 .steps{list-style:none;margin:44px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
 .step{padding:26px 22px 28px;position:relative}
-.step-num{display:grid;place-items:center;width:38px;height:38px;border-radius:999px;background:var(--navy);color:var(--orange);border:1.5px solid var(--orange);font-family:Bricolage,Arial,sans-serif;font-weight:800;font-size:17px}
+.step-num{display:grid;place-items:center;width:38px;height:38px;border-radius:999px;background:var(--navy);color:var(--orange);border:1.5px solid var(--orange);font-family:var(--brand-font-heading);font-weight:800;font-size:17px}
 .step h3{font-size:21px;letter-spacing:-.02em;margin-top:20px;line-height:1.2}
 .step p{color:var(--muted);font-size:14px;line-height:1.65;margin-top:8px}
 .step-key{border-color:var(--orange);background:var(--panel-2)}
