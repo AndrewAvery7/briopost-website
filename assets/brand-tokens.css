@@ -1,0 +1,13 @@
+/* Briopost brand tokens: the SINGLE SOURCE for the brand palette and fonts.
+   Canonical copy: this file (AndrewAvery7/briopost, shared/brand-tokens.css).
+   Copy: AndrewAvery7/briopost-website, assets/brand-tokens.css. Never edit the copy by hand; change this file, then run
+   `npm run brand:sync -- <path to website checkout>` (and add `--check` to confirm they match). */
+:root {
+  --brand-midnight: #121433;
+  --brand-deep: #0c0e26;
+  --brand-spark: #ff5b2e;
+  --brand-paper: #f6f4ef;
+  --brand-haze: #7c81c4;
+  --brand-font-heading: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --brand-font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
