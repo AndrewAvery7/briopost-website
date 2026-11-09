@@ -74,7 +74,7 @@ p{line-height:1.75}
 
 /* Format tabs like the app's (W6): selected is a light pill, the others keep an outline. */
 .tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
-.tabs button{border:1.5px solid var(--field-line);background:transparent;color:var(--paper);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:500;transition:border-color .2s,background .2s}
+.tabs button{border:1.5px solid var(--field-line);background:transparent;color:var(--paper);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:500;transition:border-color .2s,background-color .2s,color .2s}
 .tabs button:hover{border-color:var(--paper);background:var(--panel-2)}
 .tabs button[aria-selected=true]{background:var(--paper);border-color:var(--paper);color:var(--navy);font-weight:700}
 
