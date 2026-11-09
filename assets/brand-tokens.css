@@ -1,6 +1,6 @@
 /* Briopost brand tokens: the SINGLE SOURCE for the brand palette and fonts.
-   Canonical copy: this file (AndrewAvery7/briopost, shared/brand-tokens.css).
-   Copy: AndrewAvery7/briopost-website, assets/brand-tokens.css. Never edit the copy by hand; change this file, then run
+   Canonical copy: this file (the Briopost app repository, shared/brand-tokens.css).
+   Copy: the briopost-website repository, assets/brand-tokens.css. Never edit the copy by hand; change this file, then run
    `npm run brand:sync -- <path to website checkout>` (and add `--check` to confirm they match). */
 :root {
   --brand-midnight: #121433;
