@@ -15,10 +15,13 @@ for(const file of files(root)){
     if(file.endsWith('.html')){
       refs=[...text.matchAll(/(?:src|href)="([^"#]+)(?:#[^"]*)?"/g)].map(m=>m[1]);
       for(const m of text.matchAll(/srcset="([^"]+)"/g))refs.push(...m[1].split(',').map(s=>s.trim().split(/\s+/)[0]).filter(Boolean));
-      // The privacy policy promises no third-party requests: no outside stylesheets, scripts, fonts or frames.
+      // The privacy policy allows exactly one outside request: the Cloudflare Web Analytics beacon (no cookies).
+      // Every other outside stylesheet, script, font or frame fails the check.
+      if(!/[\\/]scripts[\\/]/.test(file)&&!text.includes('static.cloudflareinsights.com/beacon.min.js'))fail('Cloudflare Web Analytics beacon missing in '+file);
       for(const m of text.matchAll(/<(?:script|link|iframe|img)\b[^>]*?(?:src|href)="(https?:[^"]+)"/g)){
         const tag=m[0];
         if(/rel="canonical"/.test(tag))continue;
+        if(m[1]==='https://static.cloudflareinsights.com/beacon.min.js')continue;
         fail('Third-party request '+m[1]+' in '+file);
       }
     }else if(file.endsWith('.css')){
