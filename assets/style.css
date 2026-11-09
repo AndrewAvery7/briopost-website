@@ -4,7 +4,7 @@
 /* Self-hosted fonts (SIL Open Font License, see INTER-LICENSE.txt and BRICOLAGE-LICENSE.txt). Variable fonts cut to Latin
    by scripts/build-fonts.py: Inter 400-800, Bricolage Grotesque 500-800. No third-party font requests. */
 @font-face{font-family:"Bricolage Grotesque";src:url(bricolage-var.woff2) format('woff2');font-weight:500 800;font-display:swap}
-@font-face{font-family:var(--brand-font-body);src:url(inter-var.woff2) format('woff2');font-weight:400 800;font-display:swap}
+@font-face{font-family:Inter;src:url(inter-var.woff2) format('woff2');font-weight:400 800;font-display:swap}
 
 :root{
   --navy:var(--brand-midnight);--deep:var(--brand-deep);--panel:#171a40;--panel-2:#1f2358;
