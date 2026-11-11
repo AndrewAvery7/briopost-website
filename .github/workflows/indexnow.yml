@@ -1,0 +1,22 @@
+name: Tell search engines about changes (IndexNow)
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - 'sitemap.xml'
+      - 'llms.txt'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # GitHub Pages publishes the push in about a minute; wait so search engines fetch the new pages and the key file.
+      - run: sleep 90
+      - run: node scripts/indexnow.mjs
