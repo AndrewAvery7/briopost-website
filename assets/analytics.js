@@ -7,7 +7,7 @@
   // ===== Google Analytics 4 Measurement ID =====
   // Paste the ID from Google Analytics (Admin > Data streams > briopost.com), for example "G-AB12CD34EF".
   // It is not a secret. Leave it as "" to keep Google Analytics switched off.
-  const GA_MEASUREMENT_ID = "";
+  const GA_MEASUREMENT_ID = "G-5996X6Z2PP";
   // ==============================================
 
   if (!/^G-[A-Z0-9]{4,20}$/.test(GA_MEASUREMENT_ID)) return;
