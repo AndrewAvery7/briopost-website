@@ -1,0 +1,27 @@
+# Briopost
+
+> Briopost is a creative studio for LinkedIn, opening soon. It turns one idea into a carousel, graphic, text post or poll in the user's own voice and brand. Nothing posts to LinkedIn without the user's OK. Free during the beta. Made by VocariAI. Independent of LinkedIn: not affiliated with or endorsed by LinkedIn.
+
+## What it does
+
+- Start with notes, a link, a document or a rough thought.
+- Pick a format: a carousel, a graphic, a text post or a poll.
+- Make it yours: your colors, your fonts and your voice. Edit every slide in a real editor, starting from built-in templates.
+- Plan the month on a calendar.
+- You approve: every post waits until you confirm it, then it posts at the time you choose.
+
+## Facts
+
+- Status: not open yet. Invites go out first, then Briopost opens to everyone. People can join the waitlist on the home page.
+- Cost: the beta is free. Pricing will be shared before anyone pays.
+- AI: Briopost connects to the user's own AI and image accounts, so the user pays the provider directly. Before each AI action, Briopost shows the approximate cost.
+- Who it is for: consultants and coaches, founders and business owners, marketers and agencies, and job seekers who post on LinkedIn.
+- Contact: info@briopost.com
+
+## Pages
+
+- [Home and waitlist](https://briopost.com/): what Briopost does, real screenshots, templates, questions and the waitlist sign-up.
+- [Privacy Policy](https://briopost.com/privacy/)
+- [Terms](https://briopost.com/terms/)
+- [Email Policy](https://briopost.com/email-policy/)
+- [Contact](https://briopost.com/contact/)

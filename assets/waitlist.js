@@ -23,28 +23,33 @@
     return body && typeof body.error === 'string' && body.error.trim() ? body.error.trim().slice(0, 300) : fallback;
   }
 
-  // ---------- Home page form ----------
-  var form = document.getElementById('wl-form');
-  if (form) {
+  // ---------- Home page forms ----------
+  // Two forms share this code: the short one in the hero (prefix "hw": first name and email) and the full one in the
+  // #waitlist section (prefix "wl": adds the optional role). One status check opens or closes both.
+  var source = '';
+  try {
+    source = (new URLSearchParams(location.search).get('ref') || '').replace(/[^\w .\-]/g, '').trim().slice(0, 60);
+  } catch (e) { source = ''; }
+
+  function setupForm(prefix) {
+    var form = document.getElementById(prefix + '-form');
+    if (!form) return null;
+    var el = function (name) { return document.getElementById(prefix + '-' + name); };
     var api = form.getAttribute('data-api');
-    var fields = document.getElementById('wl-fields');
-    var closed = document.getElementById('wl-closed');
-    var msg = document.getElementById('wl-msg');
+    var fields = el('fields');
+    var closed = el('closed');
+    var msg = el('msg');
     var submit = form.querySelector('button[type="submit"]');
-    var nameInput = document.getElementById('wl-name');
-    var emailInput = document.getElementById('wl-email');
-    var roleInput = document.getElementById('wl-role');
-    var honeypot = document.getElementById('wl-website');
-    var done = document.getElementById('wl-done');
-    var doneTitle = document.getElementById('wl-done-title');
-    var doneText = document.getElementById('wl-done-text');
+    var submitHTML = submit.innerHTML;
+    var nameInput = el('name');
+    var emailInput = el('email');
+    var roleInput = el('role');
+    var honeypot = el('website');
+    var done = el('done');
+    var doneTitle = el('done-title');
+    var doneText = el('done-text');
     var startedAt = Date.now();
     var busy = false;
-
-    var source = '';
-    try {
-      source = (new URLSearchParams(location.search).get('ref') || '').replace(/[^\w .\-]/g, '').trim().slice(0, 60);
-    } catch (e) { source = ''; }
 
     var say = function (text, kind) {
       msg.textContent = text || '';
@@ -57,23 +62,39 @@
     };
     var showClosed = function () {
       fields.disabled = true;
-      closed.hidden = false;
-      say('');
+      if (closed) { closed.hidden = false; say(''); }
+      else say('Sign-ups open shortly. Questions in the meantime? Write to ' + CONTACT + '.');
     };
     var open = function () {
-      closed.hidden = true;
+      if (closed) closed.hidden = true;
       fields.disabled = false;
       startedAt = Date.now();
     };
 
-    // Ask the API whether sign-ups are open. Until it answers yes, the form stays disabled.
-    call(api, '/status', { method: 'GET' }, 8000).then(function (r) {
-      if (r.http === 200 && r.body && r.body.open === true) open(); else showClosed();
-    }).catch(showClosed);
-
     [nameInput, emailInput].forEach(function (input) {
       input.addEventListener('input', function () { if (input.getAttribute('aria-invalid')) setFieldError(input, ''); });
     });
+
+    var finish = function (status, email, quiet) {
+      var panel = form.parentElement;
+      if (panel.classList.contains('form-panel')) panel.style.minHeight = panel.getBoundingClientRect().height + 'px'; // keep the panel the same height, so nothing below jumps
+      form.hidden = true;
+      if (status === 'already_confirmed') {
+        doneTitle.textContent = 'You’re already on the list.';
+        doneText.textContent = 'Nothing else to do. We’ll email you when Briopost opens.';
+      } else {
+        doneTitle.textContent = 'Check your inbox.';
+        doneText.textContent = '';
+        doneText.appendChild(document.createTextNode('We sent a link to '));
+        var strong = document.createElement('span');
+        strong.className = 'copyable';
+        strong.textContent = email;
+        doneText.appendChild(strong);
+        doneText.appendChild(document.createTextNode('. Click it to confirm your place. If it isn’t there in a few minutes, check your spam folder.'));
+      }
+      done.hidden = false;
+      if (!quiet) doneTitle.focus();
+    };
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
@@ -81,14 +102,16 @@
       var firstName = nameInput.value.trim();
       var email = emailInput.value.trim();
       var problems = [];
+      var firstProblem = '';
+      var flag = function (input, text) { setFieldError(input, text); problems.push(input); if (!firstProblem) firstProblem = text; };
       setFieldError(nameInput, '');
       setFieldError(emailInput, '');
-      if (!firstName) { setFieldError(nameInput, 'Please enter your first name.'); problems.push(nameInput); }
-      else if (firstName.length > 60) { setFieldError(nameInput, 'Please keep your first name under 60 characters.'); problems.push(nameInput); }
-      if (!email) { setFieldError(emailInput, 'Please enter your email address.'); problems.push(emailInput); }
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) { setFieldError(emailInput, 'Please check your email address. It should look like name@example.com.'); problems.push(emailInput); }
+      if (!firstName) flag(nameInput, 'Please enter your first name.');
+      else if (firstName.length > 60) flag(nameInput, 'Please keep your first name under 60 characters.');
+      if (!email) flag(emailInput, 'Please enter your email address.');
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) flag(emailInput, 'Please check your email address. It should look like name@example.com.');
       if (problems.length) {
-        say(problems.length === 1 ? document.getElementById(problems[0].id + '-err').textContent : 'Please add your first name and email address.', 'error');
+        say(problems.length === 1 ? firstProblem : 'Please add your first name and email address.', 'error');
         problems[0].focus();
         return;
       }
@@ -96,19 +119,21 @@
       busy = true;
       submit.disabled = true;
       submit.setAttribute('aria-busy', 'true');
-      submit.textContent = 'Joining…';
+      submit.textContent = 'Saving…';
       say('Sending…');
 
       postJSON(api, '/join', {
         firstName: firstName,
         email: email,
-        role: roleInput.value || '',
+        role: roleInput ? (roleInput.value || '') : '',
         source: source,
         website: honeypot.value,
         startedAt: startedAt
       }, 15000).then(function (r) {
         var body = r.body || {};
         if (r.http === 200 && body.ok && (body.status === 'check_email' || body.status === 'already_confirmed')) {
+          // Close every home-page form, so nobody is offered a second sign-up after "Check your inbox."
+          homeForms.forEach(function (f) { if (f.finish !== finish) f.finish(body.status, email, true); });
           finish(body.status, email);
           return;
         }
@@ -126,30 +151,20 @@
         busy = false;
         submit.disabled = false;
         submit.removeAttribute('aria-busy');
-        submit.textContent = 'Join the waitlist';
+        submit.innerHTML = submitHTML; // the page's own fixed label and arrow icon, never server text
       });
     });
 
-    var finish = function (status, email) {
-      var panel = form.parentElement;
-      panel.style.minHeight = panel.getBoundingClientRect().height + 'px'; // keep the panel the same height, so nothing below jumps
-      form.hidden = true;
-      if (status === 'already_confirmed') {
-        doneTitle.textContent = 'You’re already on the list.';
-        doneText.textContent = 'Nothing else to do. We’ll email you when Briopost opens.';
-      } else {
-        doneTitle.textContent = 'Check your inbox.';
-        doneText.textContent = '';
-        doneText.appendChild(document.createTextNode('We sent a link to '));
-        var strong = document.createElement('span');
-        strong.className = 'copyable';
-        strong.textContent = email;
-        doneText.appendChild(strong);
-        doneText.appendChild(document.createTextNode('. Click it to confirm your place. If it isn’t there in a few minutes, check your spam folder.'));
-      }
-      done.hidden = false;
-      doneTitle.focus();
-    };
+    return { api: api, open: open, closed: showClosed, finish: finish };
+  }
+
+  var homeForms = ['hw', 'wl'].map(setupForm).filter(Boolean);
+  if (homeForms.length) {
+    // Ask the API whether sign-ups are open. Until it answers yes, the forms stay disabled.
+    call(homeForms[0].api, '/status', { method: 'GET' }, 8000).then(function (r) {
+      var isOpen = r.http === 200 && r.body && r.body.open === true;
+      homeForms.forEach(function (f) { if (isOpen) f.open(); else f.closed(); });
+    }).catch(function () { homeForms.forEach(function (f) { f.closed(); }); });
   }
 
   // ---------- Confirm and unsubscribe pages ----------
