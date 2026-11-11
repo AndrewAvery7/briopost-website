@@ -3,16 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Briopost — Your next post starts here. Soon.</title>
-<meta name="description" content="A new creative studio for LinkedIn is coming soon. Discover Briopost: ideas, carousels, graphics, text posts and polls in your voice and brand. Join the waitlist.">
+<title>Briopost — LinkedIn posts in your voice, ready in minutes</title>
+<meta name="description" content="Briopost is a creative studio for LinkedIn, opening soon: turn one idea into a carousel, graphic, text post or poll in your voice and brand. Free during the beta. Join the waitlist.">
 <link rel="canonical" href="https://briopost.com/">
+<link rel="alternate" type="text/plain" href="llms.txt" title="Briopost in plain text, for AI assistants">
 <meta name="theme-color" content="#121433">
 <link rel="icon" href="assets/briopost-icon.svg">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Briopost">
 <meta property="og:url" content="https://briopost.com/">
-<meta property="og:title" content="Briopost — Your next post starts here. Soon.">
+<meta property="og:title" content="Briopost — LinkedIn posts in your voice, ready in minutes">
 <meta property="og:description" content="A new creative studio for LinkedIn is coming soon. Ideas, carousels, graphics, text posts and polls in your voice and brand.">
 <meta property="og:image" content="https://briopost.com/assets/briopost-link-card.png">
 <meta property="og:image:type" content="image/png">
@@ -20,7 +21,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Briopost logo with the line: Your next post starts here. Soon. briopost.com, coming soon.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Briopost — Your next post starts here. Soon.">
+<meta name="twitter:title" content="Briopost — LinkedIn posts in your voice, ready in minutes">
 <meta name="twitter:description" content="A new creative studio for LinkedIn is coming soon.">
 <meta name="twitter:image" content="https://briopost.com/assets/briopost-link-card.png">
 <meta name="twitter:image:alt" content="Briopost logo with the line: Your next post starts here. Soon.">
@@ -32,7 +33,7 @@
 <script src="assets/waitlist.js" defer></script>
 <script src="assets/visit.js" defer></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a71b1a473b96486a95287332d69005f2"}'></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://vocariai.com/#org","name":"VocariAI","url":"https://vocariai.com","slogan":"Your voice in the age of AI"},{"@type":"WebSite","@id":"https://briopost.com/#website","name":"Briopost","url":"https://briopost.com/","inLanguage":"en-US","publisher":{"@id":"https://vocariai.com/#org"}},{"@type":"SoftwareApplication","@id":"https://briopost.com/#app","name":"Briopost","url":"https://briopost.com/","applicationCategory":"BusinessApplication","operatingSystem":"Web browser","description":"A creative studio for LinkedIn: turn one idea into carousels, graphics, text posts and polls in your own voice and brand. Nothing posts without your OK.","image":"https://briopost.com/assets/briopost-link-card.png","publisher":{"@id":"https://vocariai.com/#org"},"slogan":"Post with brio."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://vocariai.com/#org","name":"VocariAI","url":"https://vocariai.com","slogan":"Your voice in the age of AI"},{"@type":"WebSite","@id":"https://briopost.com/#website","name":"Briopost","url":"https://briopost.com/","inLanguage":"en-US","publisher":{"@id":"https://vocariai.com/#org"}},{"@type":"SoftwareApplication","@id":"https://briopost.com/#app","name":"Briopost","url":"https://briopost.com/","applicationCategory":"BusinessApplication","operatingSystem":"Web browser","description":"A creative studio for LinkedIn: turn one idea into carousels, graphics, text posts and polls in your own voice and brand. Nothing posts without your OK.","image":"https://briopost.com/assets/briopost-link-card.png","publisher":{"@id":"https://vocariai.com/#org"},"slogan":"Post with brio."},{"@type":"FAQPage","@id":"https://briopost.com/#faq","mainEntity":[{"@type":"Question","name":"Do I need my own AI account?","acceptedAnswer":{"@type":"Answer","text":"Yes. Briopost connects to your own AI and image accounts, so you pay the provider directly. Before each AI action, Briopost shows you the approximate cost."}},{"@type":"Question","name":"Does anything post without me?","acceptedAnswer":{"@type":"Answer","text":"Never. Every post waits for your OK. Nothing goes to LinkedIn until you confirm it yourself."}},{"@type":"Question","name":"When does it open?","acceptedAnswer":{"@type":"Answer","text":"Invites go out first, then Briopost opens to everyone. Join the waitlist and we’ll email you when it opens."}},{"@type":"Question","name":"Is it made by LinkedIn?","acceptedAnswer":{"@type":"Answer","text":"No. Briopost is independent. It is not affiliated with or endorsed by LinkedIn."}},{"@type":"Question","name":"What will it cost?","acceptedAnswer":{"@type":"Answer","text":"The beta is free. We’ll share pricing before anyone pays. During the beta your AI runs on your own AI account, and Briopost shows the approximate cost before each action."}}]}]}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -46,11 +47,25 @@
 <main id="main">
 
 <section class="hero wrap" aria-labelledby="hero-title">
-  <p class="eyebrow">A creative studio for LinkedIn</p>
-  <h1 id="hero-title">Your next post<br>starts <span class="accent">here.</span> Soon.</h1>
-  <p class="intro">The ideas are already yours. Briopost helps turn them into LinkedIn posts that look, sound and feel like you. A new creative studio is on its way.</p>
+  <p class="eyebrow">A creative studio for LinkedIn · Opening soon</p>
+  <h1 id="hero-title">LinkedIn posts in your voice, <span class="accent">ready in minutes.</span></h1>
+  <p class="intro">Turn one idea into a carousel, graphic, text post or poll that looks, sounds and feels like you. Your next post starts here. Soon.</p>
+  <form class="wl-form hero-form" id="hw-form" data-api="https://app.briopost.com/api/waitlist" novalidate>
+    <fieldset id="hw-fields" disabled>
+      <legend class="sr-only">Quick sign-up for the Briopost waitlist</legend>
+      <div class="field"><label class="sr-only" for="hw-name">First name</label><input id="hw-name" name="firstName" type="text" autocomplete="given-name" maxlength="60" required placeholder="First name" aria-describedby="hw-msg"></div>
+      <div class="field"><label class="sr-only" for="hw-email">Email</label><input id="hw-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" required placeholder="Email address" aria-describedby="hw-msg"></div>
+      <div class="hp" aria-hidden="true"><label for="hw-website">Website</label><input id="hw-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+      <button class="button wl-submit" type="submit" aria-describedby="hw-offer">Save my spot<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+    </fieldset>
+    <p class="form-msg" id="hw-msg" role="status" aria-live="polite"></p>
+  </form>
+  <div class="wl-done hero-done" id="hw-done" hidden>
+    <h2 id="hw-done-title" tabindex="-1">Check your inbox.</h2>
+    <p id="hw-done-text"></p>
+  </div>
+  <p class="hero-offer" id="hw-offer"><strong>Free during the beta.</strong> AI runs on your own account, and you see the approximate cost first.<br>We’ll email you when Briopost opens and to ask about early access. Nothing else. <a href="privacy/">Privacy Policy</a></p>
   <div class="hero-actions">
-    <a class="button" href="#waitlist">Join the waitlist<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
     <a class="button button-ghost" href="#preview">Take a first look</a>
   </div>
   <div class="studio-window" id="preview">
@@ -62,7 +77,7 @@
     </div>
     <div class="demo-output">
       <div class="tabs" role="tablist" aria-label="Preview a post format"><button id="tab-carousel" type="button" role="tab" aria-selected="true" aria-controls="sample" data-format="carousel">Carousel</button><button id="tab-graphic" type="button" role="tab" aria-selected="false" aria-controls="sample" tabindex="-1" data-format="graphic">Graphic</button><button id="tab-text" type="button" role="tab" aria-selected="false" aria-controls="sample" tabindex="-1" data-format="text">Text post</button><button id="tab-poll" type="button" role="tab" aria-selected="false" aria-controls="sample" tabindex="-1" data-format="poll">Poll</button></div>
-      <div class="format-preview" id="sample" role="tabpanel" aria-labelledby="tab-carousel"><noscript><p>Enable JavaScript to explore these sample formats.</p></noscript></div>
+      <div class="format-preview" id="sample" role="tabpanel" aria-labelledby="tab-carousel"><div class="static-sample"><p><strong>Sample text post:</strong> The best sales tool I’ve found? A better question. We used to lead with our pitch. Now we lead with curiosity: “What’s getting in your way?” “What have you already tried?” “What would better look like?”</p><p>The same thought can also become a carousel, a graphic or a poll. Enable JavaScript to flip through each format.</p></div></div>
       <p class="demo-disclosure">Interactive sample · Nothing is generated or posted.</p>
     </div>
   </div>
@@ -150,7 +165,7 @@
     </details>
     <details>
       <summary>What will it cost?</summary>
-      <p>We’ll share pricing before anyone pays. The beta is free.</p>
+      <p>The beta is free. We’ll share pricing before anyone pays. During the beta your AI runs on your own AI account, and Briopost shows the approximate cost before each action.</p>
     </details>
   </div>
 </section>
@@ -172,6 +187,7 @@
     <h2 id="waitlist-title">Be first to try Briopost.</h2>
     <p class="lead">Invites go out first, then Briopost opens to everyone. Leave your first name and email, and we’ll tell you when it opens.</p>
     <ul class="ticks">
+      <li><span><strong>Free during the beta.</strong> We’ll share pricing before anyone pays.</span></li>
       <li>One email to confirm your place.</li>
       <li>A note when Briopost opens, and a question or two about early access.</li>
       <li>Unsubscribe in one click, any time.</li>
@@ -206,7 +222,7 @@
         </div>
         <div class="hp" aria-hidden="true"><label for="wl-website">Website</label><input id="wl-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
         <p class="consent" id="wl-consent">We’ll email you when Briopost opens and to ask about early access. Nothing else. See the <a href="privacy/">Privacy Policy</a>.</p>
-        <button class="button wl-submit" type="submit" aria-describedby="wl-consent">Join the waitlist</button>
+        <button class="button wl-submit" type="submit" aria-describedby="wl-consent">Save my spot<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
       </fieldset>
       <p class="form-msg" id="wl-msg" role="status" aria-live="polite"></p>
     </form>

@@ -35,9 +35,13 @@ for(const file of files(root)){
 
 // 2. Home page.
 const home=read('index.html');
-if(!home.includes('Your next post'))fail('Unexpected homepage');
-for(const id of ['how','faq','maker','waitlist','wl-form','wl-name','wl-email','wl-role','wl-website','wl-msg'])if(!home.includes('id="'+id+'"'))fail('Home page is missing #'+id);
-if(!home.includes('data-api="https://app.briopost.com/api/waitlist"'))fail('Waitlist form must point at https://app.briopost.com/api/waitlist');
+if(!home.includes('id="hero-title"'))fail('Unexpected homepage: hero headline missing');
+for(const id of ['how','faq','maker','waitlist','wl-form','wl-name','wl-email','wl-role','wl-website','wl-msg','hw-form','hw-fields','hw-name','hw-email','hw-website','hw-msg','hw-done','hw-done-title','hw-done-text'])if(!home.includes('id="'+id+'"'))fail('Home page is missing #'+id);
+if((home.match(/data-api="https:\/\/app\.briopost\.com\/api\/waitlist"/g)||[]).length!==2)fail('Both waitlist forms (hero and #waitlist) must point at https://app.briopost.com/api/waitlist');
+// AI assistants: llms.txt exists and the home page announces it; FAQ answers are in the structured data.
+if(!existsSync('llms.txt'))fail('Missing llms.txt');
+if(!home.includes('href="llms.txt"'))fail('Home page must link llms.txt');
+if(!home.includes('"FAQPage"'))fail('Home page is missing FAQPage structured data');
 if(!/property="og:image" content="https:\/\/briopost\.com\/assets\/[^"]+"/.test(home))fail('Open Graph image tag missing');
 if(/colours|authoris/i.test(home))fail('Use U.S. spelling on the home page');
 
