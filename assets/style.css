@@ -60,9 +60,21 @@ p{line-height:1.75}
 
 /* Hero */
 .hero{text-align:center;padding:52px 0 0}
-.hero h1{font-size:clamp(46px,6vw,86px);line-height:1.02;max-width:17ch;margin:18px auto 0}
+.hero h1{font-size:clamp(46px,6vw,86px);line-height:1.02;max-width:20ch;margin:18px auto 0}
 .hero .intro{max-width:62ch;margin:23px auto 30px;color:var(--muted);font-size:17px}
 .hero-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+/* Hero sign-up (CRO 2026-11-10): first name, email and the main button in one row, so visitors can join without scrolling. */
+.hero-form{max-width:760px;margin:0 auto}
+.hero-form fieldset{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr) auto;gap:12px;align-items:start}
+.hero-form .wl-submit{width:auto;min-height:52px;white-space:nowrap}
+.hero-form .form-msg{margin-top:12px}
+.hero-done{max-width:620px;margin:0 auto;padding:22px 26px;border:1px solid var(--line);border-radius:14px;background:var(--panel);text-align:center}
+.hero-done h2{font-size:28px;letter-spacing:-.03em;outline:0}
+.hero-done p{margin-top:8px}
+.hero-offer{max-width:66ch;margin:16px auto 22px;color:var(--muted);font-size:14px;line-height:1.65}
+.hero-offer strong,.hero-offer a{color:var(--paper)}
+.static-sample{padding:22px;color:var(--muted);font-size:15px}
+.static-sample p+p{margin-top:12px}
 
 /* The demo window: two indigo panel shades with clearly visible outlines (W1, W3). */
 .studio-window{margin:65px auto 0;max-width:1060px;display:grid;grid-template-columns:.68fr 1fr;align-items:stretch;border:1px solid var(--line);border-radius:22px;background:var(--panel);text-align:left;overflow:hidden;box-shadow:var(--shadow)}
@@ -228,6 +240,8 @@ p{line-height:1.75}
   .hero{padding-top:30px}
   .hero h1{font-size:clamp(42px,11vw,72px)}
   .hero .intro{font-size:16px}
+  .hero-form fieldset{grid-template-columns:minmax(0,1fr)}
+  .hero-form .wl-submit{width:100%}
   .studio-window{margin-top:44px;grid-template-columns:minmax(0,1fr)}
   .notes{display:block;border-right:0;border-bottom:1px solid var(--line);padding:27px}
   .notes p{font-size:14px}
