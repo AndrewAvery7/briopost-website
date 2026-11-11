@@ -19,6 +19,10 @@
   function postJSON(api, path, data, timeoutMs) {
     return call(api, path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }, timeoutMs);
   }
+  // Tells assets/analytics.js what happened (a page event only: it changes nothing here and sends nothing by itself).
+  function signal(detail) {
+    try { document.dispatchEvent(new CustomEvent('briopost:waitlist', { detail: detail })); } catch (e) { /* never break the form */ }
+  }
   function serverText(body, fallback) {
     return body && typeof body.error === 'string' && body.error.trim() ? body.error.trim().slice(0, 300) : fallback;
   }
@@ -111,6 +115,7 @@
       if (!email) flag(emailInput, 'Please enter your email address.');
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) flag(emailInput, 'Please check your email address. It should look like name@example.com.');
       if (problems.length) {
+        signal({ action: 'error', form: form.id, reason: 'validation' });
         say(problems.length === 1 ? firstProblem : 'Please add your first name and email address.', 'error');
         problems[0].focus();
         return;
@@ -135,8 +140,10 @@
           // Close every home-page form, so nobody is offered a second sign-up after "Check your inbox."
           homeForms.forEach(function (f) { if (f.finish !== finish) f.finish(body.status, email, true); });
           finish(body.status, email);
+          signal({ action: 'joined', form: form.id, status: body.status });
           return;
         }
+        signal({ action: 'error', form: form.id, reason: r.http === 503 ? 'closed' : r.http === 429 ? 'rate_limited' : r.http === 400 ? 'rejected' : 'server_' + r.http });
         if (r.http === 503) {
           showClosed();
           say(serverText(body, 'Sign-ups open shortly.'), 'error');
@@ -146,6 +153,7 @@
         if (r.http === 400) { say(serverText(body, 'Please check your first name and email address.'), 'error'); return; }
         say('Something went wrong on our side. Please try again in a moment, or write to ' + CONTACT + '.', 'error');
       }).catch(function () {
+        signal({ action: 'error', form: form.id, reason: 'network' });
         say('We couldn’t reach the sign-up service. Please check your connection and try again, or write to ' + CONTACT + '.', 'error');
       }).finally(function () {
         busy = false;
@@ -192,6 +200,7 @@
     };
 
     if (!/^\S{8,400}$/.test(token)) {
+      signal({ action: 'link_error', page: action, reason: 'missing_code' });
       button.hidden = true;
       show('error', 'This link is missing its code. Please open the link straight from your email' + (action === 'confirm' ? ', or join the waitlist again.' : ', or write to ' + CONTACT + '.'));
       if (after) after.hidden = false;
@@ -205,14 +214,18 @@
           var body = r.body || {};
           var status = body.status || (r.http === 400 ? 'invalid' : '');
           if (texts[status] && (body.ok || status === 'invalid')) {
+            if (status === 'invalid') signal({ action: 'link_error', page: action, reason: 'invalid_link' });
+            else signal({ action: action === 'confirm' ? 'confirmed' : 'unsubscribed', status: status });
             show(texts[status][0], texts[status][1]);
             button.hidden = true;
             if (after) after.hidden = false;
             return;
           }
+          signal({ action: 'link_error', page: action, reason: r.http === 429 ? 'rate_limited' : 'server_' + r.http });
           if (r.http === 429) { show('error', serverText(body, 'Too many tries. Please wait a few minutes.')); return; }
           show('error', 'Something went wrong on our side. Please try again in a moment, or write to ' + CONTACT + '.');
         }).catch(function () {
+          signal({ action: 'link_error', page: action, reason: 'network' });
           show('error', 'We couldn’t reach Briopost. Please check your connection and try again.');
         }).finally(function () {
           button.disabled = false;
