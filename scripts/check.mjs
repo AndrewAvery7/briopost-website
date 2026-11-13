@@ -108,7 +108,7 @@ for(const {file,text} of pages){
   for(const m of text.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){
     try{JSON.parse(m[1]);}catch(e){fail(file+': structured data (JSON-LD) does not parse: '+e.message);}
   }
-  if(/\bAndrew\b|\bAvery\b/.test(text))fail(file+': public pages never name the owner; the maker is VocariAI');
+  if(/\bAndrew\b|\bAvery\b/.test(text))fail(file+': public pages never name the owner; say Briopost LLC or the Briopost team');
   if(/\b(?:colour|authoris|organis|centre|catalogue|licence|behaviour|favourite)/i.test(text))fail(file+': use U.S. spelling');
   if(noindex){
     if(sitemapUrls.has(url))fail(file+' is noindex but listed in sitemap.xml');

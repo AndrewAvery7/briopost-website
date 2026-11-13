@@ -52,7 +52,7 @@ Events it sends (all only when the ID is set):
 
 - Every indexed page has a unique title and description, a canonical `https://briopost.com/.../` address matching `sitemap.xml`, Open Graph and Twitter tags, and `lang="en-US"`. `/waitlist/confirm/`, `/waitlist/unsubscribe/` and `404.html` are `noindex, follow` and stay out of the sitemap.
 - `sitemap.xml` lists each indexed page with `<lastmod>`; the check fails if a page's "Last updated" date is newer than its `lastmod`, so update both together. `robots.txt` names the sitemap.
-- Structured data (JSON-LD): Organization (VocariAI), WebSite, WebPage, SoftwareApplication and FAQPage on the home page; BreadcrumbList on the legal pages once the generator adds it.
+- Structured data (JSON-LD): Organization (Briopost LLC), WebSite, WebPage, SoftwareApplication and FAQPage on the home page; BreadcrumbList on the legal pages once the generator adds it.
 - `404.html` is what GitHub Pages shows for any missing address, so its links all start with `/`.
 - `site.webmanifest` and `assets/icon-*.png` (drawn by `scripts/render-link-card.py`) give phones and browsers the app icon.
 - **IndexNow**: `8d289821e8f67d141300ba6699bebfed.txt` at the site root is the public IndexNow key (public by design, not a secret). After a push to `main` that changes a page, the sitemap or `llms.txt`, `.github/workflows/indexnow.yml` waits for GitHub Pages to publish, then `scripts/indexnow.mjs` sends the sitemap's addresses to `api.indexnow.org` (Bing, Yandex and others). Run it by hand from the Actions tab (Run workflow), or preview with `node scripts/indexnow.mjs --dry-run`.
