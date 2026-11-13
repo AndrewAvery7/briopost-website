@@ -34,6 +34,27 @@
   try {
     source = (new URLSearchParams(location.search).get('ref') || '').replace(/[^\w .\-]/g, '').trim().slice(0, 60);
   } catch (e) { source = ''; }
+  // Tester links (Andrew's classmates): the same form, but confirming the email gives a free test account on
+  // my.briopost.com straight away (the API decides; worker/lib/waitlistTesters.ts in the app repo). Keep this list in step
+  // with TESTER_SOURCES there. The words change here only so the visitor knows what they are signing up for.
+  var TESTER_REFS = ['ut-classmates'];
+  var testerLink = TESTER_REFS.indexOf(source.toLowerCase()) !== -1;
+  // The sign-in address the API sends back is used only if it is one of Briopost's own app addresses.
+  var safeSignIn = function (url) {
+    return typeof url === 'string' && /^https:\/\/(my|staging)\.briopost\.com\/$/.test(url) ? url : 'https://my.briopost.com/';
+  };
+  var testerReady = function (body) { return !!(body && body.tester && body.tester.status === 'ready'); };
+  var appendLink = function (parent, url, text) {
+    var a = document.createElement('a');
+    a.className = 'button';
+    a.href = safeSignIn(url);
+    a.textContent = text;
+    var wrap = document.createElement('span');
+    wrap.style.display = 'block';
+    wrap.style.marginTop = '12px';
+    wrap.appendChild(a);
+    parent.appendChild(wrap);
+  };
 
   function setupForm(prefix) {
     var form = document.getElementById(prefix + '-form');
@@ -54,6 +75,12 @@
     var doneText = el('done-text');
     var startedAt = Date.now();
     var busy = false;
+    if (testerLink) {
+      submitHTML = submitHTML.replace('Save my spot', 'Get my test account');
+      submit.innerHTML = submitHTML;
+      var offer = document.getElementById(prefix === 'hw' ? 'hw-offer' : 'wl-consent');
+      if (offer) offer.textContent = 'You\u2019re invited to test Briopost. Enter your first name and email, confirm your email, and your free test account is ready. Testing is free, with 300 AI credits a month. We\u2019ll only email you about your test account and Briopost\u2019s launch.';
+    }
 
     var say = function (text, kind) {
       msg.textContent = text || '';
@@ -79,13 +106,17 @@
       input.addEventListener('input', function () { if (input.getAttribute('aria-invalid')) setFieldError(input, ''); });
     });
 
-    var finish = function (status, email, quiet) {
+    var finish = function (status, email, quiet, body) {
       var panel = form.parentElement;
       if (panel.classList.contains('form-panel')) panel.style.minHeight = panel.getBoundingClientRect().height + 'px'; // keep the panel the same height, so nothing below jumps
       form.hidden = true;
-      if (status === 'already_confirmed') {
+      if (status === 'already_confirmed' && testerReady(body)) {
+        doneTitle.textContent = 'Your test account is ready.';
+        doneText.textContent = 'Sign in with ' + email + ' (Google, LinkedIn, or an emailed sign-in link). We also emailed you the address.';
+        appendLink(doneText, body.tester.signInUrl, 'Open Briopost');
+      } else if (status === 'already_confirmed') {
         doneTitle.textContent = 'You’re already on the list.';
-        doneText.textContent = 'Nothing else to do. We’ll email you when Briopost opens.';
+        doneText.textContent = testerLink ? 'Nothing else to do. We’ll email you about your test account shortly.' : 'Nothing else to do. We’ll email you when Briopost opens.';
       } else {
         doneTitle.textContent = 'Check your inbox.';
         doneText.textContent = '';
@@ -94,7 +125,9 @@
         strong.className = 'copyable';
         strong.textContent = email;
         doneText.appendChild(strong);
-        doneText.appendChild(document.createTextNode('. Click it to confirm your place. If it isn’t there in a few minutes, check your spam folder.'));
+        doneText.appendChild(document.createTextNode(testerLink
+          ? '. Click it to confirm your email, and your test account is ready. If it isn’t there in a few minutes, check your spam folder.'
+          : '. Click it to confirm your place. If it isn’t there in a few minutes, check your spam folder.'));
       }
       done.hidden = false;
       if (!quiet) doneTitle.focus();
@@ -138,8 +171,8 @@
         var body = r.body || {};
         if (r.http === 200 && body.ok && (body.status === 'check_email' || body.status === 'already_confirmed')) {
           // Close every home-page form, so nobody is offered a second sign-up after "Check your inbox."
-          homeForms.forEach(function (f) { if (f.finish !== finish) f.finish(body.status, email, true); });
-          finish(body.status, email);
+          homeForms.forEach(function (f) { if (f.finish !== finish) f.finish(body.status, email, true, body); });
+          finish(body.status, email, false, body);
           signal({ action: 'joined', form: form.id, status: body.status });
           return;
         }
@@ -216,7 +249,17 @@
           if (texts[status] && (body.ok || status === 'invalid')) {
             if (status === 'invalid') signal({ action: 'link_error', page: action, reason: 'invalid_link' });
             else signal({ action: action === 'confirm' ? 'confirmed' : 'unsubscribed', status: status });
-            show(texts[status][0], texts[status][1]);
+            if (action === 'confirm' && body.ok && body.tester) {
+              // A tester link: the test account is ready (or, if setting it up failed, Andrew was told and will add it).
+              if (testerReady(body)) {
+                show('ok', 'Your Briopost test account is ready. Sign in with the email address you used (Google, LinkedIn, or an emailed sign-in link). We also emailed you the address.');
+                appendLink(out, body.tester.signInUrl, 'Open Briopost');
+              } else {
+                show('ok', 'You’re confirmed. We’re setting up your test account and will email you the sign-in address shortly.');
+              }
+            } else {
+              show(texts[status][0], texts[status][1]);
+            }
             button.hidden = true;
             if (after) after.hidden = false;
             return;
