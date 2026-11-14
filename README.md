@@ -21,7 +21,7 @@ Every page header uses `assets/briopost-lockup.svg`, the brand kit's horizontal 
 
 ## Home page film
 
-`assets/film/`: a 22-second silent loop in the Studio section (WebM first, MP4 fallback, WebP poster at 6.75 s). It plays only while on screen, waits for Play when the visitor has reduced motion on, and has a Pause/Play button (`assets/motion.js`, step 6). Its HyperFrames source, the 1920 master and render notes live in the app repo at `docs/films/home-loop/`; re-render there and copy the three web files here.
+`assets/film/`: a 30-second silent loop in the Studio section (WebM first, MP4 fallback, WebP poster at 9.1 s). It plays only while on screen, waits for Play when the visitor has reduced motion on, and has a Pause/Play button (`assets/motion.js`, step 6). Its HyperFrames source, the 1920 master and render notes live in the app repo at `docs/films/home-loop/`; re-render there and copy the three web files here.
 
 ## Beta tester guide
 
