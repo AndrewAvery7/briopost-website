@@ -22,7 +22,7 @@ body{margin:0;background:var(--navy)}
 a{color:inherit;text-underline-offset:5px}
 button,input,select{font:inherit}
 button{cursor:pointer}
-a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:6px}
+a:focus-visible,button:focus-visible,summary:focus-visible,[role=button]:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 ::selection{background:var(--orange);color:var(--navy)}
 h1,h2,h3,p{margin:0}
 h1,h2,h3,.wordmark{font-family:var(--brand-font-heading);font-weight:800}
@@ -50,7 +50,7 @@ p{line-height:1.75}
 .notes .eyebrow,.maker .eyebrow,.section-head .eyebrow,.wl-done .eyebrow,.action-card .eyebrow{font-size:12px;line-height:1.4;margin-top:0;color:var(--muted)}
 
 /* Buttons: orange is kept for the one main action; the rest are outlined. */
-.button{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:54px;padding:0 25px;border-radius:12px;border:1.5px solid var(--orange);background:var(--orange);color:var(--navy);font-size:15px;text-decoration:none;font-weight:700;transition:background .2s,border-color .2s,transform .2s}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:54px;padding:0 25px;border-radius:10px;border:1.5px solid var(--orange);background:var(--orange);color:var(--navy);font-size:15px;text-decoration:none;font-weight:700;transition:background .2s,border-color .2s,transform .2s}
 .button:hover{background:var(--orange-hover);border-color:var(--orange-hover);transform:translateY(-2px)}
 .button-ghost{background:transparent;color:var(--paper);border-color:var(--field-line)}
 .button-ghost:hover{background:var(--panel-2);border-color:var(--paper)}
@@ -130,7 +130,7 @@ p{line-height:1.75}
 .about{background:var(--paper);color:var(--navy);padding:84px 0 90px;margin-top:104px}
 .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px}
 .about h2{font-size:45px;line-height:1.08;max-width:13ch}
-.about .you{color:#bb3514}
+.about .you{color:var(--navy);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:.12em;text-underline-offset:.1em;text-decoration-skip-ink:none}
 .about p{max-width:49ch;color:#4b4e78;font-size:16px}
 .about .promise{margin-top:22px;color:var(--navy);font-weight:700}
 .about .later{margin-top:22px}
@@ -165,7 +165,7 @@ p{line-height:1.75}
 .field{display:grid;gap:8px}
 .field label{font-weight:600;font-size:15px}
 .field .optional{font-weight:400;color:var(--muted)}
-.field input,.field select{width:100%;min-height:52px;padding:12px 16px;border-radius:12px;border:1.5px solid var(--field-line);background:var(--deep);color:var(--paper);font-size:16px;transition:border-color .15s}
+.field input,.field select{width:100%;min-height:52px;padding:12px 16px;border-radius:10px;border:1.5px solid var(--field-line);background:var(--deep);color:var(--paper);font-size:16px;transition:border-color .15s}
 .field select{appearance:none;-webkit-appearance:none;padding-right:44px;background-image:linear-gradient(45deg,transparent 50%,var(--paper) 50%),linear-gradient(135deg,var(--paper) 50%,transparent 50%);background-position:calc(100% - 22px) 50%,calc(100% - 16px) 50%;background-size:6px 6px;background-repeat:no-repeat}
 .field input::placeholder{color:var(--ink-3)}
 .field input:hover,.field select:hover{border-color:var(--muted)}
@@ -275,4 +275,8 @@ p{line-height:1.75}
   .step{column-gap:14px;padding:20px 16px}
   .promise-box{padding:18px;gap:14px}
 }
+/* The official horizontal lockup (brand kit file, with the ™ built in) replaces the typed wordmark on every page. */
+.brand .lockup{display:block;width:auto;height:40px;box-shadow:none;border-radius:0}
+@media(max-width:800px){.brand .lockup{height:34px}}
+@media(max-width:400px){.brand .lockup{height:30px}}
 @media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}

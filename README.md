@@ -8,7 +8,20 @@ Run `node scripts/check.mjs` to check local asset references, JavaScript syntax,
 
 ## Link card
 
-When briopost.com is shared in a text, post or chat, apps show `assets/briopost-link-card.png` (1200 x 630, set in the `og:` and `twitter:` tags in `index.html`). Its source is `scripts/link-card.html`; after editing it, run `python scripts/render-link-card.py` to redraw the card and `assets/apple-touch-icon.png`.
+When briopost.com is shared in a text, post or chat, apps show `assets/briopost-link-card.png` (1200 x 630, set in the `og:` and `twitter:` tags in `index.html`). Since 2026-11-13 it is the brand kit's share image (`docs/brand/kit/social/share-image-1200x630.png` in the app repo); copy that file again when the kit changes. `scripts/link-card.html` and `python scripts/render-link-card.py` still draw `assets/apple-touch-icon.png` and the `icon-*.png` files, but the card they draw is the older "Coming soon" design: do not copy it over the brand kit card.
+
+## Logo
+
+Every page header uses `assets/briopost-lockup.svg`, the brand kit's horizontal dark lockup (`docs/brand/kit/logo/briopost-lockup-horizontal-dark.svg`, with the ™ built in). Never retype the wordmark in HTML.
+
+## Interactive home page
+
+- `assets/preview.js`: the sample in the hero. Three hand-written topics (Sales, Leadership, Career) and a box where visitors type their own thought; "Shape it" lays it into a fixed design (cover, the idea, a closing question) in all four formats. Nothing is sent, generated or posted, and the page says so; analytics records only that a topic or Shape it was clicked, never the words.
+- `assets/motion.js` + `assets/interactive.css`: sections rise in on scroll, the How it works line and step 4 pulse, the "Give my OK" sample, larger screenshots on click, and a tilt on the template cards. Reduced motion turns movement off; the page works without the script.
+
+## Beta tester guide
+
+`/beta/` (noindex, not in the sitemap): sign-in steps, five things to try (ticks kept in the visitor's browser only, `assets/beta.js`), how to send feedback (info@briopost.com) and short answers that match Terms section 17. The tester sign-up messages in `assets/waitlist.js` link to it, and so does the test-account email in the app.
 
 ## Fonts
 
