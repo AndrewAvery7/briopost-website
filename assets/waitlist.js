@@ -55,6 +55,16 @@
     wrap.appendChild(a);
     parent.appendChild(wrap);
   };
+  // Testers also get the beta guide (/beta/): how to start, what to try, how to send feedback.
+  var appendGuide = function (parent) {
+    var a = document.createElement('a');
+    a.href = '/beta/';
+    a.textContent = 'Read the two-minute beta tester guide';
+    a.style.display = 'inline-block';
+    a.style.marginTop = '14px';
+    a.style.textDecorationColor = 'var(--orange)';
+    parent.appendChild(a);
+  };
 
   function setupForm(prefix) {
     var form = document.getElementById(prefix + '-form');
@@ -114,6 +124,7 @@
         doneTitle.textContent = 'Your test account is ready.';
         doneText.textContent = 'Sign in with ' + email + ' (Google, LinkedIn, or an emailed sign-in link). We also emailed you the address.';
         appendLink(doneText, body.tester.signInUrl, 'Open Briopost');
+        appendGuide(doneText);
       } else if (status === 'already_confirmed') {
         doneTitle.textContent = 'You’re already on the list.';
         doneText.textContent = testerLink ? 'Nothing else to do. We’ll email you about your test account shortly.' : 'Nothing else to do. We’ll email you when Briopost opens.';
@@ -254,6 +265,7 @@
               if (testerReady(body)) {
                 show('ok', 'Your Briopost test account is ready. Sign in with the email address you used (Google, LinkedIn, or an emailed sign-in link). We also emailed you the address.');
                 appendLink(out, body.tester.signInUrl, 'Open Briopost');
+                appendGuide(out);
               } else {
                 show('ok', 'You’re confirmed. We’re setting up your test account and will email you the sign-in address shortly.');
               }
