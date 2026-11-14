@@ -101,14 +101,18 @@
     if (!target || !target.closest) return;
 
     // The interactive sample on the home page (assets/preview.js).
+    var okBtn = target.closest('#ok-confirm, #ok-undo');
+    if (okBtn) track('demo_interaction', { demo_action: okBtn.id === 'ok-confirm' ? 'give_ok' : 'take_back_ok', demo_value: '(none)' });
     var demo = target.closest('#preview button');
     if (demo) {
       var action = '', value = '';
       if (demo.getAttribute('role') === 'tab') { action = 'format_tab'; value = demo.getAttribute('data-format'); }
       else if (demo.hasAttribute('data-step')) { action = Number(demo.getAttribute('data-step')) > 0 ? 'next_slide' : 'previous_slide'; }
       else if (demo.hasAttribute('data-slide')) { action = 'go_to_slide'; value = String(Number(demo.getAttribute('data-slide')) + 1); }
-      else if (demo.hasAttribute('data-vote')) { action = 'poll_vote'; value = clean(demo.textContent.replace('Your choice', ''), 60); }
+      else if (demo.hasAttribute('data-vote')) { action = 'poll_vote'; value = clean(demo.textContent.replace('Your choice', '').replace(/\d+%$/, ''), 60); }
       else if (demo.classList.contains('reset-vote')) { action = 'poll_reset'; }
+      else if (demo.classList.contains('chip')) { action = 'sample_topic'; value = demo.getAttribute('data-topic'); }
+      else if (demo.id === 'shape-btn') { action = 'shape_own'; } // the visitor's own words are never sent
       if (action) track('demo_interaction', { demo_action: action, demo_value: value || '(none)' });
       return;
     }

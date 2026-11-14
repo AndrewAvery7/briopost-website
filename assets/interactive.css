@@ -1,0 +1,139 @@
+/* Home page interactivity and brand review, 2026-11-13. Loaded after style.css and demo.css. */
+
+/* The official horizontal lockup (brand kit file, with the ™ built in) replaces the typed wordmark. */
+.brand .lockup{display:block;width:auto;height:40px;box-shadow:none;border-radius:0}
+@media(max-width:800px){.brand .lockup{height:34px}}
+@media(max-width:400px){.brand .lockup{height:30px}}
+
+/* The trust line under the hero's main action. */
+.trust-line{display:flex;align-items:center;justify-content:center;gap:8px;margin:16px auto 0;font-weight:600;font-size:15px;color:var(--paper)}
+.trust-line svg{width:20px;height:20px;fill:none;stroke:var(--orange);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hero-offer{margin-top:8px}
+
+/* ---- The sample: topics, "write your own", shaping, swipe ---- */
+.thought-tool{display:grid;gap:12px;margin-top:4px}
+.topic-chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--field-line);background:transparent;color:var(--paper);padding:7px 14px;border-radius:6px;font-size:13px;font-weight:500;transition:border-color .2s,background-color .2s}
+.chip:hover{border-color:var(--paper)}
+.chip[aria-pressed=true]{background:var(--paper);border-color:var(--paper);color:var(--navy);font-weight:700}
+.thought-label{font-size:13px;font-weight:600;color:var(--muted);margin-top:6px}
+.thought-box{position:relative}
+.thought-box textarea{display:block;width:100%;resize:vertical;min-height:112px;padding:14px 16px 26px;border-radius:10px;border:1.5px solid var(--field-line);background:var(--deep);color:var(--paper);font:400 16px/1.6 var(--brand-font-body);transition:border-color .15s}
+.thought-box textarea:hover{border-color:var(--muted)}
+.thought-box textarea:focus{outline:2px solid var(--orange);outline-offset:2px;border-color:var(--orange)}
+.thought-count{position:absolute;right:12px;bottom:8px;font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.shape-btn{justify-self:start;min-height:46px;gap:8px;padding:0 18px}
+.shape-btn .chev{width:18px;height:18px;fill:none;stroke:var(--orange);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.shape-btn:hover .chev{transform:translateX(3px)}
+.notes .thought-tool .note-foot{margin-top:2px;font-size:12px;line-height:1.6}
+
+/* Shaping: three cards shuffle for a moment before the new post appears. */
+.format-preview{position:relative}
+.format-preview.shaping>*{opacity:.12;filter:blur(2px);transition:opacity .2s,filter .2s}
+.format-preview.shaping::after{content:"Shaping your post\2026";position:absolute;left:50%;top:50%;transform:translate(-50%,70px);color:var(--paper);font-size:13px;font-weight:600;letter-spacing:.02em;white-space:nowrap}
+.format-preview.shaping::before{content:"";position:absolute;left:50%;top:50%;width:84px;height:106px;margin:-90px 0 0 -42px;border-radius:12px;background:var(--paper);box-shadow:16px -10px 0 -2px var(--brand-haze),30px -20px 0 -4px #3e427e;animation:shuffle .75s ease-in-out infinite}
+@keyframes shuffle{0%{transform:rotate(-5deg) translateX(-6px)}50%{transform:rotate(5deg) translateX(6px)}100%{transform:rotate(-5deg) translateX(-6px)}}
+.format-preview.enter>*{animation:rise .42s cubic-bezier(.2,.8,.2,1) both}
+.format-preview.enter[data-format=carousel]>.deck-wrap{animation:none}
+.format-preview.enter[data-format=carousel] .deck-slide{animation:rise .42s cubic-bezier(.2,.8,.2,1) both}
+.format-preview.enter[data-format=carousel][data-dir=next] .deck-slide{animation-name:slide-next}
+.format-preview.enter[data-format=carousel][data-dir=prev] .deck-slide{animation-name:slide-prev}
+.format-preview.enter .deck-controls,.format-preview.enter .format-hint{animation:none}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes slide-next{from{opacity:0;transform:translateX(40px) rotate(1.5deg)}to{opacity:1;transform:none}}
+@keyframes slide-prev{from{opacity:0;transform:translateX(-40px) rotate(-1.5deg)}to{opacity:1;transform:none}}
+.deck-slide{touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
+.deck-slide:active{cursor:grabbing}
+
+/* Type-led covers (no photo) for the other topics and your own thought. */
+.cover.type{background:var(--paper)}
+.type-mark{margin:auto -4px -18px auto;font-family:var(--brand-font-heading);font-weight:800;font-size:120px;line-height:.8;color:var(--brand-haze);opacity:.5;position:relative;z-index:0}
+.cover.type .deck-footer{position:relative;left:auto;right:auto;bottom:auto;color:var(--navy);text-shadow:none}
+.question h3.long{font-size:clamp(19px,2.1vw,25px);line-height:1.28;letter-spacing:-.02em;max-width:none;overflow-wrap:anywhere}
+.graphic-type{background:var(--navy);border:1px solid var(--line)}
+.graphic-type::after{display:none}
+.graphic-cards{position:absolute;right:22px;top:22px;width:84px;height:106px;z-index:1}
+.graphic-cards i{position:absolute;inset:0;border-radius:10px;background:#3e427e;transform:rotate(9deg) translate(16px,-4px)}
+.graphic-cards i:nth-child(2){background:var(--brand-haze);transform:rotate(4deg) translate(8px,-1px)}
+.graphic-cards i:nth-child(3){background:var(--paper);transform:none}
+.graphic-cards i:nth-child(3)::after{content:"";position:absolute;left:20px;top:38px;width:24px;height:24px;border:solid var(--orange);border-width:7px 7px 0 0;border-radius:2px;transform:rotate(45deg)}
+.graphic-type figcaption{z-index:2}
+.graphic-type .graphic-caption{color:var(--muted);max-width:18ch}
+
+/* Poll results after a vote (sample numbers). */
+.poll-choice{position:relative;overflow:hidden;isolation:isolate}
+.poll-bar{position:absolute;inset:0 auto 0 0;width:0;background:#e4e5f4;z-index:-1;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.voted .poll-bar{width:var(--share)}
+.voted .chosen .poll-bar{background:#d5d7e8}
+.voted .poll-choice.chosen{background:#fff}
+.poll-share{margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums}
+.poll-text{min-width:0}
+
+/* Stacked haze cards behind the demo (brand: layered panels for depth), drifting slightly with the pointer. */
+.hero{position:relative;isolation:isolate}
+.studio-window{position:relative;overflow:visible;--px:0px;--py:0px}
+.studio-window::before,.studio-window::after{content:"";position:absolute;inset:0;border-radius:22px;z-index:-1;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.studio-window::before{background:#3e427e;transform:translate(calc(26px + var(--px)),calc(-22px + var(--py))) rotate(1.6deg);opacity:.55}
+.studio-window::after{background:var(--brand-haze);transform:translate(calc(13px + var(--px)*.5),calc(-11px + var(--py)*.5)) rotate(.8deg);opacity:.35}
+.studio-window>.notes{border-radius:22px 0 0 22px}
+.studio-window>.demo-output{border-radius:0 22px 22px 0;background:var(--panel)}
+@media(max-width:800px){
+  .studio-window::before{transform:translate(8px,-12px) rotate(1.2deg)}
+  .studio-window::after{transform:translate(4px,-6px) rotate(.6deg)}
+  .studio-window>.notes{border-radius:22px 22px 0 0}
+  .studio-window>.demo-output{border-radius:0 0 22px 22px}
+}
+
+/* Rise in on scroll (only when motion.js runs and motion is allowed). */
+.motion .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease var(--delay,0ms),transform .6s cubic-bezier(.2,.8,.2,1) var(--delay,0ms)}
+.motion .reveal.in{opacity:1;transform:none}
+
+/* How it works: a line runs through the steps, and step 4 ("You approve") pulses. */
+.steps{position:relative}
+.motion .steps::before{content:"";position:absolute;left:0;right:0;top:45px;height:2px;background:linear-gradient(90deg,var(--orange),var(--brand-haze));transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.6,0,.2,1) .2s;z-index:0;opacity:.7}
+.motion .steps.run::before{transform:scaleX(1)}
+.step{z-index:1}
+.motion .steps.run .step-key .step-num{animation:okpulse 1.6s ease-out 1.5s 2}
+@keyframes okpulse{0%{box-shadow:0 0 0 0 rgb(255 91 46/55%)}100%{box-shadow:0 0 0 16px rgb(255 91 46/0%)}}
+@media(max-width:1100px){
+  .motion .steps::before{left:41px;right:auto;top:20px;bottom:20px;width:2px;height:auto;transform:scaleY(0);transform-origin:top;background:linear-gradient(180deg,var(--orange),var(--brand-haze))}
+  .motion .steps.run::before{transform:scaleY(1)}
+}
+
+/* "Give my OK" sample. */
+.ok-demo{margin-top:16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:28px;align-items:center;padding:26px 28px;background:var(--panel-2)}
+.ok-copy{display:flex;gap:18px;align-items:flex-start}
+.ok-copy svg{width:30px;height:30px;flex:none;fill:none;stroke:var(--orange);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ok-copy p{font-size:16px;line-height:1.6;color:var(--muted)}
+.ok-copy strong{color:var(--paper)}
+.ok-card{background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .3s}
+.ok-card[data-state=confirmed]{border-color:var(--ok)}
+.ok-head{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:12px}
+.ok-badge{padding:4px 9px;border-radius:6px;background:rgb(255 91 46/14%);color:#ffb39e;font-weight:700;letter-spacing:.02em;transition:background-color .3s,color .3s}
+.ok-card[data-state=confirmed] .ok-badge{background:rgb(76 195 138/16%);color:var(--ok)}
+.ok-when{color:var(--muted);font-variant-numeric:tabular-nums}
+.ok-title{font-family:var(--brand-font-heading);font-weight:700;font-size:20px;letter-spacing:-.02em;margin-top:12px}
+.ok-meta{color:var(--ink-3);font-size:13px;margin-top:2px}
+.ok-actions{margin-top:14px}
+.ok-confirm{min-height:44px;padding:0 18px;border-radius:10px;border:0;background:var(--orange);color:var(--navy);font-weight:700;font-size:15px;transition:background .2s,transform .2s}
+.ok-confirm:hover{background:var(--orange-hover);transform:translateY(-1px)}
+.ok-undo{min-height:44px;padding:0 16px;border-radius:10px;border:1.5px solid var(--field-line);background:transparent;color:var(--paper);font-weight:600;font-size:14px}
+.ok-undo:hover{border-color:var(--paper)}
+.ok-status{color:var(--muted);font-size:13px;line-height:1.55;margin-top:12px}
+.ok-card[data-state=confirmed] .ok-status{color:var(--paper)}
+@media(max-width:800px){.ok-demo{grid-template-columns:minmax(0,1fr);padding:20px}}
+
+/* Screenshots and templates open larger. */
+.zoomable{cursor:zoom-in;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .2s}
+.zoomable:hover{border-color:var(--field-line)}
+.shots .zoomable:hover{transform:translateY(-4px)}
+.lightbox{max-width:min(1200px,94vw);max-height:92vh;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--paper);box-shadow:var(--shadow)}
+.lightbox::backdrop{background:rgb(12 14 38/82%);backdrop-filter:blur(3px)}
+.lightbox img{display:block;max-width:100%;max-height:calc(92vh - 90px);width:auto;height:auto;margin:auto;border-radius:10px}
+.lightbox-cap{color:var(--muted);font-size:14px;padding:12px 48px 2px;text-align:center}
+.lightbox-close{position:absolute;top:8px;right:8px;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--deep);color:var(--paper);font-size:24px;line-height:1}
+
+@media(prefers-reduced-motion:reduce){.format-preview.shaping::before{animation:none}}
+.deck-slide h3.fit{font-size:clamp(24px,2.4vw,32px);line-height:1.08}
+.graphic-art h3.fit{font-size:clamp(28px,3vw,38px);line-height:1.06}
+.cover.type .type-mark{font-size:96px}

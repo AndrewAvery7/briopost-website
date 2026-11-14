@@ -1,0 +1,57 @@
+/* Beta tester guide (/beta/). Uses the site's style.css; these rules are only for this page. */
+.beta-hero{padding:40px 0 0}
+.beta-hero h1{font-size:clamp(40px,5.4vw,72px);line-height:1.04;max-width:18ch;margin-top:18px}
+.beta-hero .intro{max-width:62ch;margin-top:22px;color:var(--muted);font-size:17px}
+.beta-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}
+.fact{padding:22px 24px;display:grid;gap:6px}
+.fact strong{font-family:var(--brand-font-heading);font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1.2}
+.fact span{color:var(--muted);font-size:15px;line-height:1.55}
+.fact:first-child{border-color:var(--orange)}
+
+.beta-steps{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.beta-steps li{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:24px}
+.beta-steps h3{font-size:21px;letter-spacing:-.02em;line-height:1.2;margin-top:6px}
+.beta-steps p{color:var(--muted);font-size:15px;line-height:1.65;margin-top:8px}
+.beta-steps a,.beta-steps strong{color:var(--paper)}
+.beta-steps a{text-decoration-color:var(--orange);text-decoration-thickness:2px}
+
+.beta-try{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px;align-items:start}
+.try-progress{margin-top:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.try-bar{height:8px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line);margin-top:10px;overflow:hidden;max-width:320px}
+.try-bar span{display:block;height:100%;width:0;background:var(--orange);transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.try-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.try-list label{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;cursor:pointer;transition:border-color .2s,background-color .2s}
+.try-list label:hover{border-color:var(--field-line)}
+.try-list input{appearance:none;-webkit-appearance:none;flex:none;width:24px;height:24px;margin:1px 0 0;border-radius:6px;border:1.5px solid var(--field-line);background:var(--deep);display:grid;place-items:center;cursor:pointer;transition:background-color .2s,border-color .2s}
+.try-list input::after{content:"";width:6px;height:11px;border:solid var(--navy);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px) scale(0);transition:transform .2s}
+.try-list input:checked{background:var(--orange);border-color:var(--orange)}
+.try-list input:checked::after{transform:rotate(45deg) translate(-1px,-1px) scale(1)}
+.try-list input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.try-list span{color:var(--muted);font-size:15px;line-height:1.6}
+.try-list strong{color:var(--paper)}
+.try-list label:has(input:checked){background:var(--panel-2)}
+.try-list label:has(input:checked) strong{text-decoration:line-through;text-decoration-color:var(--orange);text-decoration-thickness:2px}
+
+.feedback{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:40px;padding:40px 44px;align-items:center;background:var(--panel-2)}
+.feedback h2{font-size:clamp(28px,3vw,38px);line-height:1.1;margin-top:14px}
+.feedback>div>p{color:var(--muted);margin-top:12px;max-width:56ch}
+.feedback .ticks{margin-top:20px}
+.feedback-action{display:grid;gap:14px;justify-items:start}
+.mail-fallback{color:var(--muted);font-size:14px;line-height:1.6}
+
+.beta-last{padding-bottom:110px}
+.beta-legal{text-align:center;color:var(--ink-3);font-size:14px;margin-top:24px}
+.beta-legal a{color:var(--paper)}
+
+@media(max-width:1000px){
+  .beta-steps{grid-template-columns:minmax(0,1fr);max-width:680px}
+  .beta-try{grid-template-columns:minmax(0,1fr);gap:28px}
+  .feedback{grid-template-columns:minmax(0,1fr);gap:24px}
+}
+@media(max-width:800px){
+  .beta-hero{padding-top:20px}
+  .beta-facts{grid-template-columns:minmax(0,1fr)}
+  .feedback{padding:28px 22px}
+  .feedback-action .button{width:100%}
+  .header .button-small{padding:0 12px;font-size:13px}
+}
