@@ -34,10 +34,10 @@
   try {
     source = (new URLSearchParams(location.search).get('ref') || '').replace(/[^\w .\-]/g, '').trim().slice(0, 60);
   } catch (e) { source = ''; }
-  // Tester links (Andrew's classmates): the same form, but confirming the email gives a free test account on
+  // The beta tester link: the same form, but confirming the email gives a free test account on
   // my.briopost.com straight away (the API decides; worker/lib/waitlistTesters.ts in the app repo). Keep this list in step
   // with TESTER_SOURCES there. The words change here only so the visitor knows what they are signing up for.
-  var TESTER_REFS = ['ut-classmates'];
+  var TESTER_REFS = ['beta-testers', 'ut-classmates'];   // ut-classmates: the older link, still accepted
   var testerLink = TESTER_REFS.indexOf(source.toLowerCase()) !== -1;
   // The sign-in address the API sends back is used only if it is one of Briopost's own app addresses.
   var safeSignIn = function (url) {
