@@ -84,6 +84,24 @@
     box.addEventListener('click', function (e) { if (e.target === box || e.target.closest('.lightbox-close')) box.close(); });
   }
 
+  // 6. The home page film plays only while it is on screen (saves battery and data). With reduced motion it waits
+  //    for a click on Play. Either way a Pause/Play button lets the visitor stop it.
+  var vid = document.getElementById('film-video'), tog = document.getElementById('film-toggle');
+  if (vid && tog) {
+    var userPaused = reduce;
+    var show = function () { tog.textContent = vid.paused ? 'Play' : 'Pause'; tog.setAttribute('aria-pressed', String(!vid.paused)); };
+    var tryPlay = function () { var p = vid.play(); if (p && p.catch) p.catch(function () { show(); }); };
+    tog.hidden = false;
+    vid.addEventListener('play', show); vid.addEventListener('pause', show);
+    tog.addEventListener('click', function () { if (vid.paused) { userPaused = false; tryPlay(); } else { userPaused = true; vid.pause(); } });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) {
+        if (en[0].isIntersecting) { if (!userPaused) tryPlay(); } else if (!vid.paused) vid.pause();
+      }, { threshold: 0.35 }).observe(vid);
+    } else if (!userPaused) tryPlay();
+    show();
+  }
+
   // 5. Template cards tilt toward the pointer.
   if (!reduce && window.matchMedia && matchMedia('(hover: hover)').matches) {
     [].slice.call(document.querySelectorAll('.templates .shot')).forEach(function (fig) {
