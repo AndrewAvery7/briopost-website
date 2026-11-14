@@ -102,6 +102,47 @@
     show();
   }
 
+  // 7. "Watch with sound": the narrated film in a dialog. It starts from the click (browsers allow sound only then),
+  //    the silent loop pauses while it plays, and a Captions On/Off button shows or hides the English captions. The
+  //    choice is remembered in this browser only; the player's own CC menu stays in step with the button.
+  var sOpen = document.getElementById('film-sound-open'), sBox = document.getElementById('film-sound');
+  var sVid = document.getElementById('film-sound-video'), sCc = document.getElementById('film-captions');
+  if (sOpen && sBox && sVid && sCc && sBox.showModal) {
+    var CC_KEY = 'briopost-film-captions';
+    var ccTrack = function () { return sVid.textTracks && sVid.textTracks[0]; };
+    var ccOn = false;
+    try { ccOn = localStorage.getItem(CC_KEY) === 'on'; } catch (e) { /* storage blocked: captions start off */ }
+    var ccLabel = function () { sCc.textContent = ccOn ? 'Captions: On' : 'Captions: Off'; sCc.setAttribute('aria-pressed', String(ccOn)); };
+    var showCc = function () { ccLabel(); var t = ccTrack(); if (t) t.mode = ccOn ? 'showing' : 'hidden'; };
+    sCc.addEventListener('click', function () {
+      ccOn = !ccOn; showCc();
+      try { localStorage.setItem(CC_KEY, ccOn ? 'on' : 'off'); } catch (e) { /* not remembered */ }
+    });
+    if (sVid.textTracks && sVid.textTracks.addEventListener) {
+      sVid.textTracks.addEventListener('change', function () {
+        var t = ccTrack(); if (!t) return;
+        var now = t.mode === 'showing';
+        if (now !== ccOn) { ccOn = now; ccLabel(); }
+      });
+    }
+    var loopWasPlaying = false;
+    sOpen.hidden = false; // shown only where the dialog works (the page is complete without it)
+    sOpen.addEventListener('click', function () {
+      loopWasPlaying = !!(vid && !vid.paused);
+      if (vid && !vid.paused) vid.pause();
+      sBox.showModal();
+      showCc();
+      try { sVid.currentTime = 0; } catch (e) { /* not loaded yet */ }
+      var p = sVid.play(); if (p && p.catch) p.catch(function () { /* the visitor can press Play */ });
+    });
+    sBox.addEventListener('click', function (e) { if (e.target === sBox || e.target.closest('.film-dialog-close')) sBox.close(); });
+    sBox.addEventListener('close', function () {
+      sVid.pause();
+      if (loopWasPlaying && vid) { var q = vid.play(); if (q && q.catch) q.catch(function () {}); }
+    });
+    showCc();
+  }
+
   // 5. Template cards tilt toward the pointer.
   if (!reduce && window.matchMedia && matchMedia('(hover: hover)').matches) {
     [].slice.call(document.querySelectorAll('.templates .shot')).forEach(function (fig) {

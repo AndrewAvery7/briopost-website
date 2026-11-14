@@ -23,6 +23,8 @@ Every page header uses `assets/briopost-lockup.svg`, the brand kit's horizontal 
 
 `assets/film/`: a 30-second silent loop in the Studio section (WebM first, MP4 fallback, WebP poster at 9.1 s). It plays only while on screen, waits for Play when the visitor has reduced motion on, and has a Pause/Play button (`assets/motion.js`, step 6). Its HyperFrames source, the 1920 master and render notes live in the app repo at `docs/films/home-loop/`; re-render there and copy the three web files here.
 
+Below it, **Watch with sound (35 s)** opens the narrated version (voice and music) in a dialog: `briopost-home-narrated.webm` / `.mp4`, poster `briopost-home-narrated-poster.webp`, and English captions `briopost-home-narrated.en.vtt`. It starts from the click (browsers only allow sound then), pauses the silent loop while it plays and resumes it on close. A **Captions: On / Off** button shows or hides the captions; the choice is kept in the visitor's browser only, and the player's own CC menu stays in step (`assets/motion.js`, step 7). Its source lives in the app repo at `docs/films/home-narrated/`; re-render there and copy the four web files (and the captions file if the script changes) here.
+
 ## Beta tester guide
 
 `/beta/` (noindex, not in the sitemap): sign-in steps, five things to try (ticks kept in the visitor's browser only, `assets/beta.js`), how to send feedback (info@briopost.com) and short answers that match Terms section 17. The tester sign-up messages in `assets/waitlist.js` link to it, and so does the test-account email in the app.
@@ -56,6 +58,7 @@ Events it sends (all only when the ID is set):
 | `waitlist_error` | A sign-up failed (`error_reason`: `validation`, `closed`, `rate_limited`, `rejected`, `server_<code>`, `network`), or a confirm/unsubscribe link failed (`invalid_link`, `missing_code`, ...). |
 | `waitlist_confirmed` / `waitlist_unsubscribed` | On `/waitlist/confirm/` and `/waitlist/unsubscribe/` after the server says it worked. |
 | `cta_click` | Any main button or "Join the waitlist" link (`cta_label`, `cta_location`). |
+| `film_interaction` | The home page film (`film_action`: `watch_with_sound`, `captions_on`, `captions_off`). "Watch with sound" also sends `cta_click`. |
 | `demo_interaction` | The interactive sample on the home page (`demo_action`: `format_tab`, `next_slide`, `previous_slide`, `go_to_slide`, `poll_vote`, `poll_reset`). |
 | `faq_open` | A question opened in the home page FAQ. |
 | `scroll_depth` | 25, 50, 75 and 90 percent of a page read (`percent_scrolled`). |
