@@ -145,4 +145,20 @@
 .film-toggle{position:absolute;right:24px;top:24px;min-height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--field-line);background:rgb(12 14 38/78%);color:var(--paper);font-size:13px;font-weight:600}
 .film-toggle:hover{border-color:var(--paper)}
 .film + .shots{margin-top:20px}
+/* "Watch with sound": the narrated film in a dialog, with a Captions On/Off button. */
+.film-sound-row{padding:10px 6px 2px;margin:0}
+.film-sound-open[hidden]{display:none}
+.film-sound-len{font-weight:500;color:var(--muted)}
+.film-dialog{width:min(1100px,94vw);max-height:94vh;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--paper);box-shadow:var(--shadow)}
+.film-dialog::backdrop{background:rgb(12 14 38/86%);backdrop-filter:blur(3px)}
+.film-dialog-bar{display:flex;align-items:center;gap:10px;padding:0 0 12px}
+.film-dialog-title{flex:1;margin:0;font-size:17px;line-height:1.3}
+.film-dialog .lightbox-close{position:static;flex:none}
+.film-cc{min-height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--field-line);background:var(--deep);color:var(--paper);font-size:14px;font-weight:600}
+.film-cc:hover{border-color:var(--paper)}
+.film-cc[aria-pressed="true"]{border-color:var(--orange);color:var(--paper);box-shadow:inset 0 -3px 0 var(--orange)}
+.film-dialog video{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:calc(94vh - 120px);border-radius:10px;background:var(--deep)}
+.film-dialog video::cue{font-family:inherit;font-size:clamp(14px,2.2vw,22px);line-height:1.35;background:rgb(12 14 38/82%);color:#f6f4ef}
+.film-dialog-cap{color:var(--muted);font-size:13px;padding:10px 4px 0;margin:0}
+@media(max-width:800px){.film-dialog{padding:10px}.film-dialog-title{font-size:15px}.film-cc{min-height:36px;padding:0 10px;font-size:13px}}
 @media(max-width:800px){.film-toggle{right:18px;top:18px;min-height:30px;padding:0 10px;font-size:12px;border-radius:8px}}
