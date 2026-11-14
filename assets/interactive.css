@@ -137,3 +137,12 @@
 .deck-slide h3.fit{font-size:clamp(24px,2.4vw,32px);line-height:1.08}
 .graphic-art h3.fit{font-size:clamp(28px,3vw,38px);line-height:1.06}
 .cover.type .type-mark{font-size:96px}
+
+/* The home page film (Studio section): plays when on screen, never with reduced motion unless asked. */
+.film{margin:44px 0 0;padding:12px;position:relative}
+.film video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:10px;border:1px solid var(--line-soft);background:var(--deep)}
+.film figcaption{color:var(--muted);font-size:14px;line-height:1.6;padding:14px 6px 4px}
+.film-toggle{position:absolute;right:24px;top:24px;min-height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--field-line);background:rgb(12 14 38/78%);color:var(--paper);font-size:13px;font-weight:600}
+.film-toggle:hover{border-color:var(--paper)}
+.film + .shots{margin-top:20px}
+@media(max-width:800px){.film-toggle{right:18px;top:18px;min-height:30px;padding:0 10px;font-size:12px;border-radius:8px}}
