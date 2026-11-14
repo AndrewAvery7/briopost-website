@@ -1,6 +1,6 @@
 # Briopost
 
-> Briopost is a creative studio for LinkedIn, now in a free, invite-only beta. It turns one idea into a carousel, graphic, text post or poll in the user's own voice and brand. Nothing posts to LinkedIn without the user's OK. Free during the beta, with AI credits included. Made by Briopost LLC. Independent of LinkedIn: not affiliated with or endorsed by LinkedIn.
+> Briopost is a creative studio for LinkedIn, now in a free, invite-only beta. Its AI assistant turns one idea into a carousel, graphic, text post or poll in the user's own voice and brand, and the user edits it. Nothing posts to LinkedIn without the user's OK. Free during the beta, with AI credits included. Made by Briopost LLC. Independent of LinkedIn: not affiliated with or endorsed by LinkedIn.
 
 ## What it does
 
