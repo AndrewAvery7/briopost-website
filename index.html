@@ -143,8 +143,17 @@
   <div class="section-head">
     <p class="eyebrow">The studio</p>
     <h2 id="studio-title">See the real studio.</h2>
-    <p class="lead">These are screenshots of Briopost as it looks today. Some details may change before it opens to everyone.</p>
+    <p class="lead">A 22-second look at Briopost as it is today, then the screens themselves. Some details may change before it opens to everyone.</p>
   </div>
+  <!-- The home page film: a silent HyperFrames loop (source and renders: the app repo, docs/films/home-loop). -->
+  <figure class="film panel" id="film">
+    <video id="film-video" muted loop playsinline preload="metadata" width="1600" height="900" poster="assets/film/briopost-home-loop-poster.webp" aria-describedby="film-cap">
+      <source src="assets/film/briopost-home-loop.webm" type="video/webm">
+      <source src="assets/film/briopost-home-loop.mp4" type="video/mp4">
+    </video>
+    <button type="button" class="film-toggle" id="film-toggle" aria-pressed="false" hidden>Pause</button>
+    <figcaption id="film-cap">One thought becomes a carousel, a graphic, a text post and a poll, in the real studio, and nothing posts until you give your OK. Silent loop, sample content.</figcaption>
+  </figure>
   <!-- Real app screenshots (assets/shots/). To add one, copy a <figure> line. -->
   <div class="shots">
     <figure class="shot shot-wide panel"><img src="assets/shots/studio-home-1600.webp" srcset="assets/shots/studio-home-800.webp 800w, assets/shots/studio-home-1600.webp 1600w" sizes="(max-width: 800px) 100vw, 1170px" width="1600" height="498" loading="lazy" decoding="async" alt="The Briopost home screen in the light look, with the thought box filled in (top of the screen only): &quot;Three questions that turn a sales call into a conversation&quot;."><figcaption>Start with one thought. Briopost turns it into a carousel, graphic, text post or poll.</figcaption></figure>

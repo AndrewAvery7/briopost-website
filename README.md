@@ -19,6 +19,10 @@ Every page header uses `assets/briopost-lockup.svg`, the brand kit's horizontal 
 - `assets/preview.js`: the sample in the hero. Three hand-written topics (Sales, Leadership, Career) and a box where visitors type their own thought; "Shape it" lays it into a fixed design (cover, the idea, a closing question) in all four formats. Nothing is sent, generated or posted, and the page says so; analytics records only that a topic or Shape it was clicked, never the words.
 - `assets/motion.js` + `assets/interactive.css`: sections rise in on scroll, the How it works line and step 4 pulse, the "Give my OK" sample, larger screenshots on click, and a tilt on the template cards. Reduced motion turns movement off; the page works without the script.
 
+## Home page film
+
+`assets/film/`: a 22-second silent loop in the Studio section (WebM first, MP4 fallback, WebP poster at 6.75 s). It plays only while on screen, waits for Play when the visitor has reduced motion on, and has a Pause/Play button (`assets/motion.js`, step 6). Its HyperFrames source, the 1920 master and render notes live in the app repo at `docs/films/home-loop/`; re-render there and copy the three web files here.
+
 ## Beta tester guide
 
 `/beta/` (noindex, not in the sitemap): sign-in steps, five things to try (ticks kept in the visitor's browser only, `assets/beta.js`), how to send feedback (info@briopost.com) and short answers that match Terms section 17. The tester sign-up messages in `assets/waitlist.js` link to it, and so does the test-account email in the app.
