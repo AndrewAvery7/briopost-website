@@ -24,4 +24,5 @@
 - [Privacy Policy](https://briopost.com/privacy/)
 - [Terms](https://briopost.com/terms/)
 - [Email Policy](https://briopost.com/email-policy/)
+- [What we never do](https://briopost.com/never/): the promises Briopost keeps about your LinkedIn account, posts and data.
 - [Contact](https://briopost.com/contact/)
