@@ -95,7 +95,7 @@
       submitHTML = submitHTML.replace('Save my spot', 'Get my test account');
       submit.innerHTML = submitHTML;
       var offer = document.getElementById(prefix === 'hw' ? 'hw-offer' : 'wl-consent');
-      if (offer) offer.textContent = 'You\u2019re invited to test Briopost. Enter your first name and email, confirm your email, and your free test account is ready. Testing is free, with 300 AI credits a month. We\u2019ll only email you about your test account and Briopost\u2019s launch.';
+      if (offer) offer.textContent = 'You\u2019re invited to test Briopost. Enter your first name and email, confirm your email, and your free test account is ready. Testing is free, with AI credits included. We\u2019ll only email you about your test account and Briopost\u2019s launch.';
     }
 
     var say = function (text, kind) {
