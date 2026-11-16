@@ -34,11 +34,17 @@
   try {
     source = (new URLSearchParams(location.search).get('ref') || '').replace(/[^\w .\-]/g, '').trim().slice(0, 60);
   } catch (e) { source = ''; }
+  // A beta tester's personal link also carries ?invite=<code> (one single-use code per person, made in the studio's
+  // Settings > Waitlist). It is sent only with the sign-up itself, never with the page-visit counter.
+  var invite = '';
+  try {
+    invite = (new URLSearchParams(location.search).get('invite') || '').replace(/[^A-Za-z0-9_\-]/g, '').slice(0, 64);
+  } catch (e) { invite = ''; }
   // The beta tester link: the same form, but confirming the email gives a free test account on
   // my.briopost.com straight away (the API decides; worker/lib/waitlistTesters.ts in the app repo). Keep this list in step
   // with TESTER_SOURCES there. The words change here only so the visitor knows what they are signing up for.
   var TESTER_REFS = ['beta-testers', 'ut-classmates'];   // ut-classmates: the older link, still accepted
-  var testerLink = TESTER_REFS.indexOf(source.toLowerCase()) !== -1;
+  var testerLink = TESTER_REFS.indexOf(source.toLowerCase()) !== -1 && invite.length > 0;  // the tag alone grants nothing (FX-03)
   // The sign-in address the API sends back is used only if it is one of Briopost's own app addresses.
   var safeSignIn = function (url) {
     return typeof url === 'string' && /^https:\/\/(my|staging)\.briopost\.com\/$/.test(url) ? url : 'https://my.briopost.com/';
@@ -176,6 +182,7 @@
         email: email,
         role: roleInput ? (roleInput.value || '') : '',
         source: source,
+        invite: invite || undefined,
         website: honeypot.value,
         startedAt: startedAt
       }, 15000).then(function (r) {
