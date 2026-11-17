@@ -46,16 +46,12 @@ To add a page:
 ## Interactive home page
 
 - The sample (`assets/sample/sample.js`) sits on the first screen: three sample topics, three brand kits, the four format tabs, the slide size switch, chart kinds and a box where visitors type their own thought ("Shape it"). Nothing is sent, generated or posted, and the page says so; analytics records only which control was used, never the words.
-- `assets/home.js`: the "Give my OK" card (the one springy moment), the "Plan the month" calendar (posts below the screen start as dashed outlines that still show their words, then fill in one by one), the cost moment, and the film. No section is ever hidden waiting for a script, there is no scroll-jacking, and reduced motion turns movement off. The page reads completely without JavaScript.
+- `assets/home.js`: the "Give my OK" card (the one springy moment), the "Plan the month" calendar (posts below the screen start as dashed outlines that still show their words, then fill in one by one), and the cost moment. No section is ever hidden waiting for a script, there is no scroll-jacking, and reduced motion turns movement off. The page reads completely without JavaScript.
 - `<!-- PROOF SLOT -->` in `index.html` marks where real, permitted beta tester posts would go. It stays empty until there are some.
 
 ## Home page film
 
-The film slot is the `#studio` section of `index.html`. To drop in a new film, replace the files in `assets/film/` (keep the names, or change the `src` and `poster` paths and the VideoObject in the home page's structured data).
-
-`assets/film/`: the 30-second silent tour (a loop) in the Studio section (WebM first, MP4 fallback, WebP poster from the opening scene). It plays only while on screen, waits for Play when the visitor has reduced motion on, and has a Pause/Play button (`assets/home.js`, step 5). Its HyperFrames source, the 1920 master and render notes live in the app repo at `docs/films/home-loop/`; re-render there and copy the three web files here.
-
-Below it, **Watch the narrated film (37 seconds)** opens the narrated version (voice and music) in a dialog: `briopost-home-narrated.webm` / `.mp4`, poster `briopost-home-narrated-poster.webp`, and English captions `briopost-home-narrated.en.vtt`. It starts from the click (browsers only allow sound then), pauses the silent loop while it plays and resumes it on close. A **Captions: On / Off** button shows or hides the captions; the choice is kept in the visitor's browser only, and the player's own CC menu stays in step (`assets/home.js`, step 6). Its source lives in the app repo at `docs/films/home-narrated/`; re-render there and copy the four web files (and the captions file if the script changes) here.
+No film is currently published on the home page. The `#studio` section contains genuine Briopost screenshots only. Keep film masters and review exports in the private production project until Andrew explicitly approves a future website release.
 
 ## Beta tester guide
 
@@ -90,7 +86,6 @@ Events it sends (all only when the ID is set):
 | `waitlist_error` | A sign-up failed (`error_reason`: `validation`, `closed`, `rate_limited`, `rejected`, `server_<code>`, `network`), or a confirm/unsubscribe link failed (`invalid_link`, `missing_code`, ...). |
 | `waitlist_confirmed` / `waitlist_unsubscribed` | On `/waitlist/confirm/` and `/waitlist/unsubscribe/` after the server says it worked. |
 | `cta_click` | Any main button (`.btn` or `.button`: "Become a beta tester", "See all 150 carousel designs", Confirm, Unsubscribe, "Open Briopost") or any link to `#waitlist` (`cta_label`, `cta_location`). |
-| `film_interaction` | The home page film (`film_action`: `watch_with_sound`, `captions_on`, `captions_off`). "Watch the narrated film" also sends `cta_click`. |
 | `demo_interaction` | The sample (`#preview`) and the scripted moments, with `demo_action` and `demo_value` (`(none)` when there is nothing to add). In the sample: `sample_topic` (sales, leadership, career), `brand_switch` (midnight, harbor, daylight), `size_switch` (portrait, square), `chart_kind` (bar, line, area), `shape_own` (never the words), `format_tab` (carousel, graphic, text, poll), `next_slide`, `previous_slide`, `go_to_slide` (slide number), `poll_vote` (the sample option), `poll_reset`. Around it: `give_ok` and `take_back_ok` (the "Give my OK" card), `cost_preview` and `cost_reset` (the cost moment). The calendar has no controls and sends nothing. |
 | `faq_open` | A question opened in the home page FAQ. |
 | `scroll_depth` | 25, 50, 75 and 90 percent of a page read (`percent_scrolled`). |
@@ -108,7 +103,7 @@ Events it sends (all only when the ID is set):
 
 - Every indexed page has a unique title and description, a canonical `https://briopost.com/.../` address matching `sitemap.xml`, Open Graph and Twitter tags, and `lang="en-US"`. `/waitlist/confirm/`, `/waitlist/unsubscribe/` and `404.html` are `noindex, follow` and stay out of the sitemap.
 - `sitemap.xml` lists each indexed page with `<lastmod>`; the check fails if a page's "Last updated" date is newer than its `lastmod`, so update both together. `robots.txt` names the sitemap.
-- Structured data (JSON-LD): Organization (Briopost LLC), WebSite, WebPage (with an ImageObject as `primaryImageOfPage`), SoftwareApplication, FAQPage and VideoObject (the narrated film) on the home page; BreadcrumbList on inner pages. A FAQPage must repeat the page's visible `<details><summary>`/`<p>` questions and answers word for word, in order; `scripts/check.mjs` compares them.
+- Structured data (JSON-LD): Organization (Briopost LLC), WebSite, WebPage (with an ImageObject as `primaryImageOfPage`), SoftwareApplication, and FAQPage on the home page; BreadcrumbList on inner pages. A FAQPage must repeat the page's visible `<details><summary>`/`<p>` questions and answers word for word, in order; `scripts/check.mjs` compares them.
 - `404.html` is what GitHub Pages shows for any missing address, so its links all start with `/`.
 - `site.webmanifest` and `assets/icon-*.png` (drawn by `scripts/render-link-card.py`) give phones and browsers the app icon.
 - **IndexNow**: `8d289821e8f67d141300ba6699bebfed.txt` at the site root is the public IndexNow key (public by design, not a secret). After a push to `main` that changes a page, the sitemap or `llms.txt`, `.github/workflows/indexnow.yml` waits for GitHub Pages to publish, then `scripts/indexnow.mjs` sends the sitemap's addresses to `api.indexnow.org` (Bing, Yandex and others). Run it by hand from the Actions tab (Run workflow), or preview with `node scripts/indexnow.mjs --dry-run`.
