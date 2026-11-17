@@ -37,6 +37,10 @@
 @media (min-width:390px){:root{--gutter:20px}}
 @media (min-width:768px){:root{--gutter:32px;--t-label:13px}}
 @media (min-width:1200px){:root{--gutter:56px}}
+/* Wide screens (1600 px and up): let the content column grow so a 1920 px screen is not mostly margin. Text keeps its own
+   measure (max-width in ch/em), so only grids, heroes and art get the extra room. */
+@media (min-width:1600px){:root{--maxw:1360px;--gutter:64px}}
+@media (min-width:1840px){:root{--maxw:1480px;--gutter:72px}}
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-padding-top:72px}

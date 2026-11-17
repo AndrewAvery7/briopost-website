@@ -24,6 +24,8 @@ Every hand-written page shares one header, one footer and one stylesheet. The fo
 - `partials/footer.html`: the guide, tool and profession pages, the legal links, "Independent of LinkedIn..." and "© 2026 Briopost LLC · Post with brio.".
 - `assets/sample/`: the interactive sample (`sample.js`, `sample.css`, `img/`, `playfair-latin.woff2`). Pictures load from `/assets/sample/img/`. `sample.js`'s `render()` also runs in Node.
 - `assets/designs/`: real carousel covers from the studio (400 x 501 WebP). Add more here when a page needs them.
+- `assets/pages/`: page-specific styles and scripts (`guides.css` for guide pages, `tools.css` + `tools-extra.css` for the free tools, `brand.css` for `/linkedin-brand-kit/`, one script per tool).
+- Wide screens: from 1600 px the content column grows (`--maxw` 1360 px, then 1480 px from 1840 px) so a 1920 px screen is not mostly margin; text keeps its own line length.
 
 `node scripts/build-pages.mjs` fills these markers in every hand-written page, replacing whatever is between them:
 
@@ -42,6 +44,12 @@ To add a page:
 3. To show the sample: a `<div class="bp-demo" id="preview" data-img="/assets/sample/img/">` with the controls (see the home page) and `<div class="bp-output"><!--SAMPLE--><!--/SAMPLE--></div>`, plus `/assets/sample/sample.css` and `/assets/sample/sample.js`. Keep "Sample · Nothing is sent, generated or posted." next to it. Only one `#preview` per page (analytics reads clicks inside it).
 4. Add the page to `sitemap.xml` (with `<lastmod>`) unless it is `noindex`.
 5. Run `node scripts/build-pages.mjs`, then `node scripts/check.mjs`. Links in the header and footer to pages that are not built yet show as warnings until the page exists (the list is `PLANNED` in `scripts/check.mjs`).
+
+## Page list and what is deliberately not built
+
+Search pages (one search each, how-to first, Briopost second, ending at the beta tester action): the carousel maker, templates, how to make a carousel, carousel size, post generator, content calendar, post approval, how to choose a carousel tool, LinkedIn polls, graphics, post formatting, personal branding, how to post a PDF carousel, brand kit, and three input pages (PDF, blog post or link, notes to carousel; each input was checked in the studio code for beta testers on 2026-11-17). Four "Made for" pages and four free tools (post formatter, carousel size checker, hook preview, slide planner). LinkedIn's own limits (post length, poll rules, document size and pages) appear only as quotes or close paraphrases of LinkedIn Help, with the link and the date they were checked.
+
+Not built on purpose: data reports (Briopost has no public, sourced data yet; build them only from real data with sources), comparison pages (no competitor names), pages for Company Page posting or live LinkedIn statistics (both wait on LinkedIn).
 
 ## Interactive home page
 
@@ -92,8 +100,8 @@ Events it sends (all only when the ID is set):
 | `file_download` | A legal PDF link. |
 | `outbound_click` / `email_click` | A link to another site / an email link. |
 | `page_not_found` | The 404 page. |
-| `tool_use` | A control in a free tool (`tool_name`: `post_formatter` or `size_checker`; `tool_action`: e.g. `bold`, `bullets`, `see_more`, `draft_on`). Never the text. |
-| `tool_copy` | The post formatter's Copy button. |
+| `tool_use` | A control in a free tool (`tool_name`: `post_formatter`, `size_checker`, `hook_preview` or `slide_planner`; `tool_action`: e.g. `bold`, `bullets`, `see_more`, `draft_on`, `hook_edit`, `hook_add`, `hook_remove`, `plan_update`, `shape_switch`, `clear`). Never the text. |
+| `tool_copy` | A Copy button in the post formatter, the hook preview ("Copy hook N") or the slide planner ("Copy as plain text"). |
 | `tool_result` | The size checker read a file (`size_match`: `portrait`, `square`, `story`, `wide`, `banner` or `none`; `file_kind`: `image` or `pdf`). Never the file. |
 | `tool_error` | The size checker could not read a file (`error_reason`). |
 
