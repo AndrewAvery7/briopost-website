@@ -1,0 +1,700 @@
+/* briopost.com site styles (every hand-written page). Built from design option A, "The live sample": the product on the
+   first screen, everything else calm and short. Tokens follow DESIGN-SYSTEM.md (Midnight Stage); the brand palette and
+   fonts come from brand-tokens.css, loaded first on every page. Phone first: values are set for 375 px, then widened.
+   The four generated legal pages keep style.css. The interactive sample has its own sheet, sample/sample.css.
+   Without JavaScript the <html> element has no "js" class (the header partial adds it), so html:not(.js) rules apply. */
+
+@font-face{font-family:"Bricolage Grotesque";src:url(bricolage-var.woff2) format('woff2');font-weight:500 800;font-display:swap}
+@font-face{font-family:Inter;src:url(inter-var.woff2) format('woff2');font-weight:400 800;font-display:swap}
+
+:root{
+  --midnight:var(--brand-midnight,#121433);--deep:var(--brand-deep,#0c0e26);--spark:var(--brand-spark,#ff5b2e);--paper:var(--brand-paper,#f6f4ef);--haze:var(--brand-haze,#7c81c4);
+  --panel:#1a1d47;--line-soft:#2b3068;--field-line:#5a5f9e;
+  --fg:#f6f4ef;--fg-2:#b4b7e0;
+  --h:var(--brand-font-heading,"Bricolage Grotesque","Segoe UI",system-ui,sans-serif);--b:var(--brand-font-body,Inter,ui-sans-serif,system-ui,sans-serif);
+
+  --t-display:clamp(40px,2.65vw + 30px,88px);
+  --t-h2:clamp(30px,1.95vw + 22.7px,56px);
+  --t-h3:clamp(21px,.66vw + 18.5px,28px);
+  --t-lead:clamp(18px,.28vw + 17px,21px);
+  --t-body:clamp(16px,.09vw + 15.7px,17px);
+  --t-small:14px;--t-label:12px;
+
+  --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;--s-8:64px;--s-9:96px;--s-10:128px;
+  --gutter:16px;--maxw:1168px;
+
+  --m-quick:140ms;--m-base:260ms;--m-slow:520ms;--m-stage:900ms;
+  --ease-out:cubic-bezier(.2,.8,.2,1);--ease-in-out:cubic-bezier(.65,0,.35,1);
+  --ease-spring:linear(0,.3 8%,.68 17%,.95 26%,1.1 35%,1.13 41%,1.09 50%,1.02 64%,.995 78%,1);
+
+  /* Hooks the shared sample reads. */
+  --muted-site:#b4b7e0;--line:#454b8f;--paper-site:#f6f4ef;
+  --error:#ffb4a3;--ok:#7fdcae;
+  /* Older names, kept so beta.css and waitlist.js's inline link color work on the new look. */
+  --navy:var(--midnight);--orange:var(--spark);--muted:var(--fg-2);--panel-2:#1f2358;--ink-3:#8a8ec0;
+  color-scheme:dark;
+}
+@media (min-width:390px){:root{--gutter:20px}}
+@media (min-width:768px){:root{--gutter:32px;--t-label:13px}}
+@media (min-width:1200px){:root{--gutter:56px}}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:72px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--midnight);color:var(--fg);font:400 var(--t-body)/1.6 var(--b);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,video,svg{display:block;max-width:100%}
+h1,h2,h3{font-family:var(--h);font-weight:800;letter-spacing:-.035em;line-height:1.06;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:inherit;text-underline-offset:.18em;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--spark);outline-offset:3px;border-radius:4px}
+[hidden]{display:none!important}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.nowrap{white-space:nowrap}
+.wide-only{display:none}
+@media (min-width:960px){.wide-only{display:inline}.phone-only{display:none}}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.skip{position:absolute;left:var(--gutter);top:-60px;z-index:100;background:var(--spark);color:var(--midnight);font-weight:700;padding:12px 18px;border-radius:10px;text-decoration:none}
+.skip:focus{top:8px}
+.wrap{width:100%;max-width:calc(var(--maxw) + 2 * var(--gutter));margin-inline:auto;padding-inline:var(--gutter)}
+
+/* Eyebrow: a short orange bar plus small capitals. */
+.eyebrow{display:flex;align-items:center;gap:10px;font:700 var(--t-label)/1.2 var(--b);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
+.eyebrow::before{content:"";width:18px;height:3px;border-radius:2px;background:var(--spark);flex:none}
+
+/* Buttons. Orange fill with midnight text for the one main action; haze outline for the rest. */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border-radius:10px;border:1px solid transparent;font:700 16px/1.1 var(--b);text-decoration:none;cursor:pointer;white-space:nowrap;
+  transition:background-color var(--m-quick),border-color var(--m-quick),transform var(--m-quick) var(--ease-out),color var(--m-quick)}
+.btn:active{transform:translateY(1px)}
+.btn-spark{background:var(--spark);color:var(--midnight)}
+.btn-spark:hover{background:#ff7550}
+.btn-ghost{background:transparent;color:var(--fg);border-color:var(--haze)}
+.btn-ghost:hover{border-color:var(--paper)}
+
+/* ---------- Header ---------- */
+.site-head{position:sticky;top:0;z-index:50;background:var(--midnight);border-bottom:1px solid var(--line-soft)}
+.head-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px;max-width:calc(var(--maxw) + 2 * var(--gutter));margin-inline:auto;padding-inline:var(--gutter)}
+.brand{display:block;flex:none;border-radius:6px}
+.brand img{height:28px;width:auto}
+.menu-btn{display:none;align-items:center;gap:10px;min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:transparent;font:600 15px/1 var(--b);cursor:pointer}
+.menu-icon{position:relative;width:16px;height:2px;background:currentColor;border-radius:2px}
+.menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0;width:16px;height:2px;background:currentColor;border-radius:2px;transition:transform var(--m-base) var(--ease-in-out)}
+.menu-icon::before{top:-5px}.menu-icon::after{top:5px}
+.menu-btn[aria-expanded=true] .menu-icon{background:transparent}
+.menu-btn[aria-expanded=true] .menu-icon::before{transform:translateY(5px) rotate(45deg)}
+.menu-btn[aria-expanded=true] .menu-icon::after{transform:translateY(-5px) rotate(-45deg)}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav a:not(.btn){text-decoration:none;font-weight:600}
+.btn-head{min-height:44px;padding:0 18px;font-size:15px}
+
+/* Phone menu: a panel under the header. Without JavaScript the links simply wrap under the logo. */
+.js .menu-btn{display:inline-flex}
+.js .site-nav{position:absolute;left:0;right:0;top:100%;background:var(--deep);border-bottom:1px solid var(--line-soft);padding:8px var(--gutter) 20px;display:none}
+.js .site-nav.is-open{display:block}
+.js .site-nav li a{display:flex;align-items:center;min-height:52px;border-bottom:1px solid var(--line-soft);font-size:18px}
+.js .site-nav .btn-head{width:100%;margin-top:16px;min-height:52px;font-size:16px}
+/* Without JavaScript (no Menu button): the logo, then one row of links that scrolls sideways on its own, ending with the
+   beta tester button. About 100 px tall on a phone. */
+html:not(.js) .head-inner{height:auto;flex-wrap:wrap;padding-block:8px 0;row-gap:0}
+html:not(.js) .site-nav{display:flex;flex-wrap:nowrap;align-items:center;gap:16px;width:100%;overflow-x:auto;scrollbar-width:none;padding-bottom:6px}
+html:not(.js) .site-nav::-webkit-scrollbar{display:none}
+html:not(.js) .site-nav ul{display:flex;flex-wrap:nowrap;gap:16px;white-space:nowrap}
+html:not(.js) .site-nav li a{display:inline-flex;align-items:center;min-height:44px;font-size:15px}
+html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-size:14px}
+
+/* The full menu needs about 1100 px now that it has five links; below that, the Menu button. */
+@media (min-width:1100px){
+  .head-inner{height:68px}
+  .brand img{height:32px}
+  .js .menu-btn{display:none}
+  .js .site-nav,html:not(.js) .site-nav{position:static;display:flex;align-items:center;gap:28px;padding:0;background:none;border:0}
+  html:not(.js) .site-nav{width:auto;overflow:visible}
+  html:not(.js) .head-inner{flex-wrap:nowrap;padding-block:0;height:68px}
+  html:not(.js) .site-nav .btn-head{min-height:44px;padding:0 18px;font-size:15px}
+  .site-nav ul{display:flex;gap:4px}
+  .js .site-nav li a,html:not(.js) .site-nav li a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border:0;font-size:15px;color:var(--fg-2);border-radius:6px}
+  .site-nav li a:hover{color:var(--fg)}
+  .js .site-nav .btn-head{width:auto;margin:0;min-height:44px;font-size:15px}
+  html{scroll-padding-top:84px}
+}
+
+/* ---------- 1. Hero / stage ---------- */
+/* The code order is the reading order on a phone: words, sample, sign-up, then the controls under the sample. On a
+   computer the grid puts the words and the sign-up on the left and the sample on the right. */
+.hero{position:relative;padding:14px 0 var(--s-4)}
+.hero-in{display:flex;flex-direction:column}
+.hero-copy,.hero-act{padding-inline:var(--gutter)}
+.hero-eyebrow{margin:0 0 8px}
+.hero-title{margin:0;font-size:clamp(34px,9.6vw,44px);line-height:1.02;letter-spacing:-.04em}
+.hero-title span{display:block}
+.hero-title-2{color:var(--fg-2)}
+.hero-lead{margin:8px 0 0;font-size:16px;line-height:1.45;color:var(--fg-2);max-width:44ch}
+.stage-bar{margin:12px var(--gutter) 0}
+.signup-hero{margin-top:10px}
+.trust-pair{margin-top:18px}
+.hero-film{margin-top:14px}
+.stage-more{margin:var(--s-7) var(--gutter) 0;padding-top:var(--s-6);border-top:1px solid var(--line-soft)}
+
+/* The stage bar: topic and brand switches sit right on the sample. */
+.stage-bar{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;padding:2px;gap:2px;background:var(--deep)}
+.seg button{min-height:40px;min-width:44px;padding:0 9px;border:0;border-radius:6px;background:transparent;color:var(--fg-2);font:600 13px/1 var(--b);cursor:pointer;transition:background-color var(--m-quick),color var(--m-quick)}
+.seg button:hover{color:var(--fg)}
+.seg button[aria-pressed=true]{background:var(--paper);color:var(--midnight)}
+.swatches{display:flex;align-items:center}
+.swatch-label{display:none;margin-right:6px;font:600 13px/1 var(--b);color:var(--fg-2)}
+.swatch{position:relative;width:42px;height:44px;border:0;background:none;padding:0;cursor:pointer;border-radius:50%}
+.swatch::before{content:"";position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:linear-gradient(135deg,var(--sw-bg) 0 54%,var(--sw-ac) 54%);box-shadow:inset 0 0 0 1px rgb(255 255 255/22%);transition:transform var(--m-quick) var(--ease-out)}
+.swatch::after{content:"";position:absolute;left:50%;top:50%;width:36px;height:36px;margin:-18px 0 0 -18px;border-radius:50%;box-shadow:0 0 0 2px transparent;transition:box-shadow var(--m-quick)}
+.swatch[aria-pressed=true]::after{box-shadow:0 0 0 2px var(--paper)}
+.swatch:hover::before{transform:scale(1.08)}
+.sw-midnight{--sw-bg:#121433;--sw-ac:#ff5b2e}
+.sw-harbor{--sw-bg:#0f1c2e;--sw-ac:#c9a35b}
+.sw-daylight{--sw-bg:#f3f5f7;--sw-ac:#0f766e}
+
+/* The stage floor under the slides: deep, lit softly in the brand's accent (it changes with the brand switch). */
+.stage .bp-output{position:relative;margin-top:10px;padding:10px 0 2px;
+  background:radial-gradient(70% 60% at 30% 104%,color-mix(in srgb,var(--accent) 17%,transparent),transparent 72%),var(--deep);
+  --slide-w:min(60vw,300px);--slide-gap:12px;--track-pad:var(--gutter)}
+.stage .bp-track{padding-top:4px;padding-bottom:6px;scroll-padding-inline:var(--gutter)}
+.stage .bp-label{font-size:12px;margin-top:8px;text-align:left}
+.stage .bp-nav{margin-top:2px}
+.stage .bp-arrow{display:none}
+.stage .s-chart-kinds{display:none}
+.stage .s-chart-kinds button{min-height:32px;padding:4px 10px;font-size:12px}
+.stage>.sample-note{margin:8px var(--gutter) 0}
+.sample-note{font:500 14px/1.4 var(--b);color:var(--fg-2)}
+/* Phone: the sample note shares the row with the slide dots, so the sign-up stays on the first screen. */
+@media (max-width:959px){
+  .stage .bp-nav{justify-content:flex-end;padding-right:calc(var(--gutter) - 8px)}
+  .bp-demo.is-live:not([data-format]) .stage>.sample-note,.bp-demo.is-live[data-format=carousel] .stage>.sample-note{position:relative;display:flex;align-items:center;min-height:44px;margin-top:-46px;max-width:calc(100% - 2 * var(--gutter) - 128px);font-size:14px;line-height:1.3}
+}
+.sample-note::before{content:"";display:inline-block;width:6px;height:6px;margin:0 8px 1px 0;border-radius:50%;background:var(--haze);vertical-align:middle}
+/* Graphic, text post and poll: centered inside the stage, sized to stay on the first screen. */
+.stage .bp-graphic{max-width:min(64vw,300px);margin-left:var(--gutter);margin-right:auto}
+.stage .bp-graphic+.bp-label{margin-left:var(--gutter)}
+.stage .bp-feed{margin:0 var(--gutter);max-width:460px;font-size:14px}
+.stage .bp-feed+.bp-label{margin-left:var(--gutter)}
+
+/* Signature 1: when the brand changes, a light sweeps across the slides one after another (with the color change in
+   sample.css). Decorative layer only; the slides are fully visible throughout. */
+.bp-slide .s-frame::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:linear-gradient(105deg,transparent 30%,rgb(255 255 255/.26) 48%,rgb(255 255 255/.04) 56%,transparent 66%);transform:translateX(-130%)}
+.bp-demo.is-sweeping .bp-slide .s-frame::after{animation:sweep var(--m-stage) var(--ease-in-out) calc(var(--i,0) * 90ms) both}
+@keyframes sweep{from{transform:translateX(-130%)}to{transform:translateX(130%)}}
+.bp-demo.is-sweeping .bp-graphic::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;background:linear-gradient(105deg,transparent 30%,rgb(255 255 255/.26) 48%,transparent 66%);animation:sweep var(--m-stage) var(--ease-in-out) both}
+/* New topics slide in from a small offset; they are visible from the first frame. */
+@media (prefers-reduced-motion:no-preference){
+  .bp-demo.is-live .bp-slide{animation:arrive var(--m-base) var(--ease-out) calc(var(--i,0) * 40ms) both}
+}
+@keyframes arrive{from{transform:translateX(14px)}to{transform:none}}
+
+/* Hero sign-up: two fields side by side, the button under them (on a computer, one row). */
+.signup fieldset{border:0;margin:0;padding:0;min-width:0}
+.signup-hero fieldset{display:grid;grid-template-columns:1fr 1.25fr;gap:8px}
+.signup-hero .signup-btn{grid-column:1/-1}
+.field input,.field select,.own textarea{width:100%;background:var(--deep);border:1px solid var(--field-line);border-radius:10px;color:var(--fg);transition:border-color var(--m-quick),box-shadow var(--m-quick)}
+.field input,.field select{height:52px;padding:0 14px;font-size:16px}
+.signup-hero .field input{height:48px;padding:0 12px}
+.field input::placeholder{color:#9599c9}
+.field input:focus,.field select:focus,.own textarea:focus{outline:none;border-color:var(--spark);box-shadow:0 0 0 3px rgb(255 91 46/35%)}
+.form-msg{font:600 14px/1.4 var(--b);color:var(--paper)}
+.form-msg:empty{display:none}
+.signup-hero .form-msg{margin-top:8px}
+.form-msg.is-preview{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:var(--panel);border-left:3px solid var(--spark)}
+.consent{font-size:14px;line-height:1.45;color:var(--fg-2)}
+.signup-hero .consent{margin-top:8px}
+
+.trust-pair{list-style:none;padding:0;display:grid;gap:10px}
+.trust-pair li{display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.45;color:var(--fg-2)}
+.trust-pair strong{color:var(--fg);font-weight:700}
+.trust-pair svg{flex:none;width:22px;height:22px;fill:none;stroke:var(--spark);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-top:-1px}
+.hero-film a{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-weight:600;font-size:16px;text-decoration:none;color:var(--fg)}
+.hero-film a:hover{text-decoration:underline}
+.play-dot{position:relative;width:28px;height:28px;border-radius:50%;border:1px solid var(--haze)}
+.play-dot::after{content:"";position:absolute;left:11px;top:8px;border-left:8px solid var(--paper);border-top:6px solid transparent;border-bottom:6px solid transparent}
+
+/* Try your own thought: the rest of the sample's controls. */
+.stage-more-title{font-size:var(--t-h3);margin-bottom:16px}
+.bp-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line-soft);overflow-x:auto;scrollbar-width:none}
+.bp-tabs::-webkit-scrollbar{display:none}
+.bp-tabs button{flex:none;min-height:44px;padding:0 12px;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;color:var(--fg-2);font:600 15px/1 var(--b);cursor:pointer}
+.bp-tabs button:hover{color:var(--fg)}
+.bp-tabs [aria-selected=true]{color:var(--fg);border-bottom-color:var(--spark)}
+.own{margin-top:18px;display:grid;gap:10px}
+.own-label{font-weight:600;font-size:16px}
+.own-box{position:relative}
+.own textarea{display:block;min-height:76px;padding:12px 14px 26px;font-size:16px;line-height:1.45;resize:vertical}
+.thought-count{position:absolute;right:12px;bottom:8px;font-size:12px;color:var(--fg-2)}
+.own-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.own-row .seg button{min-height:44px;padding:0 12px}
+.own-note{font-size:14px;color:var(--fg-2)}
+.bp-demo:not(.is-live) .stage-more{display:none}
+
+/* Computer: two columns, the stage running off the right edge. */
+@media (min-width:960px){
+  .hero{padding:clamp(28px,4.5vh,56px) 0 var(--s-8) max(var(--gutter),calc((100% - var(--maxw)) / 2))}
+  .hero-in{display:grid;grid-template-columns:minmax(0,500px) minmax(0,1fr);grid-template-rows:auto 1fr auto;column-gap:clamp(40px,4vw,72px);align-items:start}
+  .hero-copy{grid-column:1;grid-row:1;padding:clamp(8px,3vh,40px) 0 0}
+  .hero-act{grid-column:1;grid-row:2;padding:0}
+  .stage{grid-column:2;grid-row:1/3;min-width:0}
+  .stage-more{grid-column:2;grid-row:3}
+  .hero-eyebrow{margin-bottom:18px}
+  .hero-title{font-size:clamp(50px,4.9vw,76px);line-height:.98}
+  .hero-lead{margin-top:20px;font-size:var(--t-lead);line-height:1.5;max-width:30em}
+  .signup-hero{margin-top:28px}
+  .signup-hero fieldset{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr) auto}
+  .signup-hero .signup-btn{grid-column:auto}
+  .trust-pair{margin-top:26px;gap:12px}
+  .trust-pair li{font-size:15px}
+  .hero-film{margin-top:14px}
+  .stage-bar{margin:0 var(--gutter) 0 0;justify-content:flex-start;gap:20px}
+  .stage .s-chart-kinds{display:flex;justify-content:flex-start}
+  .swatch-label{display:inline}
+  .seg button{padding:0 14px;font-size:14px}
+  .stage .bp-output{margin-top:14px;padding:22px 0 14px;border-radius:16px 0 0 16px;--slide-w:clamp(270px,25vw,360px);--slide-gap:18px;--track-pad:28px}
+  .stage .bp-track{scroll-padding-inline:28px}
+  .stage .bp-label{font-size:13px}
+  .stage .bp-nav{justify-content:flex-start;padding-left:28px}
+  .stage .bp-arrow{display:inline-block;cursor:pointer}
+  .stage .bp-arrow:hover{border-color:var(--paper)}
+  .stage .bp-graphic,.stage .bp-feed{margin-left:28px}
+  .stage .bp-graphic{max-width:min(25vw,340px)}
+  .stage .bp-graphic+.bp-label,.stage .bp-feed+.bp-label{margin-left:28px}
+  .stage>.sample-note{margin:12px 0 0}
+  .stage-more{margin:var(--s-7) var(--gutter) 0 0;max-width:620px}
+  .own textarea{min-height:64px}
+}
+@media (min-width:960px) and (max-height:820px){
+  .hero-lead{margin-top:16px}
+  .signup-hero{margin-top:22px}
+  .stage .bp-output{--slide-w:clamp(260px,23vw,330px);padding-top:18px}
+}
+
+/* ---------- Sections ---------- */
+.section{padding-block:var(--s-8)}
+@media (min-width:960px){.section{padding-block:var(--s-10)}}
+.section-head{display:grid;gap:14px;max-width:44rem;align-content:start}
+.section-head h2{font-size:var(--t-h2)}
+.lead{font-size:var(--t-lead);line-height:1.55;color:var(--fg-2);max-width:38em}
+
+/* 2. How it works */
+.how-grid{display:grid;gap:var(--s-7);margin-top:var(--s-7)}
+.steps{list-style:none;margin:0;padding:0;display:grid}
+.steps li{position:relative;display:grid;grid-template-columns:40px 1fr;gap:16px;padding-bottom:22px}
+.steps li:not(:last-child)::before{content:"";position:absolute;left:19.5px;top:42px;bottom:4px;width:1px;background:var(--line-soft)}
+.step-num{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);font:700 16px/1 var(--h);color:var(--fg-2);font-variant-numeric:tabular-nums}
+.steps h3{font-size:var(--t-h3);margin:6px 0 4px}
+.steps p{color:var(--fg-2);max-width:34em}
+.steps .is-key .step-num{background:var(--spark);border-color:var(--spark);color:var(--midnight)}
+@media (min-width:960px){
+  .how-grid{grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:var(--s-9);align-items:center}
+  .steps li{padding-bottom:28px}
+}
+
+/* Signature 2: the "Give my OK" card. The only springy motion on the page. */
+.ok{display:grid;gap:12px}
+.ok-card{display:grid;grid-template-columns:96px 1fr;gap:14px 18px;padding:18px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line-soft);transition:box-shadow var(--m-base)}
+.ok-card[data-state=confirmed]{box-shadow:inset 0 0 0 1px var(--haze)}
+.ok-thumb{--accent:#ff5b2e;--accent-text:#121433;--scrim:12 14 38;border-radius:4px;align-self:start}
+.ok-thumb-title{position:absolute;left:9%;right:9%;bottom:9%;z-index:2;font:800 11.5cqw/1.02 var(--h);letter-spacing:-.03em;color:#fff}
+.ok-thumb-title mark{background:var(--accent);color:var(--accent-text);padding:0 .12em;border-radius:.14em}
+.ok-body{display:grid;gap:4px;align-content:start}
+.ok-when{font:600 13px/1.3 var(--b);color:var(--fg-2);text-transform:uppercase;letter-spacing:.08em}
+.ok-title{font:800 20px/1.15 var(--h);letter-spacing:-.025em}
+.ok-meta{font-size:14px;color:var(--fg-2)}
+.ok-badge-wrap{margin-top:6px}
+.ok-badge{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:0 12px;border-radius:999px;background:var(--spark);color:var(--midnight);font:700 13px/1 var(--b)}
+.ok-tick{width:0;height:14px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transition:width var(--m-quick)}
+.ok-card[data-state=confirmed] .ok-badge{background:var(--paper);color:var(--midnight)}
+.ok-card[data-state=confirmed] .ok-tick{width:14px}
+.ok-card.is-springing .ok-badge{animation:spring var(--m-slow) var(--ease-spring) both}
+@keyframes spring{from{transform:scale(.72)}to{transform:none}}
+.ok-actions{grid-column:1/-1;display:flex;gap:10px}
+.ok-actions .btn{flex:1}
+.ok-status{grid-column:1/-1;font-size:14px;color:var(--fg-2)}
+.ok-card[data-state=confirmed] .ok-status{color:var(--fg)}
+
+/* 3. Film */
+.section-film{padding-top:0}
+.film-wrap{display:grid;gap:var(--s-6)}
+.film{position:relative;margin:0;border-radius:16px;overflow:hidden;background:var(--deep);box-shadow:0 0 0 1px var(--line-soft)}
+.film video{width:100%;height:auto;aspect-ratio:16/9;background:var(--deep)}
+.film figcaption{padding:14px 18px 16px;font-size:14px;color:var(--fg-2)}
+.film-frame{position:relative}
+.film-toggle{position:absolute;left:12px;bottom:12px;min-height:44px;padding:0 16px;border-radius:10px;border:1px solid rgb(246 244 239/40%);background:rgb(12 14 38/82%);color:var(--paper);font:600 14px/1 var(--b);cursor:pointer}
+.film-toggle:hover{border-color:var(--paper)}
+@media (min-width:960px){.film-wrap{grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:var(--s-8);align-items:center}}
+
+/* 4. Features */
+.section#features{background:var(--deep)}
+.counts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin:var(--s-7) 0 0;border-top:1px solid var(--line-soft)}
+.counts>div{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:6px;padding:18px 0 18px;border-bottom:1px solid var(--line-soft)}
+.counts>div:nth-child(odd){padding-right:14px;border-right:1px solid var(--line-soft)}
+.counts>div:nth-child(even){padding-left:18px}
+.counts dt{font-size:14px;line-height:1.35;color:var(--fg-2)}
+.counts dd{margin:0;font:800 clamp(44px,12vw,72px)/.9 var(--h);letter-spacing:-.045em;font-variant-numeric:lining-nums tabular-nums;color:var(--paper)}
+.counts dd small{display:block;font:600 13px/1.2 var(--b);letter-spacing:0;color:var(--fg-2);margin-bottom:4px}
+.counts>div:first-child dd{color:var(--spark)}
+@media (min-width:960px){
+  .counts{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .counts>div,.counts>div:nth-child(odd),.counts>div:nth-child(even){padding:24px 20px 22px;border-right:1px solid var(--line-soft)}
+  .counts>div:first-child{padding-left:0}
+  .counts>div:last-child{border-right:0}
+}
+.tpl{margin-top:var(--s-7)}
+.tpl-title{font-size:var(--t-h3);max-width:28em}
+.tpl-row{list-style:none;margin:20px calc(-1 * var(--gutter)) 0;padding:0 var(--gutter) 6px;display:grid;grid-auto-flow:column;grid-auto-columns:42%;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);scrollbar-width:none;overscroll-behavior-x:contain}
+.tpl-row::-webkit-scrollbar{display:none}
+.tpl-row li{scroll-snap-align:start;display:grid;gap:8px;font-size:13px;color:var(--fg-2)}
+.tpl-row img{width:100%;height:auto;border-radius:4px;box-shadow:0 14px 30px rgb(0 0 0/35%)}
+.fine{margin-top:10px;font-size:14px;color:var(--fg-2)}
+@media (min-width:768px){.tpl-row{grid-auto-flow:row;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible;margin-inline:0;padding-inline:0}}
+.groups{display:grid;gap:0;margin-top:var(--s-7);border-top:1px solid var(--line-soft)}
+.group{display:grid;gap:10px;padding:22px 0;border-bottom:1px solid var(--line-soft)}
+.group h3{display:flex;align-items:baseline;gap:12px;font-size:var(--t-h3)}
+.group ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.group li{position:relative;padding-left:18px;color:var(--fg-2);line-height:1.5}
+.group li::before{content:"";position:absolute;left:0;top:.68em;width:7px;height:2px;background:var(--haze)}
+@media (min-width:960px){
+  .group{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:24px;padding:28px 0}
+  .group ul{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 32px}
+}
+
+/* 5. Cost before action */
+.cost-grid{display:grid;gap:var(--s-7)}
+.cost-demo{display:grid;gap:14px;justify-items:start;padding:22px 18px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line-soft)}
+.cost-strip{display:flex;flex-wrap:wrap;gap:6px}
+.mini{width:34px;aspect-ratio:4/5;border-radius:3px;background:linear-gradient(var(--paper),var(--paper)) 18% 30%/58% 7% no-repeat,linear-gradient(#5d62a6,#5d62a6) 18% 46%/64% 5% no-repeat,linear-gradient(#5d62a6,#5d62a6) 18% 56%/44% 5% no-repeat,var(--midnight);box-shadow:0 0 0 1px var(--line)}
+.mini-photo{background:linear-gradient(to top,rgb(12 14 38/.85),rgb(12 14 38/.1)),url(sample/img/hearth-cafe-540.webp) center/cover}
+.mini-new{display:none;background:repeating-linear-gradient(0deg,transparent 0 5px,rgb(124 129 196/.25) 5px 7px) 18% 40%/64% 40% no-repeat,var(--deep);box-shadow:0 0 0 1px var(--haze);outline:1px dashed var(--haze);outline-offset:-1px}
+.cost-demo[data-state=done] .mini-new{display:block;animation:arrive-up var(--m-base) var(--ease-out) both}
+.cost-demo[data-state=done] .mini-new:nth-child(7){animation-delay:70ms}
+.cost-demo[data-state=done] .mini-new:nth-child(8){animation-delay:140ms}
+@keyframes arrive-up{from{transform:translateY(6px)}to{transform:none}}
+.cost-btn{display:inline-block;white-space:normal;text-align:left;min-height:52px;padding:15px 20px;line-height:1.3}
+.cost-tag{font-weight:600;opacity:.85;white-space:nowrap}
+.cost-line{display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.45;color:var(--fg)}
+.cost-dot{flex:none;width:10px;height:10px;margin-top:6px;border-radius:50%;background:var(--spark);box-shadow:0 0 0 0 rgb(255 91 46/50%);transition:box-shadow var(--m-base)}
+.cost-btn:hover~.cost-line .cost-dot,.cost-btn:focus-visible~.cost-line .cost-dot{box-shadow:0 0 0 6px rgb(255 91 46/22%)}
+.cost-status{font-size:14px;color:var(--fg-2)}
+.cost-status:empty{display:none}
+@media (min-width:960px){
+  .cost-grid{grid-template-columns:minmax(0,1fr) minmax(0,480px);gap:var(--s-9);align-items:center}
+  .cost-demo{padding:30px}
+  .mini{width:44px}
+}
+
+/* 6. FAQ: the one paper band. */
+.section-faq{background:var(--paper);color:var(--midnight)}
+.section-faq .eyebrow,.section-faq .lead{color:#4a4e7a}
+.section-faq :focus-visible{outline-color:var(--midnight)}
+.faq-grid{display:grid;gap:var(--s-6)}
+/* The question list works on midnight (any page) and on the paper band. */
+.faq{border-top:1px solid var(--line-soft)}
+.faq details{border-bottom:1px solid var(--line-soft)}
+.section-faq .faq{border-top-color:#d9d6cc}
+.section-faq .faq details{border-bottom-color:#d9d6cc}
+.section-faq .faq details p{color:#34385f}
+.section-faq a{text-decoration-color:var(--spark);text-decoration-thickness:2px}
+.faq summary{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:60px;padding:14px 0;font:700 18px/1.3 var(--b);cursor:pointer;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";flex:none;width:14px;height:14px;background:linear-gradient(currentColor,currentColor) center/14px 2px no-repeat,linear-gradient(currentColor,currentColor) center/2px 14px no-repeat;transition:transform var(--m-base) var(--ease-in-out)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 20px;color:var(--fg-2);max-width:40em}
+@media (min-width:960px){.faq-grid{grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:var(--s-9)}}
+
+/* 7. Closing sign-up */
+.join-grid{display:grid;gap:var(--s-6)}
+.ticks{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:8px}
+.ticks li{position:relative;padding-left:28px;color:var(--fg-2)}
+.ticks li::before{content:"";position:absolute;left:2px;top:.42em;width:12px;height:7px;border-left:2px solid var(--spark);border-bottom:2px solid var(--spark);transform:rotate(-45deg)}
+.signup-join{padding:22px 18px;border-radius:16px;background:var(--deep);box-shadow:inset 0 0 0 1px var(--line-soft)}
+.signup-join fieldset{display:grid;gap:16px}
+.signup-join label{display:block;margin-bottom:6px;font-weight:600;font-size:16px}
+.optional{font-weight:400;color:var(--fg-2)}
+.field select{appearance:none;background:var(--deep) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b4b7e0' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") right 14px center/18px no-repeat;padding-right:42px}
+.signup-join .signup-btn{width:100%}
+.signup-join .form-msg{margin-top:14px}
+.signin{margin-top:14px;font-size:14px;color:var(--fg-2)}
+@media (min-width:960px){
+  .join-grid{grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:var(--s-9);align-items:start}
+  .signup-join{padding:30px}
+}
+
+/* Footer */
+.site-foot{background:var(--deep);border-top:1px solid var(--line-soft);padding:var(--s-7) 0}
+.foot-inner{display:grid;gap:16px;font-size:14px;color:var(--fg-2)}
+.foot-links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:0 4px}
+.foot-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px 0 0;color:var(--fg);text-decoration:none}
+.foot-links a:hover{text-decoration:underline}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:1ms!important;animation-delay:0ms!important;transition-duration:1ms!important}
+}
+
+/* =====================================================================================================================
+   Added for the built site (on top of option A).
+   ===================================================================================================================== */
+
+/* Without JavaScript the menu wraps under the logo, so the header scrolls away instead of covering the page. */
+html:not(.js) .site-head{position:static}
+.site-nav a[aria-current=page]{color:var(--fg)}
+
+/* Waiting state: until the sign-up service says it is open, the fields are disabled (assets/waitlist.js). */
+/* Calm, not broken: the notice above the fields says why; the fields stay readable and the button turns quiet. */
+.signup fieldset:disabled input,.signup fieldset:disabled select{opacity:.72;cursor:not-allowed}
+.signup fieldset:disabled .btn-spark{background:var(--panel);color:var(--fg-2);border-color:var(--line);cursor:not-allowed}
+.notice-hero{margin:0 0 10px;padding:10px 14px;font-size:14px;line-height:1.45}
+@media (max-width:959px){.hero-in:has(#hw-closed:not([hidden])) .stage .bp-label{display:none}.hero-in:has(#hw-closed:not([hidden])) .stage .bp-output{--slide-w:min(52vw,300px)}}
+.next-step{margin-top:10px;font-size:14px;line-height:1.45;color:var(--fg)}
+.signup-hero .next-step{margin-top:8px}
+.signup-join .next-step{margin-top:12px}
+.signup fieldset:disabled .btn:active{transform:none}
+.form-msg.is-error{color:var(--paper);padding-left:12px;border-left:3px solid var(--spark)}
+.form-msg.is-ok{color:var(--ok)}
+.field-error{display:block;margin-top:6px;font-size:14px;line-height:1.45;color:var(--paper)}
+.field-error:not(:empty)::before{content:"";display:inline-block;width:6px;height:6px;margin:0 8px 2px 0;border-radius:50%;background:var(--spark);vertical-align:middle}
+.field-error:empty{display:none}
+.field input[aria-invalid=true]{border-color:var(--spark)}
+.copyable{color:var(--fg);font-weight:600;user-select:all;-webkit-user-select:all;overflow-wrap:anywhere}
+/* The notice and the "Check your inbox" panel that waitlist.js shows. */
+.notice{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;margin-bottom:18px;border-radius:14px;background:var(--panel);box-shadow:inset 3px 0 0 var(--spark);color:var(--fg-2);font-size:16px;line-height:1.5}
+.notice strong{color:var(--fg)}
+.wl-done{display:grid;gap:10px}
+.wl-done h2,.wl-done h3{font:800 26px/1.15 var(--h);letter-spacing:-.03em;outline:0}
+.wl-done p{color:var(--fg-2)}
+.hero-done{padding:16px 18px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line-soft)}
+.hero-done h2{font-size:22px}
+/* Links and buttons that waitlist.js and the older pages create with the class "button". */
+.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border-radius:10px;border:1px solid var(--spark);background:var(--spark);color:var(--midnight);font:700 16px/1.1 var(--b);text-decoration:none;cursor:pointer;transition:background-color var(--m-quick),border-color var(--m-quick)}
+.button:hover{background:#ff7550;border-color:#ff7550}
+.button-ghost{background:transparent;color:var(--fg);border-color:var(--haze)}
+.button-ghost:hover{background:transparent;border-color:var(--paper)}
+.button-small{min-height:44px;padding:0 16px;font-size:15px}
+.button:disabled{opacity:.55;cursor:not-allowed}
+.button .arrow,.btn .arrow{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+
+/* ---------- How it works: "Plan the month" (from design option B) ---------- */
+.plan{display:grid;gap:var(--s-6);margin-top:var(--s-8);padding-top:var(--s-7);border-top:1px solid var(--line-soft)}
+.plan-copy{display:grid;gap:12px;align-content:start;max-width:34rem}
+.plan-copy h3{font-size:var(--t-h3)}
+.plan-copy p{color:var(--fg-2)}
+.plan-copy .plan-aside{font-size:var(--t-small)}
+.cal{background:var(--deep);border-radius:16px;box-shadow:inset 0 0 0 1px var(--line);padding:var(--s-4)}
+.cal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:var(--s-3)}
+.cal-title{font:800 20px/1.1 var(--h);letter-spacing:-.02em}
+.cal-grid{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.cal-dow{display:none}
+.day{display:none}
+.day.has-post,.day.open{display:grid;grid-template-columns:62px minmax(0,1fr);align-items:center;gap:10px;min-height:52px}
+.d{font:700 14px/1.1 var(--b);color:var(--fg-2);font-variant-numeric:tabular-nums}
+.post{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:10px;padding:10px 12px;border-radius:8px;background:var(--panel);box-shadow:inset 3px 0 0 var(--haze);
+  transition:background-color var(--m-slow) var(--ease-out),box-shadow var(--m-slow) var(--ease-out),transform var(--m-slow) var(--ease-out)}
+.p-carousel{box-shadow:inset 3px 0 0 var(--spark)}
+.pk{font:700 11px/1.3 var(--b);text-transform:uppercase;letter-spacing:.08em;color:var(--fg-2)}
+.pt{grid-column:1;font:600 14px/1.3 var(--b);color:var(--fg)}
+.post .pill{grid-column:2;grid-row:1/3;align-self:center}
+.pill{display:inline-flex;align-items:center;white-space:nowrap;min-height:24px;padding:3px 9px;border-radius:999px;font:700 11.5px/1 var(--b);color:var(--paper);box-shadow:inset 0 0 0 1px var(--haze)}
+.slot{display:block;padding:12px;border-radius:8px;border:1px dashed var(--line);font:500 14px var(--b);color:var(--fg-2)}
+/* The calendar fills in one post at a time (assets/home.js). An unfilled post is a dashed outline that still shows its
+   words: nothing is ever hidden. */
+.post.is-ghost{background:transparent;box-shadow:inset 0 0 0 1px var(--line);transform:translateY(4px)}
+.plan .sample-note{margin-top:10px}
+@media (min-width:700px){
+  .cal{padding:var(--s-5)}
+  .cal-grid{grid-template-columns:repeat(7,minmax(0,1fr))}
+  .cal-dow{display:block;font:600 var(--t-label)/1 var(--b);text-transform:uppercase;letter-spacing:.1em;color:var(--fg-2);padding:4px 6px 8px}
+  .day,.day.has-post,.day.open{display:flex;flex-direction:column;gap:6px;min-height:118px;padding:8px;border-radius:8px;background:rgb(255 255 255/.025);box-shadow:inset 0 0 0 1px rgb(46 51 107/.7)}
+  .day.wk{background:transparent}
+  .dw{display:none}
+  .d{font-size:13px}
+  .post{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:8px;flex:1}
+  .pt{font-size:12.5px}
+  .post .pill{margin-top:auto;font-size:10.5px;padding:3px 7px}
+  .slot{padding:8px;font-size:12px;flex:1}
+}
+@media (min-width:960px){.plan{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:var(--s-8);align-items:start}}
+
+/* ---------- The studio: film, "Watch with sound", screenshots ---------- */
+.film-sound-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:0;padding:0 18px 18px}
+.film-sound-len{font-weight:500;color:var(--fg-2)}
+.film-dialog{width:min(1100px,calc(100vw - 24px));max-width:none;padding:0;border:0;border-radius:16px;background:var(--deep);color:var(--fg);box-shadow:0 0 0 1px var(--line-soft),0 30px 80px rgb(0 0 0/60%)}
+.film-dialog::backdrop{background:rgb(6 7 20/82%)}
+.film-dialog video{width:100%;height:auto;aspect-ratio:16/9;background:#000}
+.film-dialog-bar{display:flex;align-items:center;gap:10px;padding:10px 10px 10px 18px}
+.film-dialog-title{flex:1;font-size:18px;letter-spacing:-.02em}
+.film-cc,.lightbox-close{min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--haze);background:transparent;color:var(--fg);font:600 14px/1 var(--b);cursor:pointer}
+.film-cc[aria-pressed=true]{background:var(--paper);color:var(--midnight);border-color:var(--paper)}
+.lightbox-close{min-width:44px;padding:0;font-size:24px;line-height:1}
+/* Phones: the three screenshots sit in a row you can swipe; from 768 px, three columns under the film. */
+.shots{list-style:none;margin:var(--s-6) calc(-1 * var(--gutter)) 0;padding:0 var(--gutter) 6px;display:grid;grid-auto-flow:column;grid-auto-columns:78%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);scrollbar-width:none;overscroll-behavior-x:contain}
+.shots::-webkit-scrollbar{display:none}
+.shots li{scroll-snap-align:start}
+.shots:focus-visible{outline:2px solid var(--spark);outline-offset:4px}
+.shots figure{margin:0;display:grid;gap:10px}
+.shots img{width:100%;height:auto;border-radius:14px;box-shadow:0 0 0 1px var(--line-soft),0 18px 40px rgb(0 0 0/35%)}
+.shots figcaption{font-size:var(--t-small);color:var(--fg-2)}
+@media (min-width:768px){.shots{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible;margin-inline:0;padding-inline:0}}
+@media (min-width:960px){.section-film .shots{grid-column:1/-1;margin-top:0}}
+
+/* ---------- Features: a row of real designs and the link to the template gallery ---------- */
+.designs{list-style:none;margin:20px calc(-1 * var(--gutter)) 0;padding:0 var(--gutter) 6px;display:grid;grid-auto-flow:column;grid-auto-columns:40%;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);scrollbar-width:none;overscroll-behavior-x:contain}
+.designs::-webkit-scrollbar{display:none}
+.designs li{scroll-snap-align:start}
+.designs figure{margin:0;display:grid;gap:8px;font-size:14px;color:var(--fg-2)}
+.designs img{width:100%;height:auto;border-radius:4px;box-shadow:0 14px 30px rgb(0 0 0/35%)}
+.designs:focus-visible{outline:2px solid var(--spark);outline-offset:4px}
+.tpl-more{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:22px}
+.tpl-more .fine{margin:0}
+@media (min-width:768px){.designs{grid-auto-flow:row;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible;margin-inline:0;padding-inline:0}}
+
+/* ---------- Closing sign-up extras ---------- */
+.form-panel{padding:22px 18px;border-radius:16px;background:var(--deep);box-shadow:inset 0 0 0 1px var(--line-soft)}
+.form-panel .signup-join{padding:0;background:none;box-shadow:none}
+@media (min-width:960px){.form-panel{padding:30px}}
+.for-links{margin-top:var(--s-5)}
+.for-links h3{font:700 var(--t-label)/1.2 var(--b);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
+.for-links ul{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.for-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);text-decoration:none;font-weight:600;font-size:15px}
+.for-links a:hover{border-color:var(--paper)}
+.maker{display:grid;grid-template-columns:48px minmax(0,1fr);gap:16px;align-items:start;margin-top:var(--s-8);padding-top:var(--s-6);border-top:1px solid var(--line-soft);max-width:46rem}
+.maker img{width:48px;height:48px}
+.maker h3{font-size:var(--t-h3);margin-bottom:6px}
+.maker p{color:var(--fg-2)}
+
+/* Footer: the guide pages in a second list. */
+.foot-head{font:700 var(--t-label)/1.2 var(--b);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2);margin-top:8px}
+/* Two columns on a phone (the guides fill down, six and five, so no link sits alone); from 960 px the guides take three
+   columns of four, four and three, and "Made for" sits beside them in one column of four. */
+.foot-nav{display:grid;gap:8px}
+.foot-pages{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+.foot-guides .foot-pages{grid-template-columns:none;grid-template-rows:repeat(6,auto);grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}
+@media (min-width:960px){
+  .foot-nav{grid-template-columns:minmax(0,3fr) minmax(0,1fr);gap:32px}
+  .foot-guides .foot-pages{grid-template-rows:repeat(4,auto)}
+  .foot-for .foot-pages{grid-template-columns:minmax(0,1fr)}
+}
+.foot-pages a{display:inline-flex;align-items:center;min-height:44px;line-height:1.3;color:var(--fg-2);text-decoration:none}
+.foot-pages a:hover{color:var(--fg);text-decoration:underline}
+.foot-legal{display:grid;gap:6px;padding-top:16px;border-top:1px solid var(--line-soft)}
+.foot-legal .foot-links{margin-bottom:4px}
+
+/* ---------- Simple pages: /beta/, /never/, /waitlist/confirm/, /waitlist/unsubscribe/, 404 ---------- */
+.panel{background:var(--panel);border-radius:16px;box-shadow:inset 0 0 0 1px var(--line-soft)}
+.accent{color:var(--spark)}
+.intro{font-size:var(--t-lead);line-height:1.55;color:var(--fg-2)}
+.center{text-align:center;justify-items:center;margin-inline:auto}
+.center .eyebrow{justify-content:center}
+.action{display:grid;place-items:center;min-height:calc(100svh - 56px - 260px);padding:var(--s-7) var(--gutter) var(--s-8)}
+.action-card{width:min(560px,100%);padding:28px 22px;display:grid;gap:14px}
+.action-card h1{font-size:clamp(34px,6vw,46px)}
+.action-card .lead{font-size:16px}
+.action-card .button,.action-card .btn{width:100%;margin-top:8px}
+.action-card .back{color:var(--fg-2);font-size:16px}
+@media (min-width:768px){.action-card{padding:40px}}
+.doc{max-width:860px;margin:var(--s-6) auto var(--s-8);padding-block:8px 24px}
+.doc h1{font-size:clamp(36px,6vw,58px);margin-bottom:12px}
+.doc h2{font-size:22px;margin:36px 0 6px;letter-spacing:-.02em}
+.doc p,.doc li{color:var(--fg-2);margin-top:10px;line-height:1.7}
+.doc a:not(.btn):not(.button),.doc strong{color:var(--fg)}
+.doc .status{border-left:3px solid var(--spark);background:var(--panel-2);border-radius:0 10px 10px 0;padding:14px 18px;margin:20px 0 8px;font-size:16px}
+@media (min-width:768px){.doc{padding:52px 60px 60px;background:var(--panel);border-radius:16px;box-shadow:inset 0 0 0 1px var(--line-soft)}}
+.doc-wrap{padding-inline:var(--gutter)}
+/* /beta/ (beta.css holds the page's own layout) */
+.beta-hero{padding-top:var(--s-7)}
+.ticks li strong{color:var(--fg)}
+
+/* ---------- Motion extras ---------- */
+@media (prefers-reduced-motion:reduce){
+  .post.is-ghost{background:var(--panel);box-shadow:inset 3px 0 0 var(--haze);transform:none}
+}
+
+/* ---------- Page openings with a product picture (the guide pages and the /for/ pages) ----------
+   Phone: the words, the buttons, then a short strip (three covers side by side, or the page's object cropped), so the
+   product shows on the first screen under the call to action. From 960 px: two columns, the picture on the right.
+   The slide (or the page's object) is the brightest thing in the opening; the covers behind it are dimmed. */
+.g-hero-grid{display:grid;gap:var(--s-5)}
+.g-hero-grid>*{min-width:0}
+.g-art{margin:0}
+.g-art-cap{margin-top:12px;font-size:var(--t-small);line-height:1.45;color:var(--fg-2)}
+.g-art-strip{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:10px;align-items:end;max-width:440px}
+.g-art-strip>*{width:100%;min-width:0}
+.g-art-strip img{width:100%;height:auto;border-radius:4px;box-shadow:0 14px 30px rgb(0 0 0/40%)}
+.g-art-strip .g-art-back{filter:brightness(.62) saturate(.9)}
+/* Object pages (text post, calendar, review link): on a phone, a cropped view that fades out. */
+.g-art-crop>:first-child{max-height:236px;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent);mask-image:linear-gradient(180deg,#000 72%,transparent)}
+.g-art .bp-feed{margin:0;max-width:440px;font-size:15px}
+.g-art .bp-label{display:none}
+.g-art-review{max-width:440px}
+.g-art-review .g-review-list li.has-thumb{grid-template-columns:40px minmax(0,1fr) auto}
+.g-art-review .has-thumb .post-thumb{grid-column:1;grid-row:1/3}
+.g-art-review .has-thumb .g-review-kind,.g-art-review .has-thumb .g-review-text{grid-column:2}
+.g-art-review .has-thumb .g-state{grid-column:3}
+.post-thumb{width:40px;height:auto;border-radius:3px;box-shadow:0 4px 12px rgb(0 0 0/35%)}
+/* The hero's calendar is always a short list of days, at every width. */
+.g-art-cal{max-width:460px}
+.g-art-cal .cal-grid{grid-template-columns:none}
+.g-art-cal .day.has-post,.g-art-cal .day.open{display:grid;grid-template-columns:52px minmax(0,1fr);align-items:center;gap:10px;min-height:52px;padding:0;background:none;box-shadow:none}
+.g-art-cal .d{font-size:13px}
+.g-art-cal .post{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;padding:10px 12px}
+.g-art-cal .post .pill{margin-top:0;font-size:11.5px}
+.g-art-cal .pt{font-size:14px}
+.g-art-cal .slot{padding:12px;font-size:13px}
+.g-art-cal .post.has-thumb{grid-template-columns:40px minmax(0,1fr) auto;column-gap:12px}
+.g-art-cal .has-thumb .post-thumb{grid-column:1;grid-row:1/3}
+.g-art-cal .has-thumb .pk,.g-art-cal .has-thumb .pt{grid-column:2}
+.g-art-cal .has-thumb .pill{grid-column:3;grid-row:1/3}
+/* Sizes: three frames drawn to scale at the same width; the 4:5 one holds a real cover. */
+.g-art-frames{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end;max-width:400px}
+.g-art-frame p{margin-top:8px;font-size:13px;line-height:1.3;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.g-art-frame strong{display:block;font:800 18px/1.1 var(--h);letter-spacing:-.02em;color:var(--fg)}
+.g-art-shape{aspect-ratio:var(--ar);border-radius:4px;box-shadow:inset 0 0 0 1px var(--haze);background:rgb(124 129 196/.08);overflow:hidden}
+.g-art-frame.is-main .g-art-shape{box-shadow:0 14px 30px rgb(0 0 0/40%)}
+.g-art-fill{width:100%;height:100%;object-fit:cover;display:block}
+@media (min-width:600px){.g-art-crop>:first-child{max-height:300px}}
+@media (min-width:960px){
+  .g-hero-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);column-gap:clamp(40px,5vw,80px);align-items:center}
+  .g-hero-grid>.g-hero-copy{grid-column:1}
+  .g-hero-grid>.g-art{grid-column:2;grid-row:1/span 2;justify-self:center;width:100%;max-width:460px}
+  .g-hero h1,.page-hero h1{font-size:clamp(40px,2.4vw + 18px,62px)}
+  /* Three covers: the sample in front, two real designs behind it. */
+  .g-art-strip{display:block;position:relative;max-width:none;aspect-ratio:1/.88}
+  .g-art-strip>*{position:absolute;top:50%}
+  .g-art-strip>:first-child{left:20%;width:60%;z-index:3;transform:translateY(-50%)}
+  .g-art-strip>:nth-child(2){left:0;width:46%;z-index:1;transform:translateY(-58%) rotate(-5deg)}
+  .g-art-strip>:nth-child(3){right:0;width:46%;z-index:2;transform:translateY(-42%) rotate(5deg)}
+  .g-art-strip .g-art-front .s-frame,.g-art-strip img.g-art-front{box-shadow:0 30px 60px rgb(0 0 0/55%)}
+  .g-art-crop>:first-child{max-height:none;-webkit-mask-image:none;mask-image:none}
+  .g-art-frames{max-width:none;gap:18px}
+}
+
+/* ---------- Tablets, 600 to 959 px: not the phone layout stretched ----------
+   The words keep a reading width, the hero sign-up is one row, the sample's slides grow, and lists and side-by-side
+   blocks get two columns. */
+@media (min-width:600px) and (max-width:959px){
+  .hero-copy,.hero-act{max-width:640px}
+  .hero-lead{font-size:18px}
+  .signup-hero fieldset{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr) auto}
+  .signup-hero .signup-btn{grid-column:auto}
+  .stage .bp-output{--slide-w:min(42vw,340px)}
+  .stage-more{max-width:640px}
+  .g-art-strip{max-width:520px}
+  .g-art-crop>:first-child{max-height:320px}
+}
+@media (min-width:768px) and (max-width:959px){
+  .group{grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:20px}
+  .group ul{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 24px}
+  .cost-grid,.faq-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-7);align-items:start}
+  .how-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-7);align-items:start}
+}
+
+/* One button rule (Should 3): 48 px tall, 24 px at the sides, Inter Bold 16 px, 10 px corners; buttons hug their words.
+   On a phone under 480 px, the buttons in an action row fill the row, so a page's two actions line up the same way
+   everywhere. */
+@media (max-width:479px){
+  .g-actions .btn,.hero-actions .btn,.tp-hero-cta .btn,.cta-actions .btn,.g-cta-side .btn,.ch-end-cta .btn,.tp-join-cta .btn,.tool-card .btn{width:100%}
+  .cta-actions,.g-cta-side{justify-items:stretch}
+}

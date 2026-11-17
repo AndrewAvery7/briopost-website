@@ -5,6 +5,20 @@ const root=process.cwd();
 const fail=m=>{throw new Error(m)};
 function files(dir){return readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.name==='.git'||e.name==='node_modules'?[]:e.isDirectory()?files(join(dir,e.name)):[join(dir,e.name)]);}
 const read=f=>readFileSync(f,'utf8');
+// Folders that hold tools and page parts, not pages: scripts/ (link-card.html) and partials/ (header, footer).
+const NOT_PAGES=/[\\/](?:scripts|partials)[\\/]/;
+// Pages the shared header and footer already link to, built by later work. Until a page exists, a link to it is a
+// warning (listed at the end), not a failure; once it exists it is checked like every other page.
+const PLANNED=new Set(['/linkedin-carousel-templates/','/linkedin-carousel-maker/','/how-to-make-a-linkedin-carousel/',
+  '/linkedin-carousel-size/','/linkedin-post-generator/','/linkedin-content-calendar/','/linkedin-post-approval/',
+  '/for/consultants-and-coaches/','/for/founders-and-business-owners/','/for/marketers-and-agencies/','/for/job-seekers/',
+  '/free-tools/','/free-tools/linkedin-post-formatter/','/free-tools/linkedin-carousel-size-checker/',
+  '/how-to-choose-a-linkedin-carousel-tool/']);
+const plannedMissing=new Set();
+
+// 0. Shared page parts: every hand-written page carries the current header, footer and no-JavaScript sample.
+try{execFileSync(process.execPath,[join(root,'scripts','build-pages.mjs'),'--check'],{stdio:'inherit'});}
+catch(e){fail('Shared page parts are out of date or missing: run node scripts/build-pages.mjs');}
 
 // 1. Every page, stylesheet and script: no private paths, every local reference exists, scripts parse.
 for(const file of files(root)){
@@ -18,7 +32,7 @@ for(const file of files(root)){
       // Pages load exactly one outside script tag: the Cloudflare Web Analytics beacon (no cookies). Google Analytics is
       // loaded only by assets/analytics.js, and only once its Measurement ID is filled in (see README).
       // Every other outside stylesheet, script, font or frame fails the check.
-      if(!/[\\/]scripts[\\/]/.test(file)&&!text.includes('static.cloudflareinsights.com/beacon.min.js'))fail('Cloudflare Web Analytics beacon missing in '+file);
+      if(!NOT_PAGES.test(file)&&!text.includes('static.cloudflareinsights.com/beacon.min.js'))fail('Cloudflare Web Analytics beacon missing in '+file);
       for(const m of text.matchAll(/<(?:script|link|iframe|img)\b[^>]*?(?:src|href)="(https?:[^"]+)"/g)){
         const tag=m[0];
         if(/rel="canonical"/.test(tag))continue;
@@ -30,7 +44,7 @@ for(const file of files(root)){
       refs=[...text.matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g)].map(m=>m[1]);
       if(/@import|fonts\.googleapis|fonts\.gstatic/.test(text))fail('Outside font or stylesheet in '+file);
     }
-    for(const ref of refs){if(/^(?:https?:|data:|mailto:|#)/.test(ref)||ref==='/')continue;const target=ref.startsWith('/')?join(root,ref.split('?')[0]):resolve(dirname(file),ref.split('?')[0]);if(!existsSync(target))fail('Missing asset: '+ref+' in '+file);}
+    for(const ref of refs){if(/^(?:https?:|data:|mailto:|#)/.test(ref)||ref==='/')continue;const target=ref.startsWith('/')?join(root,ref.split('?')[0]):resolve(dirname(file),ref.split('?')[0]);if(!existsSync(target)){const path=ref.split('?')[0];if(PLANNED.has(path)){plannedMissing.add(path);continue;}fail('Missing asset: '+ref+' in '+file);}}
     if(file.endsWith('.js'))execFileSync(process.execPath,['--check',file],{stdio:'inherit'});
   }
 }
@@ -83,7 +97,7 @@ const warnings=[];
 const ANALYTICS_TAG='<script src="/assets/analytics.js" defer></script>';
 const SITE='https://briopost.com/';
 const rel=f=>f.slice(root.length+1).split('\\').join('/');
-const pages=files(root).filter(f=>f.endsWith('.html')&&!/[\\/]scripts[\\/]/.test(f)).map(f=>({file:rel(f),text:read(f)}));
+const pages=files(root).filter(f=>f.endsWith('.html')&&!NOT_PAGES.test(f)).map(f=>({file:rel(f),text:read(f)}));
 const sitemap=read('sitemap.xml');
 const sitemapUrls=new Set(locs);
 const meta=(t,attr,name)=>{const m=t.match(new RegExp('<meta\\s+'+attr+'="'+name.replace(/[.:]/g,'\\$&')+'"\\s+content="([^"]*)"'));return m?m[1].trim():'';};
@@ -108,6 +122,31 @@ for(const {file,text} of pages){
   for(const m of text.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){
     try{JSON.parse(m[1]);}catch(e){fail(file+': structured data (JSON-LD) does not parse: '+e.message);}
   }
+  // Links never pass through a redirect (no http:// or www. forms of briopost.com), and visitors never see a link to
+  // the owner's studio (app.briopost.com); sign-in links go to https://my.briopost.com.
+  for(const m of text.matchAll(/<a\b[^>]*href="([^"]+)"/g)){
+    if(/^http:\/\/(?:www\.)?briopost\.com|^https?:\/\/www\.briopost\.com/i.test(m[1]))fail(file+': link through a redirect: '+m[1]);
+    if(/^https?:\/\/app\.briopost\.com/i.test(m[1]))fail(file+': visitors must not see a link to app.briopost.com: '+m[1]);
+  }
+  // Structured data that schema.org validates: a WebPage's primaryImageOfPage is an ImageObject, not a bare address.
+  for(const m of text.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){
+    let data;try{data=JSON.parse(m[1]);}catch(e){continue;}
+    const walk=n=>{if(Array.isArray(n))return n.forEach(walk);if(!n||typeof n!=='object')return;
+      if(typeof n.primaryImageOfPage==='string')fail(file+': primaryImageOfPage must be an ImageObject, not a plain address');
+      if(n['@type']==='ImageObject'&&!n.url&&!n.contentUrl)fail(file+': ImageObject without url');
+      Object.values(n).forEach(walk);};
+    walk(data);
+  }
+  // FAQPage structured data repeats the visible questions and answers (<details><summary>Q</summary><p>A</p>) word for word.
+  for(const m of text.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){
+    let data;try{data=JSON.parse(m[1]);}catch(e){continue;}
+    const nodes=[].concat(data['@graph']||data).filter(n=>n&&n['@type']==='FAQPage');
+    if(!nodes.length)continue;
+    const plain=h=>h.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();
+    const shown=[...text.matchAll(/<details>\s*<summary>([\s\S]*?)<\/summary>\s*<p>([\s\S]*?)<\/p>\s*<\/details>/g)].map(d=>[plain(d[1]),plain(d[2])]);
+    const listed=nodes.flatMap(n=>n.mainEntity||[]).map(q=>[String(q.name||'').trim(),String((q.acceptedAnswer||{}).text||'').trim()]);
+    if(JSON.stringify(shown)!==JSON.stringify(listed))fail(file+': the FAQPage structured data must match the visible FAQ word for word, in the same order');
+  }
   if(/\bAndrew\b|\bAvery\b/.test(text))fail(file+': public pages never name the owner; say Briopost LLC or the Briopost team');
   if(/\b(?:colour|authoris|organis|centre|catalogue|licence|behaviour|favourite)/i.test(text))fail(file+': use U.S. spelling');
   if(noindex){
@@ -120,6 +159,8 @@ for(const {file,text} of pages){
   const desc=meta(text,'name','description');
   if(!title)fail(file+' has no <title>');
   if(!desc)fail(file+' has no meta description');
+  // Ahrefs rules (site audit 2026-11-16): descriptions of about 110 to 160 characters, so search results show them whole.
+  if(desc&&(desc.length<110||desc.length>160))fail(file+': meta description is '+desc.length+' characters; keep it between 110 and 160');
   if(seenTitles.has(title))fail(file+' repeats the title of '+seenTitles.get(title));
   if(seenDescs.has(desc))fail(file+' repeats the description of '+seenDescs.get(desc));
   seenTitles.set(title,file);seenDescs.set(desc,file);
@@ -155,6 +196,7 @@ for(const icon of manifest.icons||[])if(!existsSync(join(root,icon.src)))fail('s
 const keyFiles=readdirSync(root).filter(f=>/^[0-9a-f]{32}\.txt$/.test(f));
 if(keyFiles.length!==1||read(keyFiles[0]).trim()+'.txt'!==keyFiles[0])fail('Expected one IndexNow key file <key>.txt at the site root, containing its own key');
 
+for(const p of plannedMissing)warnings.push('link to '+p+' (planned page, not built yet)');
 if(warnings.length){
   console.log('Warnings (not failures):');
   for(const w of warnings)console.log('  - '+w);

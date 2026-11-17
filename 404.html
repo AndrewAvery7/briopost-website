@@ -4,30 +4,94 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Page not found — Briopost</title>
-<meta name="description" content="This page isn’t on briopost.com. Go to the Briopost home page or join the waitlist.">
+<meta name="description" content="This page isn’t on briopost.com. Go to the Briopost home page or become a beta tester.">
 <meta name="robots" content="noindex, follow">
-<meta name="theme-color" content="#121433">
 <!-- GitHub Pages shows this page at any missing address, so every link here starts with / -->
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#121433">
 <link rel="icon" href="/assets/briopost-icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/assets/brand-tokens.css"><link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/assets/brand-tokens.css">
+<link rel="stylesheet" href="/assets/site.css">
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/visit.js" defer></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a71b1a473b96486a95287332d69005f2"}'></script>
 </head>
 <body data-not-found>
+<!--HEADER-->
+<script>document.documentElement.classList.add('js')</script>
 <a class="skip" href="#main">Skip to content</a>
-<header class="header wrap"><a class="brand" href="/" aria-label="Briopost home"><img class="lockup" src="/assets/briopost-lockup.svg" width="206" height="40" alt="Briopost"></a><a class="status" href="/">&larr; Back to home</a></header>
-<main id="main" class="wrap action">
+<header class="site-head">
+  <div class="head-inner">
+    <a class="brand" href="/" aria-label="Briopost home"><img src="/assets/briopost-lockup.svg" width="166" height="32" alt="Briopost"></a>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav"><span class="menu-icon" aria-hidden="true"></span>Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/linkedin-carousel-templates/">Templates</a></li>
+        <li><a href="/#how">How it works</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="/free-tools/">Free tools</a></li>
+      </ul>
+      <a class="btn btn-spark btn-head" href="/#waitlist">Become a beta tester</a>
+    </nav>
+  </div>
+</header>
+<!--/HEADER-->
+<main id="main" class="action">
   <div class="action-card panel">
     <p class="eyebrow">Error 404</p>
     <h1>This page isn’t here.</h1>
-    <p class="lead">The link may be old or mistyped. Everything about Briopost is on the home page, including the waitlist.</p>
-    <a class="button" href="/">Go to the home page</a>
-    <p><a class="back" href="/#waitlist">Join the waitlist</a> · <a class="back" href="/contact/">Contact us</a></p>
+    <p class="lead">The link may be old or mistyped. Everything about Briopost starts on the home page, including the beta sign-up.</p>
+    <a class="btn btn-spark" href="/#waitlist">Become a beta tester</a>
+    <p><a class="back" href="/">Go to the home page</a> · <a class="back" href="/contact/">Contact us</a></p>
   </div>
 </main>
-<div class="footer-wrap"><footer class="footer wrap"><span>© 2026 Briopost LLC · Post with brio.</span><span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/email-policy/">Email</a> · <a href="/never/">What we never do</a> · <a href="/contact/">Contact</a></span><span>Independent of LinkedIn. Not affiliated with or endorsed by LinkedIn.</span></footer></div>
+<!--FOOTER-->
+<footer class="site-foot">
+  <div class="wrap foot-inner">
+    <a class="brand" href="/" aria-label="Briopost home"><img src="/assets/briopost-lockup.svg" width="140" height="27" alt="Briopost"></a>
+    <nav class="foot-nav" aria-label="Guides and tools">
+      <div class="foot-group foot-guides">
+      <p class="foot-head">Guides and tools</p>
+      <ul class="foot-pages">
+        <li><a href="/linkedin-carousel-maker/">LinkedIn carousel maker</a></li>
+        <li><a href="/linkedin-carousel-templates/">LinkedIn carousel templates</a></li>
+        <li><a href="/how-to-make-a-linkedin-carousel/">How to make a LinkedIn carousel</a></li>
+        <li><a href="/linkedin-carousel-size/">LinkedIn carousel size</a></li>
+        <li><a href="/linkedin-post-generator/">LinkedIn post generator</a></li>
+        <li><a href="/linkedin-content-calendar/">LinkedIn content calendar</a></li>
+        <li><a href="/linkedin-post-approval/">LinkedIn post approval</a></li>
+        <li><a href="/how-to-choose-a-linkedin-carousel-tool/">How to choose a carousel tool</a></li>
+        <li><a href="/free-tools/">Free tools</a></li>
+        <li><a href="/free-tools/linkedin-post-formatter/">LinkedIn post formatter</a></li>
+        <li><a href="/free-tools/linkedin-carousel-size-checker/">Carousel size checker</a></li>
+      </ul>
+      </div>
+      <div class="foot-group foot-for">
+      <p class="foot-head">Made for</p>
+      <ul class="foot-pages">
+        <li><a href="/for/consultants-and-coaches/">Consultants and coaches</a></li>
+        <li><a href="/for/founders-and-business-owners/">Founders and business owners</a></li>
+        <li><a href="/for/marketers-and-agencies/">Marketers and agencies</a></li>
+        <li><a href="/for/job-seekers/">Job seekers</a></li>
+      </ul>
+      </div>
+    </nav>
+    <div class="foot-legal">
+      <ul class="foot-links">
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/email-policy/">Email</a></li>
+        <li><a href="/never/">What we never do</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+      <p>Independent of LinkedIn. Not affiliated with or endorsed by LinkedIn.</p>
+      <p>© 2026 Briopost LLC · Post with brio.</p>
+    </div>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+<!--/FOOTER-->
 </body>
 </html>
