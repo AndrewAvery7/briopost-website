@@ -30,6 +30,7 @@
   // ---------- Home page forms ----------
   // Two forms share this code: the short one in the hero (prefix "hw": first name and email) and the full one in the
   // #waitlist section (prefix "wl": adds the optional role). One status check opens or closes both.
+  // Visitors read "beta tester" wording everywhere; the ids, event names and API keep the older "waitlist" names.
   var source = '';
   try {
     source = (new URLSearchParams(location.search).get('ref') || '').replace(/[^\w .\-]/g, '').trim().slice(0, 60);
@@ -92,9 +93,11 @@
     var startedAt = Date.now();
     var busy = false;
     if (testerLink) {
-      submitHTML = submitHTML.replace('Save my spot', 'Get my test account');
+      submitHTML = submitHTML.replace(/Become a beta tester|Save my spot/, 'Get my test account');
       submit.innerHTML = submitHTML;
       var offer = document.getElementById(prefix === 'hw' ? 'hw-offer' : 'wl-consent');
+      var next = el('next'); // "We email you to confirm. Then we send beta invitations...": not for an invited tester
+      if (next) next.hidden = true;
       if (offer) offer.textContent = 'You\u2019re invited to test Briopost. Enter your first name and email, confirm your email, and your free test account is ready. Testing is free, with AI credits included. We\u2019ll only email you about your test account and Briopost\u2019s launch.';
     }
 
@@ -132,8 +135,8 @@
         appendLink(doneText, body.tester.signInUrl, 'Open Briopost');
         appendGuide(doneText);
       } else if (status === 'already_confirmed') {
-        doneTitle.textContent = 'You’re already on the list.';
-        doneText.textContent = testerLink ? 'Nothing else to do. We’ll email you about your test account shortly.' : 'Nothing else to do. We’ll email you when Briopost opens.';
+        doneTitle.textContent = 'You’ve already signed up.';
+        doneText.textContent = testerLink ? 'Nothing else to do. We’ll email you about your test account shortly.' : 'Nothing else to do. We send beta invitations in small groups, and we’ll email you about yours.';
       } else {
         doneTitle.textContent = 'Check your inbox.';
         doneText.textContent = '';
@@ -144,7 +147,7 @@
         doneText.appendChild(strong);
         doneText.appendChild(document.createTextNode(testerLink
           ? '. Click it to confirm your email, and your test account is ready. If it isn’t there in a few minutes, check your spam folder.'
-          : '. Click it to confirm your place. If it isn’t there in a few minutes, check your spam folder.'));
+          : '. Click it to confirm your email. If it isn’t there in a few minutes, check your spam folder.'));
       }
       done.hidden = false;
       if (!quiet) doneTitle.focus();
@@ -238,11 +241,11 @@
     try { token = (new URLSearchParams(location.search).get('token') || '').trim(); } catch (e) { token = ''; }
     var label = button.textContent;
     var texts = action === 'confirm' ? {
-      confirmed: ['ok', 'You’re on the list. Thank you! We’ll email you when Briopost opens.'],
+      confirmed: ['ok', 'You’re confirmed. Thank you! We send beta invitations in small groups, and we’ll email you about yours.'],
       already_confirmed: ['ok', 'You’re already confirmed. Nothing else to do.'],
-      invalid: ['error', 'This link has expired or was replaced by a newer one. Join the waitlist again to get a fresh link.']
+      invalid: ['error', 'This link has expired or was replaced by a newer one. Sign up again on the home page to get a fresh link.']
     } : {
-      unsubscribed: ['ok', 'You’re unsubscribed. We won’t send you waitlist emails again.'],
+      unsubscribed: ['ok', 'You’re unsubscribed. We won’t send you beta emails again.'],
       invalid: ['error', 'This link doesn’t work any more. If you still get our emails, write to ' + CONTACT + ' and we’ll remove you.']
     };
     var show = function (kind, text) {
@@ -253,7 +256,7 @@
     if (!/^\S{8,400}$/.test(token)) {
       signal({ action: 'link_error', page: action, reason: 'missing_code' });
       button.hidden = true;
-      show('error', 'This link is missing its code. Please open the link straight from your email' + (action === 'confirm' ? ', or join the waitlist again.' : ', or write to ' + CONTACT + '.'));
+      show('error', 'This link is missing its code. Please open the link straight from your email' + (action === 'confirm' ? ', or sign up again on the home page.' : ', or write to ' + CONTACT + '.'));
       if (after) after.hidden = false;
     } else {
       button.addEventListener('click', function () {
@@ -268,7 +271,7 @@
             if (status === 'invalid') signal({ action: 'link_error', page: action, reason: 'invalid_link' });
             else signal({ action: action === 'confirm' ? 'confirmed' : 'unsubscribed', status: status });
             if (action === 'confirm' && body.ok && body.tester) {
-              // A tester link: the test account is ready (or, if setting it up failed, Andrew was told and will add it).
+              // A tester link: the test account is ready (or, if setting it up failed, the Briopost team was told and will add it).
               if (testerReady(body)) {
                 show('ok', 'Your Briopost test account is ready. Sign in with the email address you used (Google, LinkedIn, or an emailed sign-in link). We also emailed you the address.');
                 appendLink(out, body.tester.signInUrl, 'Open Briopost');

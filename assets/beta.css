@@ -1,23 +1,26 @@
-/* Beta tester guide (/beta/). Uses the site's style.css; these rules are only for this page. */
-.beta-hero{padding:40px 0 0}
+/* Beta tester guide (/beta/). Loaded after site.css; these rules are only for this page. */
+.beta-hero{padding-top:40px}
 .beta-hero h1{font-size:clamp(40px,5.4vw,72px);line-height:1.04;max-width:18ch;margin-top:18px}
 .beta-hero .intro{max-width:62ch;margin-top:22px;color:var(--muted);font-size:17px}
 .beta-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}
 .fact{padding:22px 24px;display:grid;gap:6px}
 .fact strong{font-family:var(--brand-font-heading);font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1.2}
-.fact span{color:var(--muted);font-size:15px;line-height:1.55}
+.fact span{color:var(--muted);font-size:16px;line-height:1.55}
 .fact:first-child{border-color:var(--orange)}
+/* Fewer panels: the three facts and the three steps sit on rules; the checklist rows and the feedback box keep theirs. */
+.beta-facts .fact.panel,.beta-steps li.panel{background:none;box-shadow:none;border-radius:0;border-top:2px solid var(--line-soft);padding:18px 0 0}
+.beta-facts .fact.panel:first-child{border-top-color:var(--orange)}
 
 .beta-steps{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .beta-steps li{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:24px}
 .beta-steps h3{font-size:21px;letter-spacing:-.02em;line-height:1.2;margin-top:6px}
-.beta-steps p{color:var(--muted);font-size:15px;line-height:1.65;margin-top:8px}
+.beta-steps p{color:var(--muted);font-size:16px;line-height:1.65;margin-top:8px}
 .beta-steps a,.beta-steps strong{color:var(--paper)}
 .beta-steps a{text-decoration-color:var(--orange);text-decoration-thickness:2px}
 
 .beta-try{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px;align-items:start}
 .try-progress{margin-top:26px;font-weight:700;font-variant-numeric:tabular-nums}
-.try-bar{height:8px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line);margin-top:10px;overflow:hidden;max-width:320px}
+.try-bar{height:8px;border-radius:10px;background:var(--panel-2);border:1px solid var(--line);margin-top:10px;overflow:hidden;max-width:320px}
 .try-bar span{display:block;height:100%;width:0;background:var(--orange);transition:width .4s cubic-bezier(.2,.8,.2,1)}
 .try-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .try-list label{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;cursor:pointer;transition:border-color .2s,background-color .2s}
@@ -27,7 +30,7 @@
 .try-list input:checked{background:var(--orange);border-color:var(--orange)}
 .try-list input:checked::after{transform:rotate(45deg) translate(-1px,-1px) scale(1)}
 .try-list input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
-.try-list span{color:var(--muted);font-size:15px;line-height:1.6}
+.try-list span{color:var(--muted);font-size:16px;line-height:1.6}
 .try-list strong{color:var(--paper)}
 .try-list label:has(input:checked){background:var(--panel-2)}
 .try-list label:has(input:checked) strong{text-decoration:line-through;text-decoration-color:var(--orange);text-decoration-thickness:2px}
@@ -55,3 +58,5 @@
   .feedback-action .button{width:100%}
   .header .button-small{padding:0 12px;font-size:13px}
 }
+
+.beta-open{margin-top:28px}
