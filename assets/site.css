@@ -316,15 +316,9 @@ html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-
 .ok-status{grid-column:1/-1;font-size:14px;color:var(--fg-2)}
 .ok-card[data-state=confirmed] .ok-status{color:var(--fg)}
 
-/* 3. Film */
+/* 3. Studio screenshots */
 .section-film{padding-top:0}
 .film-wrap{display:grid;gap:var(--s-6)}
-.film{position:relative;margin:0;border-radius:16px;overflow:hidden;background:var(--deep);box-shadow:0 0 0 1px var(--line-soft)}
-.film video{width:100%;height:auto;aspect-ratio:16/9;background:var(--deep)}
-.film figcaption{padding:14px 18px 16px;font-size:14px;color:var(--fg-2)}
-.film-frame{position:relative}
-.film-toggle{position:absolute;left:12px;bottom:12px;min-height:44px;padding:0 16px;border-radius:10px;border:1px solid rgb(246 244 239/40%);background:rgb(12 14 38/82%);color:var(--paper);font:600 14px/1 var(--b);cursor:pointer}
-.film-toggle:hover{border-color:var(--paper)}
 @media (min-width:960px){.film-wrap{grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:var(--s-8);align-items:center}}
 
 /* 4. Features */
@@ -518,18 +512,9 @@ html:not(.js) .site-head{position:static}
 }
 @media (min-width:960px){.plan{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:var(--s-8);align-items:start}}
 
-/* ---------- The studio: film, "Watch with sound", screenshots ---------- */
-.film-sound-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:0;padding:0 18px 18px}
-.film-sound-len{font-weight:500;color:var(--fg-2)}
-.film-dialog{width:min(1100px,calc(100vw - 24px));max-width:none;padding:0;border:0;border-radius:16px;background:var(--deep);color:var(--fg);box-shadow:0 0 0 1px var(--line-soft),0 30px 80px rgb(0 0 0/60%)}
-.film-dialog::backdrop{background:rgb(6 7 20/82%)}
-.film-dialog video{width:100%;height:auto;aspect-ratio:16/9;background:#000}
-.film-dialog-bar{display:flex;align-items:center;gap:10px;padding:10px 10px 10px 18px}
-.film-dialog-title{flex:1;font-size:18px;letter-spacing:-.02em}
-.film-cc,.lightbox-close{min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--haze);background:transparent;color:var(--fg);font:600 14px/1 var(--b);cursor:pointer}
-.film-cc[aria-pressed=true]{background:var(--paper);color:var(--midnight);border-color:var(--paper)}
-.lightbox-close{min-width:44px;padding:0;font-size:24px;line-height:1}
-/* Phones: the three screenshots sit in a row you can swipe; from 768 px, three columns under the film. */
+/* ---------- The studio screenshots and lightbox ---------- */
+.lightbox-close{min-height:44px;min-width:44px;padding:0 14px;border-radius:10px;border:1px solid var(--haze);background:transparent;color:var(--fg);font:600 14px/1 var(--b);cursor:pointer;font-size:24px;line-height:1}
+/* Phones: the three studio screenshots sit in a row; from 768 px, three columns. */
 .shots{list-style:none;margin:var(--s-6) calc(-1 * var(--gutter)) 0;padding:0 var(--gutter) 6px;display:grid;grid-auto-flow:column;grid-auto-columns:78%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);scrollbar-width:none;overscroll-behavior-x:contain}
 .shots::-webkit-scrollbar{display:none}
 .shots li{scroll-snap-align:start}

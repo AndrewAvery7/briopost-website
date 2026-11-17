@@ -111,15 +111,6 @@
     var target = e.target;
     if (!target || !target.closest) return;
 
-    // The home page film: "Watch with sound" and the Captions On/Off button (assets/home.js, step 6).
-    // This runs on the way down, before home.js flips the label, so "Off" means the visitor is turning captions on.
-    var filmBtn = target.closest('#film-sound-open, #film-captions');
-    if (filmBtn) {
-      track('film_interaction', { film_action: filmBtn.id === 'film-sound-open' ? 'watch_with_sound'
-        : (/Off/.test(filmBtn.textContent) ? 'captions_on' : 'captions_off') });
-      if (filmBtn.id === 'film-captions') return;
-    }
-
     // The scripted moments on the home page (assets/home.js): the "Give my OK" card and the cost before an AI action.
     var okBtn = target.closest('#ok-confirm, #ok-undo');
     if (okBtn) { track('demo_interaction', { demo_action: okBtn.id === 'ok-confirm' ? 'give_ok' : 'take_back_ok', demo_value: '(none)' }); return; }
