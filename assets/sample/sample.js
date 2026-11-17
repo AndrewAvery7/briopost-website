@@ -124,7 +124,7 @@
     var photo = (state.img || IMG) + t.photo;
     s.push({ kind: 'cover', html: frame(0, n,
       '<p class="s-eyebrow">' + esc(t.cover.eyebrow) + '</p><h3 class="s-title">' + title(t.cover.title) + '</h3><p class="s-text">' + esc(t.cover.text) + '</p>', 's-cover', {
-        back: '<img class="s-photo" src="' + photo + '-540.webp" srcset="' + photo + '-540.webp 540w, ' + photo + '-1080.webp 1080w" sizes="(max-width: 700px) 80vw, 420px" width="1080" height="1340" alt="' + esc(t.photoAlt) + '" fetchpriority="high" decoding="async"><div class="s-scrim" aria-hidden="true"></div>'
+        back: '<img class="s-photo" src="' + photo + '-540.webp" srcset="' + photo + '-540.webp 540w, ' + photo + '-1080.webp 1080w" sizes="(max-width: 700px) 60vw, 360px" width="1080" height="1340" alt="' + esc(t.photoAlt) + '" fetchpriority="high" decoding="async"><div class="s-scrim" aria-hidden="true"></div>'
       }) });
     var kinds = '<div class="s-chart-kinds" role="group" aria-label="Chart kind">' + ['bar', 'line', 'area'].map(function (k) {
       return '<button type="button" data-chart="' + k + '" aria-pressed="' + (state.chart === k) + '">' + { bar: 'Bars', line: 'Line', area: 'Area' }[k] + '</button>';
