@@ -24,6 +24,8 @@ Every hand-written page shares one header, one footer and one stylesheet. The fo
 - `partials/footer.html`: the guide, tool and profession pages, the legal links, "Independent of LinkedIn..." and "© 2026 Briopost LLC · Post with brio.".
 - `assets/sample/`: the interactive sample (`sample.js`, `sample.css`, `img/`, `playfair-latin.woff2`). Pictures load from `/assets/sample/img/`. `sample.js`'s `render()` also runs in Node.
 - `assets/designs/`: real carousel covers from the studio (400 x 501 WebP). Add more here when a page needs them.
+- `assets/pages/`: page-specific styles and scripts (`guides.css` for guide pages, `tools.css` + `tools-extra.css` for the free tools, `brand.css` for `/linkedin-brand-kit/`, one script per tool).
+- Wide screens: from 1600 px the content column grows (`--maxw` 1360 px, then 1480 px from 1840 px) so a 1920 px screen is not mostly margin; text keeps its own line length.
 
 `node scripts/build-pages.mjs` fills these markers in every hand-written page, replacing whatever is between them:
 
@@ -43,19 +45,21 @@ To add a page:
 4. Add the page to `sitemap.xml` (with `<lastmod>`) unless it is `noindex`.
 5. Run `node scripts/build-pages.mjs`, then `node scripts/check.mjs`. Links in the header and footer to pages that are not built yet show as warnings until the page exists (the list is `PLANNED` in `scripts/check.mjs`).
 
+## Page list and what is deliberately not built
+
+Search pages (one search each, how-to first, Briopost second, ending at the beta tester action): the carousel maker, templates, how to make a carousel, carousel size, post generator, content calendar, post approval, how to choose a carousel tool, LinkedIn polls, graphics, post formatting, personal branding, how to post a PDF carousel, brand kit, and three input pages (PDF, blog post or link, notes to carousel; each input was checked in the studio code for beta testers on 2026-11-17). Four "Made for" pages and four free tools (post formatter, carousel size checker, hook preview, slide planner). LinkedIn's own limits (post length, poll rules, document size and pages) appear only as quotes or close paraphrases of LinkedIn Help, with the link and the date they were checked.
+
+Not built on purpose: data reports (Briopost has no public, sourced data yet; build them only from real data with sources), comparison pages (no competitor names), pages for Company Page posting or live LinkedIn statistics (both wait on LinkedIn).
+
 ## Interactive home page
 
 - The sample (`assets/sample/sample.js`) sits on the first screen: three sample topics, three brand kits, the four format tabs, the slide size switch, chart kinds and a box where visitors type their own thought ("Shape it"). Nothing is sent, generated or posted, and the page says so; analytics records only which control was used, never the words.
-- `assets/home.js`: the "Give my OK" card (the one springy moment), the "Plan the month" calendar (posts below the screen start as dashed outlines that still show their words, then fill in one by one), the cost moment, and the film. No section is ever hidden waiting for a script, there is no scroll-jacking, and reduced motion turns movement off. The page reads completely without JavaScript.
+- `assets/home.js`: the "Give my OK" card (the one springy moment), the "Plan the month" calendar (posts below the screen start as dashed outlines that still show their words, then fill in one by one), and the cost moment. No section is ever hidden waiting for a script, there is no scroll-jacking, and reduced motion turns movement off. The page reads completely without JavaScript.
 - `<!-- PROOF SLOT -->` in `index.html` marks where real, permitted beta tester posts would go. It stays empty until there are some.
 
-## Home page film
+## Film production
 
-The film slot is the `#studio` section of `index.html`. To drop in a new film, replace the files in `assets/film/` (keep the names, or change the `src` and `poster` paths and the VideoObject in the home page's structured data).
-
-`assets/film/`: the 30-second silent tour (a loop) in the Studio section (WebM first, MP4 fallback, WebP poster from the opening scene). It plays only while on screen, waits for Play when the visitor has reduced motion on, and has a Pause/Play button (`assets/home.js`, step 5). Its HyperFrames source, the 1920 master and render notes live in the app repo at `docs/films/home-loop/`; re-render there and copy the three web files here.
-
-Below it, **Watch the narrated film (37 seconds)** opens the narrated version (voice and music) in a dialog: `briopost-home-narrated.webm` / `.mp4`, poster `briopost-home-narrated-poster.webp`, and English captions `briopost-home-narrated.en.vtt`. It starts from the click (browsers only allow sound then), pauses the silent loop while it plays and resumes it on close. A **Captions: On / Off** button shows or hides the captions; the choice is kept in the visitor's browser only, and the player's own CC menu stays in step (`assets/home.js`, step 6). Its source lives in the app repo at `docs/films/home-narrated/`; re-render there and copy the four web files (and the captions file if the script changes) here.
+No video is currently embedded or served from the public website. The film masters, source project, captions and local review package remain available in the private Briopost app repository under `docs/films/beta-overview/` and `docs/films/home-loop/`. Publish a film to the site only after the website rebuild is ready and the release is explicitly approved.
 
 ## Beta tester guide
 
@@ -90,15 +94,14 @@ Events it sends (all only when the ID is set):
 | `waitlist_error` | A sign-up failed (`error_reason`: `validation`, `closed`, `rate_limited`, `rejected`, `server_<code>`, `network`), or a confirm/unsubscribe link failed (`invalid_link`, `missing_code`, ...). |
 | `waitlist_confirmed` / `waitlist_unsubscribed` | On `/waitlist/confirm/` and `/waitlist/unsubscribe/` after the server says it worked. |
 | `cta_click` | Any main button (`.btn` or `.button`: "Become a beta tester", "See all 150 carousel designs", Confirm, Unsubscribe, "Open Briopost") or any link to `#waitlist` (`cta_label`, `cta_location`). |
-| `film_interaction` | The home page film (`film_action`: `watch_with_sound`, `captions_on`, `captions_off`). "Watch the narrated film" also sends `cta_click`. |
 | `demo_interaction` | The sample (`#preview`) and the scripted moments, with `demo_action` and `demo_value` (`(none)` when there is nothing to add). In the sample: `sample_topic` (sales, leadership, career), `brand_switch` (midnight, harbor, daylight), `size_switch` (portrait, square), `chart_kind` (bar, line, area), `shape_own` (never the words), `format_tab` (carousel, graphic, text, poll), `next_slide`, `previous_slide`, `go_to_slide` (slide number), `poll_vote` (the sample option), `poll_reset`. Around it: `give_ok` and `take_back_ok` (the "Give my OK" card), `cost_preview` and `cost_reset` (the cost moment). The calendar has no controls and sends nothing. |
 | `faq_open` | A question opened in the home page FAQ. |
 | `scroll_depth` | 25, 50, 75 and 90 percent of a page read (`percent_scrolled`). |
 | `file_download` | A legal PDF link. |
 | `outbound_click` / `email_click` | A link to another site / an email link. |
 | `page_not_found` | The 404 page. |
-| `tool_use` | A control in a free tool (`tool_name`: `post_formatter` or `size_checker`; `tool_action`: e.g. `bold`, `bullets`, `see_more`, `draft_on`). Never the text. |
-| `tool_copy` | The post formatter's Copy button. |
+| `tool_use` | A control in a free tool (`tool_name`: `post_formatter`, `size_checker`, `hook_preview` or `slide_planner`; `tool_action`: e.g. `bold`, `bullets`, `see_more`, `draft_on`, `hook_edit`, `hook_add`, `hook_remove`, `plan_update`, `shape_switch`, `clear`). Never the text. |
+| `tool_copy` | A Copy button in the post formatter, the hook preview ("Copy hook N") or the slide planner ("Copy as plain text"). |
 | `tool_result` | The size checker read a file (`size_match`: `portrait`, `square`, `story`, `wide`, `banner` or `none`; `file_kind`: `image` or `pdf`). Never the file. |
 | `tool_error` | The size checker could not read a file (`error_reason`). |
 
@@ -108,7 +111,7 @@ Events it sends (all only when the ID is set):
 
 - Every indexed page has a unique title and description, a canonical `https://briopost.com/.../` address matching `sitemap.xml`, Open Graph and Twitter tags, and `lang="en-US"`. `/waitlist/confirm/`, `/waitlist/unsubscribe/` and `404.html` are `noindex, follow` and stay out of the sitemap.
 - `sitemap.xml` lists each indexed page with `<lastmod>`; the check fails if a page's "Last updated" date is newer than its `lastmod`, so update both together. `robots.txt` names the sitemap.
-- Structured data (JSON-LD): Organization (Briopost LLC), WebSite, WebPage (with an ImageObject as `primaryImageOfPage`), SoftwareApplication, FAQPage and VideoObject (the narrated film) on the home page; BreadcrumbList on inner pages. A FAQPage must repeat the page's visible `<details><summary>`/`<p>` questions and answers word for word, in order; `scripts/check.mjs` compares them.
+- Structured data (JSON-LD): Organization (Briopost LLC), WebSite, WebPage (with an ImageObject as `primaryImageOfPage`), SoftwareApplication, FAQPage on the home page; BreadcrumbList on inner pages. A FAQPage must repeat the page's visible `<details><summary>`/`<p>` questions and answers word for word, in order; `scripts/check.mjs` compares them.
 - `404.html` is what GitHub Pages shows for any missing address, so its links all start with `/`.
 - `site.webmanifest` and `assets/icon-*.png` (drawn by `scripts/render-link-card.py`) give phones and browsers the app icon.
 - **IndexNow**: `8d289821e8f67d141300ba6699bebfed.txt` at the site root is the public IndexNow key (public by design, not a secret). After a push to `main` that changes a page, the sitemap or `llms.txt`, `.github/workflows/indexnow.yml` waits for GitHub Pages to publish, then `scripts/indexnow.mjs` sends the sitemap's addresses to `api.indexnow.org` (Bing, Yandex and others). Run it by hand from the Actions tab (Run workflow), or preview with `node scripts/indexnow.mjs --dry-run`.

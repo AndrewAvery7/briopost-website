@@ -136,7 +136,8 @@
 .bp-dots button::after{content:"";position:absolute;left:8px;top:18px;width:8px;height:8px;border-radius:50%;background:var(--line,#454b8f);transition:transform var(--m-quick,140ms),background var(--m-quick,140ms)}
 .bp-dots button[aria-current=true]::after{background:#ff5b2e;transform:scale(1.35)}
 .bp-own-note{font-size:13px;color:var(--muted-site,#b4b7e0);text-align:center;margin:8px auto 0;max-width:46ch}
-.bp-demo:not(.is-live) .bp-nav,.bp-demo:not(.is-live) .s-chart-kinds,.bp-demo:not(.is-live) .bp-controls,.bp-demo:not(.is-live) .bp-tabs{display:none}
+/* Hidden until the script runs, but keeping their space, so nothing shifts when they appear. */
+.bp-demo:not(.is-live) .bp-nav,.bp-demo:not(.is-live) .s-chart-kinds,.bp-demo:not(.is-live) .bp-controls,.bp-demo:not(.is-live) .bp-tabs{visibility:hidden}
 /* Without JavaScript the chart is shown drawn. */
 .bp-demo:not(.is-live) .c-svg{}
 .bp-demo:not(.is-live) .c-bar{transform:none}

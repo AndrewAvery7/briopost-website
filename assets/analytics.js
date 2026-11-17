@@ -65,9 +65,11 @@
   // ----- Waitlist (events come from assets/waitlist.js, which says what happened) -----
   // The free tools (assets/pages/formatter.js, size-checker.js) report which control was used. Never the visitor's
   // text or file: only the tool, the action and, for the size checker, which size it matched.
+  // hook-preview.js and slide-planner.js report the same way (hook_preview, slide_planner).
+  var TOOL_NAMES = { post_formatter: 1, size_checker: 1, hook_preview: 1, slide_planner: 1 };
   document.addEventListener('briopost:tool', function (e) {
     var d = e.detail || {};
-    var tool = d.tool === 'size_checker' ? 'size_checker' : 'post_formatter';
+    var tool = TOOL_NAMES.hasOwnProperty(d.tool) ? d.tool : 'post_formatter';
     if (d.action === 'copy') track('tool_copy', { tool_name: tool });
     else if (d.action === 'checked') track('tool_result', { tool_name: tool, size_match: String(d.match || 'none').slice(0, 20), file_kind: d.kind === 'pdf' ? 'pdf' : 'image' });
     else if (d.action === 'error') track('tool_error', { tool_name: tool, error_reason: String(d.reason || 'unknown').slice(0, 30) });
@@ -110,15 +112,6 @@
   document.addEventListener('click', function (e) {
     var target = e.target;
     if (!target || !target.closest) return;
-
-    // The home page film: "Watch with sound" and the Captions On/Off button (assets/home.js, step 6).
-    // This runs on the way down, before home.js flips the label, so "Off" means the visitor is turning captions on.
-    var filmBtn = target.closest('#film-sound-open, #film-captions');
-    if (filmBtn) {
-      track('film_interaction', { film_action: filmBtn.id === 'film-sound-open' ? 'watch_with_sound'
-        : (/Off/.test(filmBtn.textContent) ? 'captions_on' : 'captions_off') });
-      if (filmBtn.id === 'film-captions') return;
-    }
 
     // The scripted moments on the home page (assets/home.js): the "Give my OK" card and the cost before an AI action.
     var okBtn = target.closest('#ok-confirm, #ok-undo');
