@@ -63,6 +63,17 @@
   }
 
   // ----- Waitlist (events come from assets/waitlist.js, which says what happened) -----
+  // The free tools (assets/pages/formatter.js, size-checker.js) report which control was used. Never the visitor's
+  // text or file: only the tool, the action and, for the size checker, which size it matched.
+  document.addEventListener('briopost:tool', function (e) {
+    var d = e.detail || {};
+    var tool = d.tool === 'size_checker' ? 'size_checker' : 'post_formatter';
+    if (d.action === 'copy') track('tool_copy', { tool_name: tool });
+    else if (d.action === 'checked') track('tool_result', { tool_name: tool, size_match: String(d.match || 'none').slice(0, 20), file_kind: d.kind === 'pdf' ? 'pdf' : 'image' });
+    else if (d.action === 'error') track('tool_error', { tool_name: tool, error_reason: String(d.reason || 'unknown').slice(0, 30) });
+    else if (d.action) track('tool_use', { tool_name: tool, tool_action: String(d.action).slice(0, 20) });
+  });
+
   document.addEventListener('briopost:waitlist', function (e) {
     var d = e.detail || {};
     var form = formNames[d.form] || d.form || 'page';
@@ -95,13 +106,13 @@
   ['focusin', 'input', 'change'].forEach(function (type) { document.addEventListener(type, formStart, true); });
 
   // ----- Clicks: calls to action, PDF downloads, outside links, email links, the interactive sample -----
-  // Listened to on the way down (capture), before assets/preview.js redraws the sample and replaces the clicked button.
+  // Listened to on the way down (capture), before assets/sample/sample.js redraws the sample and replaces the clicked button.
   document.addEventListener('click', function (e) {
     var target = e.target;
     if (!target || !target.closest) return;
 
-    // The home page film: "Watch with sound" and the Captions On/Off button (assets/motion.js, step 7).
-    // This runs on the way down, before motion.js flips the label, so "Off" means the visitor is turning captions on.
+    // The home page film: "Watch with sound" and the Captions On/Off button (assets/home.js, step 6).
+    // This runs on the way down, before home.js flips the label, so "Off" means the visitor is turning captions on.
     var filmBtn = target.closest('#film-sound-open, #film-captions');
     if (filmBtn) {
       track('film_interaction', { film_action: filmBtn.id === 'film-sound-open' ? 'watch_with_sound'
@@ -109,25 +120,39 @@
       if (filmBtn.id === 'film-captions') return;
     }
 
-    // The interactive sample on the home page (assets/preview.js).
+    // The scripted moments on the home page (assets/home.js): the "Give my OK" card and the cost before an AI action.
     var okBtn = target.closest('#ok-confirm, #ok-undo');
-    if (okBtn) track('demo_interaction', { demo_action: okBtn.id === 'ok-confirm' ? 'give_ok' : 'take_back_ok', demo_value: '(none)' });
+    if (okBtn) { track('demo_interaction', { demo_action: okBtn.id === 'ok-confirm' ? 'give_ok' : 'take_back_ok', demo_value: '(none)' }); return; }
+    var costBtn = target.closest('#cost-btn');
+    if (costBtn) {
+      var costDemo = document.getElementById('cost-demo');
+      track('demo_interaction', { demo_action: costDemo && costDemo.getAttribute('data-state') === 'done' ? 'cost_reset' : 'cost_preview', demo_value: '(none)' });
+      return;
+    }
+
+    // The interactive sample (assets/sample/sample.js) inside #preview. Only which control was used is sent, never the
+    // visitor's own words (the "Shape it" text stays on the page).
     var demo = target.closest('#preview button');
     if (demo) {
       var action = '', value = '';
       if (demo.getAttribute('role') === 'tab') { action = 'format_tab'; value = demo.getAttribute('data-format'); }
       else if (demo.hasAttribute('data-step')) { action = Number(demo.getAttribute('data-step')) > 0 ? 'next_slide' : 'previous_slide'; }
       else if (demo.hasAttribute('data-slide')) { action = 'go_to_slide'; value = String(Number(demo.getAttribute('data-slide')) + 1); }
-      else if (demo.hasAttribute('data-vote')) { action = 'poll_vote'; value = clean(demo.textContent.replace('Your choice', '').replace(/\d+%$/, ''), 60); }
+      else if (demo.hasAttribute('data-vote')) { action = 'poll_vote'; value = clean(demo.textContent.replace('Your choice', '').replace(/\d+%$/, ''), 60); } // a sample option, never typed text
       else if (demo.classList.contains('reset-vote')) { action = 'poll_reset'; }
-      else if (demo.classList.contains('chip')) { action = 'sample_topic'; value = demo.getAttribute('data-topic'); }
-      else if (demo.id === 'shape-btn') { action = 'shape_own'; } // the visitor's own words are never sent
-      if (action) track('demo_interaction', { demo_action: action, demo_value: value || '(none)' });
-      return;
+      else if (demo.hasAttribute('data-topic')) { action = 'sample_topic'; value = demo.getAttribute('data-topic'); }
+      else if (demo.hasAttribute('data-brand')) { action = 'brand_switch'; value = demo.getAttribute('data-brand'); }
+      else if (demo.hasAttribute('data-size')) { action = 'size_switch'; value = demo.getAttribute('data-size'); }
+      else if (demo.hasAttribute('data-chart')) { action = 'chart_kind'; value = demo.getAttribute('data-chart'); }
+      else if (demo.classList.contains('shape-btn')) { action = 'shape_own'; } // the visitor's own words are never sent
+      // On the home page #preview also holds the hero sign-up; its button is not a sample control, so it falls through to
+      // the call-to-action tracking below.
+      if (action) { track('demo_interaction', { demo_action: action, demo_value: value || '(none)' }); return; }
     }
 
-    // Primary buttons and links ("Save my spot", "Join the waitlist", "Take a first look", Confirm / Unsubscribe).
-    var cta = target.closest('a.button, button.button, a[href$="#waitlist"]');
+    // Primary buttons and links ("Become a beta tester" buttons and links, "See all 150 carousel designs", Confirm /
+    // Unsubscribe, "Open Briopost"). Buttons use the class "btn" (site.css) or the older "button".
+    var cta = target.closest('a.btn, button.btn, a.button, button.button, a[href$="#waitlist"]');
     if (cta) {
       track('cta_click', {
         cta_label: clean(cta.textContent, 60) || clean(cta.getAttribute('aria-label'), 60),

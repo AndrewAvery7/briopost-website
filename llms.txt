@@ -1,28 +1,46 @@
 # Briopost
 
-> Briopost is a creative studio for LinkedIn, now in a free, invite-only beta. Its AI assistant turns one idea into a carousel, graphic, text post or poll in the user's own voice and brand, and the user edits it. Nothing posts to LinkedIn without the user's OK. Free during the beta, with AI credits included. Made by Briopost LLC. Independent of LinkedIn: not affiliated with or endorsed by LinkedIn.
+> Briopost is a creative studio for LinkedIn, now in a free beta, by invitation. Its AI assistant turns one idea into a carousel, graphic, text post or poll in the user's own voice and brand, and the user edits every word. Nothing posts to LinkedIn without the user's OK, and Briopost shows the cost of each AI action before it runs. Made by Briopost LLC. Independent of LinkedIn: not affiliated with or endorsed by LinkedIn.
 
 ## What it does
 
-- Start with notes, a link, a document or a rough thought.
+- Start with a few words, notes, a link, a PDF or a voice note (Talk it through: speak up to three minutes; the recording isn't kept).
 - Pick a format: a carousel, a graphic, a text post or a poll.
-- Make it yours: your colors, your fonts and your voice. Edit every slide in a real editor, starting from built-in templates.
-- Plan the month on a calendar.
+- Make it yours: a brand kit (colors, fonts, logo) that can start from your website address, 150 carousel designs, 49 graphic designs, 32 photo styles, and a real slide editor with charts (6 kinds), about 200 icons, comparisons, cards, big numbers and highlighted words.
+- Plan the month on a calendar, with series, repeats with fresh wording, a first comment and follow-up comments.
+- Share for review: client review links (no account needed to approve or comment), share links, and PDF or image exports.
 - You approve: every post waits until you confirm it, then it posts at the time you choose.
+- Teams with owner, admin and member roles; an assistant connection and an API; a "Send to Briopost" bookmark.
 
 ## Facts
 
-- Status: not open yet. Invites go out first, then Briopost opens to everyone. People can join the waitlist on the home page.
-- Cost: the beta is free. Pricing will be shared before anyone pays.
-- AI: AI is included and paid for with monthly AI credits (the beta includes credits). Before each AI action, Briopost shows its cost in credits. A cheaper plan will let the user bring their own Claude, OpenAI or fal key instead.
+- Status: a free beta, by invitation. People can ask to join on the home page; Briopost confirms their email and sends beta invitations in small groups. A personal invitation link gives a test account after the email is confirmed.
+- Cost: the beta is free and includes AI credits. Pricing will be shared before anyone pays. Before each AI action, Briopost shows its cost.
+- AI: included, paid for with AI credits. A user can also bring their own Claude, OpenAI or fal key.
+- Not yet: posting to LinkedIn Company Pages and live statistics from a member's own LinkedIn both wait on LinkedIn's approval. Uploading LinkedIn's own analytics export works today.
 - Who it is for: consultants and coaches, founders and business owners, marketers and agencies, and job seekers who post on LinkedIn.
 - Contact: info@briopost.com
 
 ## Pages
 
-- [Home and waitlist](https://briopost.com/): what Briopost does, real screenshots, templates, questions and the waitlist sign-up.
+- [Home](https://briopost.com/): what Briopost does, an interactive sample carousel, how it works, templates, questions and the beta tester sign-up.
+- [LinkedIn carousel maker](https://briopost.com/linkedin-carousel-maker/): turn a few words, notes, a link or a PDF into an editable carousel in your brand; cost shown before each AI step; nothing posts without your OK.
+- [LinkedIn carousel templates](https://briopost.com/linkedin-carousel-templates/): a selection of 42 real designs from the studio (150 carousel designs and 49 graphic designs in all), filterable by format and by 28 fields, and one design shown in three brand kits.
+- [How to make a LinkedIn carousel](https://briopost.com/how-to-make-a-linkedin-carousel/): a seven-step guide, from planning one idea and writing the cover hook to exporting a PDF, posting it as a document and writing the caption.
+- [LinkedIn carousel size](https://briopost.com/linkedin-carousel-size/): 1080x1350 (4:5, the default), 1080x1080 and 1080x1920 carousel sizes, graphic sizes up to 1920x1080 and the 1584x396 banner, and how to export a sharp PDF.
+- [LinkedIn post generator](https://briopost.com/linkedin-post-generator/): text posts, polls and carousels drafted from your own words or a voice note of up to three minutes (the recording isn't kept), plus weekly post ideas.
+- [LinkedIn content calendar](https://briopost.com/linkedin-content-calendar/): one calendar for every post, Plan a series, repeats with fresh wording, first comment and follow-ups; every post needs your OK.
+- [LinkedIn post approval](https://briopost.com/linkedin-post-approval/): client review links (up to 20 posts, 14 days, no account needed to approve or comment), share links and embeds, and your own final confirm.
+- [How to choose a LinkedIn carousel tool](https://briopost.com/how-to-choose-a-linkedin-carousel-tool/): a neutral 10-question checklist (approval before posting, AI costs, brand kit, editor, exports, client approval, privacy, your data, teams, what waits on LinkedIn), with what Briopost does today.
+- [LinkedIn posts for consultants and coaches](https://briopost.com/for/consultants-and-coaches/): a sample carousel, five post ideas and the Briopost features that matter for consultants and coaches.
+- [LinkedIn posts for founders and business owners](https://briopost.com/for/founders-and-business-owners/): post ideas for founders and owners, and how Briopost keeps posts in your brand with your approval.
+- [LinkedIn content for marketers and agencies](https://briopost.com/for/marketers-and-agencies/): a brand kit per client, workspaces, team roles and client review links; nothing posts without an OK.
+- [LinkedIn posts for job seekers](https://briopost.com/for/job-seekers/): five post ideas for people looking for their next role, and how to draft them in Briopost.
+- [Free LinkedIn tools](https://briopost.com/free-tools/): free tools that run in the browser; nothing is sent.
+- [LinkedIn post formatter](https://briopost.com/free-tools/linkedin-post-formatter/): free, in-browser bold and italic (Unicode letters), bullet and numbered lists, a feed preview with the "see more" cut, and a character counter (about 3,000).
+- [LinkedIn carousel size checker](https://briopost.com/free-tools/linkedin-carousel-size-checker/): free, in-browser check of a picture or PDF's size, shape and page count against 1080x1350, 1080x1080 and 1080x1920; nothing is uploaded.
+- [What we never do](https://briopost.com/never/): the promises Briopost keeps about your LinkedIn account, posts and data.
 - [Privacy Policy](https://briopost.com/privacy/)
 - [Terms](https://briopost.com/terms/)
 - [Email Policy](https://briopost.com/email-policy/)
-- [What we never do](https://briopost.com/never/): the promises Briopost keeps about your LinkedIn account, posts and data.
 - [Contact](https://briopost.com/contact/)
