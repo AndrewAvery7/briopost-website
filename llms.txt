@@ -6,7 +6,7 @@
 
 - Start with a few words, notes, a link, a PDF or a voice note (Talk it through: speak up to three minutes; the recording isn't kept).
 - Pick a format: a carousel, a graphic, a text post or a poll.
-- Make it yours: a brand kit (colors, fonts, logo) that can start from your website address, 150 carousel designs, 49 graphic designs, 32 photo styles, free stock photos, and a real slide editor with charts (6 kinds), about 200 icons, comparisons, cards, big numbers and highlighted words.
+- Make it yours: a brand kit (colors, fonts, logo) that can start from your website address, 150 carousel designs, 100 graphic designs, 32 photo styles, free stock photos, and a real slide editor with charts (6 kinds), about 200 icons, comparisons, cards, big numbers and highlighted words.
 - Plan the month on a calendar, with series, repeats with fresh wording, a first comment and follow-up comments.
 - Share for review: client review links (no account needed to approve or comment), share links, and PDF or image exports.
 - You approve: every post waits until you confirm it, then it posts at the time you choose.
@@ -25,14 +25,14 @@
 
 - [Home](https://briopost.com/): what Briopost does, an interactive sample carousel, how it works, templates, questions and the beta tester sign-up.
 - [LinkedIn carousel maker](https://briopost.com/linkedin-carousel-maker/): turn a few words, notes, a link or a PDF into an editable carousel in your brand; cost shown before each AI step; nothing posts without your OK.
-- [LinkedIn carousel templates](https://briopost.com/linkedin-carousel-templates/): a selection of 42 real designs from the studio (150 carousel designs and 49 graphic designs in all), filterable by format and by 28 fields, and one design shown in three brand kits.
+- [LinkedIn carousel templates](https://briopost.com/linkedin-carousel-templates/): a selection of 42 real designs from the studio (150 carousel designs and 100 graphic designs in all), filterable by format and by 28 fields, and one design shown in three brand kits.
 - [How to make a LinkedIn carousel](https://briopost.com/how-to-make-a-linkedin-carousel/): a seven-step guide, from planning one idea and writing the cover hook to exporting a PDF, posting it as a document and writing the caption.
 - [LinkedIn carousel size](https://briopost.com/linkedin-carousel-size/): 1080x1350 (4:5, the default), 1080x1080 and 1080x1920 carousel sizes, graphic sizes up to 1920x1080 and the 1584x396 banner, and how to export a sharp PDF.
 - [LinkedIn post generator](https://briopost.com/linkedin-post-generator/): text posts, polls and carousels drafted from your own words or a voice note of up to three minutes (the recording isn't kept), plus weekly post ideas.
 - [LinkedIn content calendar](https://briopost.com/linkedin-content-calendar/): one calendar for every post, Plan a series, repeats with fresh wording, first comment and follow-ups; every post needs your OK.
 - [LinkedIn post approval](https://briopost.com/linkedin-post-approval/): client review links (up to 20 posts, 14 days, no account needed to approve or comment), share links and embeds, and your own final confirm.
 - [LinkedIn poll ideas](https://briopost.com/linkedin-polls/): poll ideas by purpose, how to write the question and options, LinkedIn's own poll rules from LinkedIn Help (linked), and Briopost's poll editor (a question and 2 to 4 options).
-- [LinkedIn graphics](https://briopost.com/linkedin-graphics/): single-image graphics in your brand: 49 designs, five sizes including the 1584x396 profile banner, download as PNG or plan it on the calendar.
+- [LinkedIn graphics](https://briopost.com/linkedin-graphics/): single-image graphics in your brand: 100 designs, five sizes including the 1584x396 profile banner, download as PNG or plan it on the calendar.
 - [LinkedIn post formatting](https://briopost.com/linkedin-post-formatting/): bold and italic with Unicode letters (and their drawbacks), line breaks, lists, the first lines before "see more", and LinkedIn's 3,000-character post limit quoted from LinkedIn Help.
 - [LinkedIn personal branding](https://briopost.com/linkedin-personal-branding/): a simple weekly plan: three topics, one or two posts a week, the same look and voice; no promised results.
 - [How to post a PDF carousel on LinkedIn](https://briopost.com/how-to-post-a-pdf-carousel-on-linkedin/): LinkedIn's document upload steps and limits quoted from LinkedIn Help, the title, and fixes for blurry or wrong-size slides.
