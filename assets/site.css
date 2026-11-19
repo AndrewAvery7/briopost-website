@@ -570,6 +570,7 @@ html:not(.js) .site-head{position:static}
 .foot-pages a:hover{color:var(--fg);text-decoration:underline}
 .foot-legal{display:grid;gap:6px;padding-top:16px;border-top:1px solid var(--line-soft)}
 .foot-legal .foot-links{margin-bottom:4px}
+.foot-fine{font-size:12px;line-height:1.4;color:var(--fg-2)}
 
 /* ---------- Simple pages: /beta/, /never/, /waitlist/confirm/, /waitlist/unsubscribe/, 404 ---------- */
 .panel{background:var(--panel);border-radius:16px;box-shadow:inset 0 0 0 1px var(--line-soft)}
