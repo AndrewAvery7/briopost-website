@@ -1,18 +1,36 @@
 <script>document.documentElement.classList.add('js')</script>
-<a class="skip" href="#main">Skip to content</a>
-<header class="site-head">
-  <div class="head-inner">
-    <a class="brand" href="/" aria-label="Briopost home"><img src="/assets/briopost-lockup.svg" width="166" height="32" alt="Briopost"></a>
-    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav"><span class="menu-icon" aria-hidden="true"></span>Menu</button>
-    <nav class="site-nav" id="site-nav" aria-label="Main">
+<a class="skip" href="#main">Skip to the content</a>
+<div class="src d5">
+<header class="site-head" id="top">
+  <div class="wrap head-row">
+    <a class="logo" href="/" aria-label="Briopost home"><img src="/assets/briopost-lockup-light.svg" alt="Briopost" width="150" height="29"></a>
+    <nav class="nav" aria-label="Main">
       <ul>
-        <li><a href="/#features">Features</a></li>
+        <li><a href="/features/">Product</a></li>
         <li><a href="/linkedin-carousel-templates/">Templates</a></li>
         <li><a href="/#how">How it works</a></li>
-        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="/#plans">Plans</a></li>
         <li><a href="/free-tools/">Free tools</a></li>
       </ul>
-      <a class="btn btn-spark btn-head" href="/#waitlist">Become a beta tester</a>
+    </nav>
+    <div class="head-actions">
+      <a class="signin-link" href="https://my.briopost.com/">Sign in</a>
+      <a class="btn btn-spark btn-small" href="/#waitlist">Become a beta tester</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-panel"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span></button>
+    </div>
+  </div>
+  <div class="menu-panel" id="menu-panel" hidden>
+    <nav aria-label="Menu">
+      <ul>
+        <li><a href="/features/">Product</a></li>
+        <li><a href="/linkedin-carousel-templates/">Templates</a></li>
+        <li><a href="/#how">How it works</a></li>
+        <li><a href="/#plans">Plans</a></li>
+        <li><a href="/free-tools/">Free tools</a></li>
+        <li><a href="https://my.briopost.com/">Sign in</a></li>
+      </ul>
+      <a class="btn btn-spark" href="/#waitlist">Become a beta tester</a>
     </nav>
   </div>
 </header>
+</div>
