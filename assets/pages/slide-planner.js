@@ -16,7 +16,7 @@
   var count = document.getElementById('sp-count');
   var status = document.getElementById('sp-status');
   var shapeName = document.getElementById('sp-shape-name');
-  var SHAPES = { portrait: '4:5 portrait, 1080 x 1350', square: '1:1 square, 1080 x 1080', tall: '9:16 tall, 1080 x 1920' };
+  var SHAPES = { portrait: '4:5 portrait, 1080\u00a0\u00d7\u00a01350', square: '1:1 square, 1080\u00a0\u00d7\u00a01080', tall: '9:16 tall, 1080\u00a0\u00d7\u00a01920' };
   var announceTimer = 0;
 
   function tell(action) {

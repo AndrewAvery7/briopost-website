@@ -188,8 +188,10 @@ html:not(.js) .d5 .nav ul{flex-wrap: wrap; gap: 4px 18px;}
 .d5 .menu-panel{max-height:calc(100vh - 92px);max-height:calc(100dvh - 92px);overflow-y:auto;overscroll-behavior:contain}
 .d5 .menu-panel a[aria-current=page]:not(.btn){background:var(--h100)}
 .d6 .wrap{max-width:1640px;padding-inline:clamp(16px,4vw,64px)}
-.d6 .foot-col ul{gap:0}
-.d6 .foot-col a{display:inline-flex;align-items:center;min-height:44px;padding-block:0}
+.d6 .foot-col ul{row-gap:0}
+.d6 .foot-col a{display:inline-flex;align-items:flex-start;min-height:44px;padding-block:11px;line-height:1.35}
 .d6 .foot-col-guides li{margin-bottom:0}
+.d6 .foot-col li{display:flex}
+.skip{text-decoration:none;font-weight:700}
 .skip:focus{top:92px}
 .skip:focus-visible{outline:3px solid var(--mid);outline-offset:3px;box-shadow:0 0 0 6px #fff}

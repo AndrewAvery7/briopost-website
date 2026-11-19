@@ -651,7 +651,7 @@ h1{font-size:var(--t-display);line-height:1;letter-spacing:-.03em}
 .section{padding-block:clamp(48px,5.4vw,84px)}
 
 /* The questions band: the title on one line above the list, so no title word is left alone in a narrow column. */
-.faq-grid .section-head h2{font-size:var(--t-h2);text-wrap:pretty}
+.faq-grid .section-head h2{font-size:var(--t-h2);text-wrap:balance}
 @media (min-width:768px){
   .faq-grid{grid-template-columns:minmax(0,1fr);gap:var(--s-6)}
   .faq-grid .section-head{max-width:none}
@@ -659,57 +659,26 @@ h1{font-size:var(--t-display);line-height:1;letter-spacing:-.03em}
 }
 
 /* One closing "Become a beta tester" band on every inner page, the look of the home and features .backcover: the deep
-   haze band, no diagonal and no orange tab, the words on the left and the action on a card on the right.
-   Markup differs by page family (guides .g-cta, /for/ and free tools .cta-band, templates .tp-join), so the card is a
-   grid area drawn behind the ticks and the button where they are not already wrapped in one. */
+   haze band, no diagonal and no orange tab, the words on the left and the action on a real card on the right (guides
+   .g-cta-side; /for/, free tools, templates and the choose page .cta-card). One card width everywhere. The eyebrow
+   "Free beta, by invitation" stays as the inner-page variant (it is part of each page's copy). */
 .g-cta,.cta-band,.tp-join{position:relative;overflow:hidden;isolation:isolate;background:var(--h300);padding-block:clamp(56px,6vw,104px)}
 .g-cta::before,.g-cta::after{content:none}
 .g-cta .section-head h2,.cta-band .section-head h2,.tp-join .section-head h2{font-size:clamp(2rem,1.3rem + 3.2vw,4.4rem);line-height:.98;letter-spacing:-.035em;max-width:14ch}
 .g-cta .lead,.cta-band .lead,.tp-join .lead{color:var(--midnight);max-width:34ch}
 .g-cta .eyebrow,.cta-band .eyebrow,.tp-join .eyebrow{color:var(--midnight)}
-.g-cta-side{border-radius:var(--r-card);background:var(--card);box-shadow:var(--shadow-2)}
-@media (min-width:960px){.g-cta .g-cta-inner{grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:var(--s-8)}}
-
-/* /for/ and free tools: eyebrow, title, words on the left; the ticks, the button and "Sign in" on the card. */
-.cta-band .cta-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0;align-items:start}
-.cta-band .cta-grid::before{content:"";align-self:stretch;grid-column:1;grid-row:4/6;border-radius:var(--r-card);background:var(--card);box-shadow:var(--shadow-2)}
-.cta-band .section-head{display:contents}
-.cta-band .section-head>*{grid-column:1;margin:0}
-.cta-band .eyebrow{grid-row:1;margin-bottom:14px}
-.cta-band .section-head h2{grid-row:2;margin-bottom:14px}
-.cta-band .lead{grid-row:3;margin-bottom:var(--s-6)}
-.cta-band .ticks{grid-row:4;padding:clamp(22px,3vw,40px) clamp(22px,3vw,40px) 0}
-.cta-band .cta-actions{grid-column:1;grid-row:5;padding:20px clamp(22px,3vw,40px) clamp(22px,3vw,40px)}
+.cta-band .cta-grid,.tp-join .tp-join-wrap,.g-cta .g-cta-inner{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s-6);align-items:center}
+.cta-band .section-head,.tp-join .section-head{margin:0}
+.g-cta-side,.cta-card{display:grid;gap:16px;align-content:start;justify-items:start;padding:clamp(22px,3vw,44px);border-radius:var(--r-card);background:var(--card);box-shadow:var(--shadow-2)}
+.cta-card .ticks,.g-cta-side .ticks{margin:0}
+.cta-card .cta-actions{display:grid;gap:14px;justify-items:start}
+.cta-card .cta-actions .signin,.cta-card .tp-join-cta,.cta-card .ch-end-cta{margin:0}
+.cta-card .tp-join-strip{width:100%;gap:10px}
+.cta-card .tp-join-strip li:nth-child(even){transform:none}
 @media (min-width:960px){
-  .cta-band .cta-grid{grid-template-columns:minmax(0,1fr) minmax(0,480px);column-gap:var(--s-8);align-items:center}
-  .cta-band .cta-grid::before{grid-column:2;grid-row:1/4}
-  .cta-band .lead{margin-bottom:0;align-self:start}
-  .cta-band .ticks{grid-column:2;grid-row:1/3;align-self:end}
-  .cta-band .cta-actions{grid-column:2;grid-row:3;align-self:start}
+  .cta-band .cta-grid,.tp-join .tp-join-wrap,.g-cta .g-cta-inner{grid-template-columns:minmax(0,1fr) minmax(0,560px);column-gap:var(--s-8);row-gap:0}
 }
-
-/* Templates: the four covers, the ticks and the button on the card. */
-.tp-join .tp-join-wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:0;align-items:start}
-.tp-join .tp-join-wrap::before{content:"";align-self:stretch;grid-column:1;grid-row:4/7;border-radius:var(--r-card);background:var(--card);box-shadow:var(--shadow-2)}
-.tp-join .section-head{display:contents}
-.tp-join .section-head>*{grid-column:1;margin:0}
-.tp-join .eyebrow{grid-row:1;margin-bottom:14px}
-.tp-join .section-head h2{grid-row:2;margin-bottom:14px}
-.tp-join .lead{grid-row:3;margin-bottom:var(--s-6)}
-.tp-join .tp-join-strip{grid-column:1;grid-row:4;padding:clamp(22px,3vw,40px) clamp(22px,3vw,40px) 0;gap:10px}
-.tp-join .tp-join-strip li:nth-child(even){transform:none}
-.tp-join .ticks{grid-row:5;padding:20px clamp(22px,3vw,40px) 0}
-.tp-join .tp-join-cta{grid-row:6;padding:20px clamp(22px,3vw,40px) clamp(22px,3vw,40px)}
-@media (min-width:960px){
-  .tp-join .tp-join-wrap{grid-template-columns:minmax(0,1fr) minmax(0,520px);column-gap:var(--s-8);align-items:center}
-  .tp-join .tp-join-wrap::before{grid-column:2;grid-row:1/5}
-  .tp-join .eyebrow{grid-row:2;align-self:end}
-  .tp-join .section-head h2{grid-row:3}
-  .tp-join .lead{grid-row:4;margin-bottom:0;align-self:start}
-  .tp-join .tp-join-strip{grid-column:2;grid-row:1/3;align-self:end}
-  .tp-join .ticks{grid-column:2;grid-row:3;align-self:center}
-  .tp-join .tp-join-cta{grid-column:2;grid-row:4;align-self:start}
-}
+@media (max-width:479px){.cta-card .cta-actions,.cta-card{justify-items:stretch}}
 
 /* Touch targets in page content: small text links get a 44 px tall target without moving the layout. */
 .crumbs a,.ch-crumbs a,.tp-crumbs a,a.dl,a.back{display:inline-block;min-height:0;padding-block:13px;margin-block:-13px}

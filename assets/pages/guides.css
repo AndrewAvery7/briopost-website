@@ -80,6 +80,9 @@
 .g-tabs{margin-bottom:14px}
 .g-own{margin-top:var(--s-6);padding-top:var(--s-5);border-top:1px solid var(--line);max-width:620px}
 @media (min-width:700px){.g-demo .bp-feed{margin-inline:auto}}
+/* One sample frame on every page (as on /for/): an inset rounded card on phones too, not a full-bleed square one. */
+.g-demo .bp-output{border-radius:var(--r-card)}
+@media (max-width:959px){.g-demo .bp-output{margin-inline:var(--gutter)}}
 @media (min-width:960px){
   .g-demo .bp-output{border-radius:var(--r-card);--slide-w:clamp(260px,24vw,330px);--slide-gap:18px;--track-pad:28px;padding:22px 0 12px}
   .g-demo .bp-track{scroll-padding-inline:28px}

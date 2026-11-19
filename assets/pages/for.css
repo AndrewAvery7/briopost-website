@@ -29,7 +29,7 @@
   --slide-w:min(64vw,300px);--slide-gap:12px;--track-pad:16px}
 .for-demo .bp-track{scroll-padding-inline:16px}
 .for-demo .bp-label{font-size:12px;margin-top:8px;text-align:left;color:var(--fg-2)}
-.for-demo .bp-arrow{display:none;color:var(--fg);background:var(--card);border-color:var(--h400)}
+.for-demo .bp-arrow{color:var(--fg);background:var(--card);border-color:var(--h400);cursor:pointer}
 .for-demo .bp-arrow:hover{border-color:var(--fg)}
 .for-demo .s-chart-kinds{display:none}
 .for-demo .s-chart-kinds button{color:var(--fg);background:var(--card);border-color:var(--h400)}
@@ -39,13 +39,15 @@
 .for-demo .bp-tabs button:hover{color:var(--fg);background:rgb(255 255 255/.6)}
 .for-demo .bp-tabs [aria-selected=true]{background:var(--spark);color:var(--midnight)}
 .for-demo .bp-own-note{color:var(--fg-2)}
+/* One sample frame on every page (as on the guides): arrows on phones too, and midnight dots. */
+.for-demo .bp-dots button::after{background:var(--field-line)}
+.for-demo .bp-dots button[aria-current="true"]::after{background:var(--midnight)}
 .for-demo .sample-note{margin-top:12px}
 @media (min-width:768px){
   .for-demo .swatch-label{display:inline}
   .for-demo .bp-output{padding:26px 0 16px;--slide-w:clamp(260px,26vw,340px);--slide-gap:18px;--track-pad:28px}
   .for-demo .bp-track{scroll-padding-inline:28px}
   .for-demo .bp-label{font-size:13px}
-  .for-demo .bp-arrow{display:inline-block;cursor:pointer}
 }
 
 /* Five post ideas. */
@@ -88,6 +90,10 @@
 #faq:has(+#more){padding-bottom:var(--s-7)}
 #faq+#more>.wrap{padding-top:var(--s-4)}
 @media (min-width:960px){
-  #faq+#more>.wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);column-gap:var(--s-8);align-items:start}
+  #faq+#more>.wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1.6fr);column-gap:var(--s-8);align-items:start}
   #faq+#more .related{margin-top:0}
+  /* A "keep reading" heading, not a section title: a step smaller, so "More from Briopost." stays on one line. */
+  #faq+#more .section-head h2{font-size:clamp(2rem,.6rem + 2.6vw,3rem)}
 }
+/* The labels over the pill rows get room to breathe. */
+#more .related h3{margin-bottom:12px}

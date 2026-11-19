@@ -70,31 +70,31 @@
       match = s.key;
       if (isImageExact) {
         state = 'ok';
-        lines.push('This matches the ' + s.name + ' ' + s.ratioName + ' carousel size Briopost makes, ' + s.w + ' x ' + s.h + ' pixels, exactly.');
+        lines.push('This matches the ' + s.name + ' ' + s.ratioName + ' carousel size Briopost makes, ' + s.w + '\u00a0\u00d7\u00a0' + s.h + ' pixels, exactly.');
       } else if (isPdf) {
         state = 'ok';
-        lines.push('The page has the same ' + s.ratioName + ' shape as the ' + s.name + ' carousels Briopost makes (' + s.w + ' x ' + s.h + ' pixels).');
+        lines.push('The page has the same ' + s.ratioName + ' shape as the ' + s.name + ' carousels Briopost makes (' + s.w + '\u00a0\u00d7\u00a0' + s.h + ' pixels).');
         lines.push('PDF pages are measured in points, not pixels, so the shape is what to compare.');
       } else {
         state = 'ok';
         lines.push('Same ' + s.ratioName + ' shape as the ' + s.name + ' carousels Briopost makes, at a different size.');
         lines.push(w < s.w
-          ? 'It is ' + num(w) + ' pixels wide. Briopost exports this shape at ' + s.w + ' x ' + s.h + '. Smaller pictures can look soft on large screens, so use a bigger copy if you have one.'
-          : 'It is larger than the ' + s.w + ' x ' + s.h + ' Briopost exports, which is fine: the shape is right.');
+          ? 'It is ' + num(w) + ' pixels wide. Briopost exports this shape at ' + s.w + '\u00a0\u00d7\u00a0' + s.h + '. Smaller pictures can look soft on large screens, so use a bigger copy if you have one.'
+          : 'It is larger than the ' + s.w + '\u00a0\u00d7\u00a0' + s.h + ' Briopost exports, which is fine: the shape is right.');
       }
     } else if (c.same) {
       match = s.key;
-      lines.push('This is the shape of a ' + s.name + ' (' + s.ratioName + '). Briopost makes graphics at ' + s.w + ' x ' + s.h + ', but its carousels are portrait 4:5, square 1:1 or story 9:16.');
+      lines.push('This is the shape of a ' + s.name + ' (' + s.ratioName + '). Briopost makes graphics at ' + s.w + '\u00a0\u00d7\u00a0' + s.h + ', but its carousels are portrait 4:5, square 1:1 or story 9:16.');
       var near = compareTo(w, h, carousels);
       var cr = cropTo(w, h, near);
-      lines.push('For a carousel, the closest is ' + near.name + ' ' + near.ratioName + '. Cropping to ' + num(cr[0]) + ' x ' + num(cr[1]) + unit + ' gives that shape.');
+      lines.push('For a carousel, the closest is ' + near.name + ' ' + near.ratioName + '. Cropping to ' + num(cr[0]) + '\u00a0\u00d7\u00a0' + num(cr[1]) + unit + ' gives that shape.');
     } else {
       var n2 = compareTo(w, h, carousels);
       var c2 = cropTo(w, h, n2);
-      lines.push('This does not match the carousel sizes Briopost makes: portrait 4:5 (1080 x 1350), square 1:1 (1080 x 1080) or story 9:16 (1080 x 1920).');
+      lines.push('This does not match the carousel sizes Briopost makes: portrait 4:5 (1080\u00a0\u00d7\u00a01350), square 1:1 (1080\u00a0\u00d7\u00a01080) or story 9:16 (1080\u00a0\u00d7\u00a01920).');
       lines.push('The closest is ' + n2.name + ' ' + n2.ratioName + '. ' + (isPdf
-        ? 'Export the pages again at that shape, or crop them to ' + fmt(c2[0]) + ' x ' + fmt(c2[1]) + ' points.'
-        : 'Crop it to ' + num(c2[0]) + ' x ' + num(c2[1]) + ' pixels, or resize it to ' + n2.w + ' x ' + n2.h + ', to get that shape.'));
+        ? 'Export the pages again at that shape, or crop them to ' + fmt(c2[0]) + '\u00a0\u00d7\u00a0' + fmt(c2[1]) + ' points.'
+        : 'Crop it to ' + num(c2[0]) + '\u00a0\u00d7\u00a0' + num(c2[1]) + ' pixels, or resize it to ' + n2.w + '\u00a0\u00d7\u00a0' + n2.h + ', to get that shape.'));
     }
     return { lines: lines, state: state, match: match };
   }
@@ -115,9 +115,9 @@
     add('File', o.kindLabel);
     if (o.isPdf) {
       add('Pages', num(o.pages));
-      add(o.pages > 1 ? 'First page' : 'Page size', fmt(o.w) + ' x ' + fmt(o.h) + ' points');
+      add(o.pages > 1 ? 'First page' : 'Page size', fmt(o.w) + '\u00a0\u00d7\u00a0' + fmt(o.h) + ' points');
     } else {
-      add('Size', num(o.w) + ' x ' + num(o.h) + ' pixels');
+      add('Size', num(o.w) + '\u00a0\u00d7\u00a0' + num(o.h) + ' pixels');
     }
     add('Shape', ratioText(o.w, o.h) + (o.w > o.h ? ' (wider than tall)' : o.w < o.h ? ' (taller than wide)' : ' (square)'));
     out.appendChild(dl);

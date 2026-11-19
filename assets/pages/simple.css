@@ -9,3 +9,5 @@
 @media(max-width:767px){.doc{padding-inline:var(--gutter)}}
 /* Legal, contact and "never" pages: the soft hall light of the other page openings behind the top of the page. */
 body:has(main.doc,main.doc-wrap){background:radial-gradient(ellipse 40% 520px at 78% 0,rgb(255 255 255/.7),transparent 70%) no-repeat,linear-gradient(180deg,var(--h200),var(--h100) 640px) no-repeat,var(--h100)}
+/* Very narrow phones: a touch smaller so a short title such as "Contact and Support" keeps its last word company. */
+@media (max-width:374px){main.doc h1{font-size:2.125rem}}

@@ -290,13 +290,13 @@
       if (target >= 0) return; // our own scroll is still settling
       mark(inView());
     }
+    // Where a slide sits centered; the track cannot go past its ends, so on wide pages the first and last slides
+    // cannot be centered and several slides share one stop.
+    function stopFor(tr, f) { return Math.max(0, Math.min(maxScroll(tr), f.offsetLeft - (tr.clientWidth - f.offsetWidth) / 2)); }
     function go(i) {
       var tr = track(), figs = slideList(); if (!tr || !figs.length) return;
       i = Math.max(0, Math.min(figs.length - 1, i));
-      var f = figs[i];
-      // Where the slide sits centered; the track cannot go past its ends, so on wide pages the first and last slides
-      // cannot be centered and several slides share one stop.
-      var want = Math.max(0, Math.min(maxScroll(tr), f.offsetLeft - (tr.clientWidth - f.offsetWidth) / 2));
+      var want = stopFor(tr, figs[i]);
       target = i; mark(i);
       tr.scrollTo({ left: want, behavior: reduce ? 'auto' : 'smooth' });
       clearTimeout(settle);
@@ -309,6 +309,21 @@
 
     // On a phone the sample sits above "Shape it": after shaping, bring the new first slide back into view (only in
     // answer to the visitor's own click, and without smooth scrolling when reduced motion is on).
+    // Next and Previous (arrows, and the arrow keys without wrapping) move one slide from the one shown. On wide pages
+    // several slides are on screen and share a stop, so a step that would leave the track where it is goes on to the
+    // next slide that moves it: every press visibly moves the slides. Where every slide shares one stop (one slide on
+    // screen, as on phones and the home page), this is the plain one-slide step.
+    function step(dir, wrap) {
+      var tr = track(), figs = slideList(), len = figs.length; if (!tr || !len) return;
+      var from = target >= 0 ? stopFor(tr, figs[target]) : tr.scrollLeft, j = current;
+      for (var k = 0; k < len; k++) {
+        j += dir;
+        if (j < 0 || j >= len) { if (!wrap) return; j = (j + len) % len; }
+        if (Math.abs(stopFor(tr, figs[j]) - from) > 2 || len < 2) { go(j); return; }
+      }
+      go((current + dir + len) % len);
+    }
+
     function showFirst() {
       if (!root.matchMedia || !root.matchMedia('(max-width: 959px)').matches) return;
       var first = out.querySelector('.bp-slide') || out.firstElementChild;
@@ -336,7 +351,7 @@
       } else if (b.hasAttribute('data-chart')) {
         state.chart = b.getAttribute('data-chart'); paint(true); draw(true);
       } else if (b.hasAttribute('data-step')) {
-        var len = slideList().length; go((current + Number(b.getAttribute('data-step')) + len) % len);
+        step(Number(b.getAttribute('data-step')), true);
       } else if (b.hasAttribute('data-slide')) {
         go(Number(b.getAttribute('data-slide')));
       } else if (b.hasAttribute('data-vote')) {
@@ -362,9 +377,9 @@
     // Arrow keys, Home and End on the focused track move one slide from the one shown.
     demo.addEventListener('keydown', function (e) {
       var t = track(); if (!t || e.target !== t) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); step(e.key === 'ArrowRight' ? 1 : -1, false); return; }
       var n = -1;
-      if (e.key === 'ArrowRight') n = current + 1; else if (e.key === 'ArrowLeft') n = current - 1;
-      else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = slideList().length - 1;
+      if (e.key === 'Home') n = 0; else if (e.key === 'End') n = slideList().length - 1;
       else return;
       e.preventDefault(); go(Math.max(0, n));
     });
