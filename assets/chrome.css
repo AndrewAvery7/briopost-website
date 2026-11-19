@@ -172,14 +172,11 @@ html:not(.js) .d5 .head-row{flex-wrap: wrap; row-gap: 6px;}
 html:not(.js) .d5 .nav{display: block; order: 3; flex-basis: 100%; margin: 0;}
 html:not(.js) .d5 .nav ul{flex-wrap: wrap; gap: 4px 18px;}
 }
-/* The footer's guide list runs in two columns on wide screens. */
-@media (min-width:900px){
-.d6 .foot-grid{grid-template-columns:1.1fr 1fr 2fr 1fr 1.2fr 1fr}
-.d6 .foot-col-guides ul{columns:2;column-gap:28px;display:block}
-.d6 .foot-col-guides li{break-inside:avoid;margin-bottom:8px}
-}
-@media (min-width:900px) and (max-width:1279px){
-.d6 .foot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+/* Footer layout: the brand on its own row, then the link columns; the guide list runs in two columns on wide screens. */
 .d6 .foot-brand{grid-column:1/-1}
-}
+/* Phones and tablets: two columns, the guide list across both. */
+@media (max-width:1099px){.d6 .foot-grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px;row-gap:32px}.d6 .foot-col-guides{grid-column:1/-1}.d6 .foot-col-guides ul{display:block;columns:2;column-gap:20px}.d6 .foot-col-guides li{break-inside:avoid;margin-bottom:8px}}
+@media (max-width:420px){.d6 .foot-col{font-size:.9375rem}}
+@media (max-width:1099px){.d6 .foot-col-guides{order:2}.d6 .foot-col:has(#f-tools),.d6 .foot-col:has(#f-for){order:3}}
+@media (min-width:1100px){.d6 .foot-grid{grid-template-columns:minmax(0,1fr) minmax(0,2.2fr) repeat(3,minmax(0,1fr));column-gap:clamp(28px,3vw,56px)}.d6 .foot-col-guides{grid-column:auto}}
 .d6 .foot-col a{display:inline-block;padding-block:3px}
