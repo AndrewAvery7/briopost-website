@@ -19,7 +19,7 @@
 .g-section,.guide .section-faq,.g-related{padding-block:clamp(48px,5.4vw,84px)}
 .g-section:nth-of-type(even){background:var(--h50)}
 .g-prose{min-width:0}
-.g-prose h2,.g-section .section-head h2{font-size:clamp(28px,1.6vw + 21px,46px)}
+.g-prose h2,.g-section .section-head h2{font-size:var(--t-h2)}
 .g-prose h2{margin-bottom:var(--s-4)}
 .g-prose .eyebrow{margin-bottom:14px}
 .g-h2-small,.g-prose h2.g-h2-small{font-size:var(--t-h3)}
@@ -68,8 +68,9 @@
 /* ---------- The sample (the shared interactive sample, sized for an inner page) ---------- */
 .g-demo{margin-top:calc(-1 * var(--s-3))}
 .g-demo-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-bottom:14px}
+/* The sample sits on a card, as on the home page and the /for/ pages. */
 .g-demo .bp-output{position:relative;max-width:calc(var(--maxw) + 2 * var(--gutter));margin-inline:auto;padding:14px 0 6px;
-  background:radial-gradient(70% 60% at 30% 104%,color-mix(in srgb,var(--sk-accent,#ff5b2e) 14%,transparent),transparent 72%),var(--h200);
+  background:var(--card);box-shadow:var(--shadow-1);
   --slide-w:min(70vw,300px);--slide-gap:14px;--track-pad:var(--gutter)}
 .g-demo .bp-track{scroll-padding-inline:var(--gutter)}
 .g-demo .bp-graphic{max-width:min(78vw,360px)}
@@ -190,17 +191,10 @@
 .g-related-name::after{content:" →";color:var(--fg)}
 .g-related-text{font-size:16px;color:var(--fg-2)}
 @media (min-width:768px){.g-related-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
-/* The closing action: the deep haze band of the home and features pages, the words on the band and the action on a card. */
-.g-cta{position:relative;overflow:hidden;isolation:isolate;background:var(--h300);padding-block:clamp(40px,4.6vw,72px)}
-.g-cta::before{content:"";position:absolute;z-index:-1;left:0;top:0;bottom:0;width:34%;background:var(--h200);clip-path:polygon(0 0,100% 0,62% 100%,0 100%)}
-.g-cta::after{content:"";position:absolute;z-index:-1;left:var(--gutter);top:0;width:72px;height:14px;background:var(--spark)}
+/* The closing action: the shared closing band in site.css (deep haze band, words left, the action on a card). */
 .g-cta-inner{display:grid;gap:var(--s-6);align-items:center}
-.g-cta .section-head h2{font-size:clamp(2.6rem,1.2rem + 4vw,5.5rem);line-height:.95;letter-spacing:-.04em}
-.g-cta .section-head .lead{color:var(--midnight);max-width:34ch}
-.g-cta .eyebrow{color:var(--midnight)}
-.g-cta-side{display:grid;gap:16px;align-content:start;justify-items:start;padding:clamp(22px,3vw,44px);border-radius:var(--r-card);background:var(--card);box-shadow:var(--shadow-2)}
+.g-cta-side{display:grid;gap:16px;align-content:start;justify-items:start;padding:clamp(22px,3vw,44px)}
 .g-cta-btn{max-width:100%}
-@media (min-width:960px){.g-cta-inner{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:var(--s-8)}}
 .g-demo .bp-feed+.bp-label,.g-demo .bp-graphic+.bp-label,.g-demo .bp-own-note{padding-inline:var(--gutter)}
 
 /* ---------- Haze theme overrides of shared guide rules in site.css (redesign rollout, 2026-11-19) ----------
@@ -234,3 +228,10 @@
 /* Two pale bands in a row get a hairline between them. */
 .g-section:nth-of-type(even)+.section-faq{box-shadow:inset 0 1px 0 var(--line-soft)}
 .g-demo .s-chart-kinds button[aria-pressed=true]{background:var(--midnight);color:#fff;border-color:var(--midnight)}
+/* /linkedin-carousel-size/: on a computer the three frames sit beside the size table instead of above it, so the
+   section is not half empty. */
+@media (min-width:1100px){
+  .g-section>.wrap:has(>.g-shapes+.g-table-wrap){display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);column-gap:var(--s-8);align-items:center}
+  .g-section>.wrap:has(>.g-shapes+.g-table-wrap)>.section-head{grid-column:1/-1}
+  .g-section>.wrap:has(>.g-shapes+.g-table-wrap)>.g-shapes{margin:0}
+}

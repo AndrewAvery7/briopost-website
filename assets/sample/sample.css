@@ -54,7 +54,7 @@
 .is-drawn .c-line{stroke-dashoffset:0}
 .is-drawn .c-area,.is-drawn .c-dot,.is-drawn .c-val{opacity:1}
 .s-chart-kinds{display:flex;justify-content:center;gap:6px;margin-top:10px}
-.s-chart-kinds button{min-height:36px;padding:6px 12px;border-radius:999px;border:1px solid var(--line,#454b8f);background:transparent;color:inherit;font:600 13px/1 var(--sk-b,Inter)}
+.s-chart-kinds button{min-height:44px;padding:6px 12px;border-radius:999px;border:1px solid var(--line,#454b8f);background:transparent;color:inherit;font:600 13px/1 var(--sk-b,Inter)}
 .s-chart-kinds button[aria-pressed=true]{background:var(--midnight,#121433);color:#fff;border-color:var(--midnight,#121433)}
 
 /* 3. Comparison with ticks and crosses. */
@@ -126,7 +126,7 @@
 /* The carousel track: native swipe and scroll snap; works without JavaScript. */
 .bp-track{display:grid;grid-auto-flow:column;grid-auto-columns:var(--slide-w,min(80%,360px));gap:var(--slide-gap,16px);overflow-x:auto;scroll-snap-type:x mandatory;padding:6px var(--track-pad,10%) 14px;scrollbar-width:none;overscroll-behavior-x:contain}
 .bp-track::-webkit-scrollbar{display:none}
-.bp-track:focus-visible{outline:2px solid #ff5b2e;outline-offset:4px}
+.bp-track:focus-visible{outline:3px solid var(--midnight,#121433);outline-offset:4px}
 .bp-slide{margin:0;scroll-snap-align:center}
 .bp-label{margin:10px 0 0;font:500 13px/1.4 Inter,system-ui,sans-serif;color:var(--muted-site,#b4b7e0);text-align:center}
 .bp-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px}

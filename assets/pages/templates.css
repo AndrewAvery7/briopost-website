@@ -74,7 +74,6 @@
 
 /* ---------- 2. Gallery ---------- */
 .tp-gallery .section-head{margin-bottom:var(--s-6)}
-.tp-num{text-decoration:underline;text-decoration-color:var(--spark);text-decoration-thickness:.12em;text-underline-offset:.12em}
 .tp-filters{display:flex;flex-wrap:wrap;align-items:end;gap:14px 20px;margin-bottom:12px}
 .tp-prof{display:grid;gap:6px;min-width:0}
 .tp-prof label{font:700 var(--t-label)/1.2 var(--b);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2)}
@@ -132,7 +131,6 @@
 .tp-next-list a:hover{background:#fff;box-shadow:inset 0 0 0 1.5px var(--midnight)}
 
 /* ---------- 6. Closing action ---------- */
-.tp-join{background:var(--h200);overflow:hidden}
 .tp-join-wrap{display:grid;gap:var(--s-6)}
 .tp-join-cta{margin-top:8px}
 .tp-join-strip{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}

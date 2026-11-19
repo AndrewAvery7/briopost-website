@@ -74,12 +74,20 @@
 .related h3{font:700 var(--t-label)/1.2 var(--b);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
 
 /* Closing call to action. */
-.cta-band{background:var(--h200)}
 .cta-grid{display:grid;gap:var(--s-6)}
 .cta-actions{display:grid;gap:14px;align-content:start;justify-items:start}
 .cta-actions .signin{margin:0}
 @media (min-width:960px){.cta-grid{grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:var(--s-9);align-items:center}}
 
-/* Topic switch: a clear selected state on the light page. */
+/* Topic switch on the light page (the selected state comes from site.css, the same on every page). */
 .for-demo .seg{background:var(--h100);border-color:var(--h300)}
-.for-demo .seg button[aria-pressed=true]{background:var(--fg);color:var(--card)}
+
+/* "More from Briopost" continues the questions band (one band, not two thin ones); on a computer its title sits left of
+   the links so the row is not half empty. */
+#faq+#more{background:var(--h50);padding-top:0}
+#faq:has(+#more){padding-bottom:var(--s-7)}
+#faq+#more>.wrap{padding-top:var(--s-4)}
+@media (min-width:960px){
+  #faq+#more>.wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);column-gap:var(--s-8);align-items:start}
+  #faq+#more .related{margin-top:0}
+}

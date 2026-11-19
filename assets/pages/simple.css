@@ -7,3 +7,5 @@
 .doc :focus-visible,.action-card :focus-visible{outline:3px solid var(--midnight);outline-offset:2px}
 .action-card .back{text-decoration-color:var(--spark);text-decoration-thickness:2px;text-underline-offset:3px}
 @media(max-width:767px){.doc{padding-inline:var(--gutter)}}
+/* Legal, contact and "never" pages: the soft hall light of the other page openings behind the top of the page. */
+body:has(main.doc,main.doc-wrap){background:radial-gradient(ellipse 40% 520px at 78% 0,rgb(255 255 255/.7),transparent 70%) no-repeat,linear-gradient(180deg,var(--h200),var(--h100) 640px) no-repeat,var(--h100)}
