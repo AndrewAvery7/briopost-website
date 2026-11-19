@@ -1,6 +1,6 @@
 /* briopost.com shared header and footer (every page except the home and features pages, whose own sheets carry the
    same rules). Cut from assets/features.css (the approved design, 2026-11-19); keep the two in step. */
-:root{--paper:#f6f4ef;--fs-body:1.0625rem;--mid:#121433;--ink2:#34376a;--spark:#ff5b2e;--card:#fcfbf8;--h100:#e8e9f6;--line:rgba(18,20,51,.14)}
+.d5,.d6,.skip{--paper:#f6f4ef;--fs-body:1.0625rem;--mid:#121433;--ink2:#34376a;--spark:#ff5b2e;--card:#fcfbf8;--h100:#e8e9f6;--line:rgba(18,20,51,.14)}
 .d5{--mid: #121433;
   --ink2: #34376a;
   --spark: #ff5b2e;

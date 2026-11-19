@@ -101,7 +101,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;padding:2px;gap:2px;background:var(--deep)}
 .seg button{min-height:40px;min-width:44px;padding:0 9px;border:0;border-radius:6px;background:transparent;color:var(--fg-2);font:600 13px/1 var(--b);cursor:pointer;transition:background-color var(--m-quick),color var(--m-quick)}
 .seg button:hover{color:var(--fg)}
-.seg button[aria-pressed=true]{background:var(--paper);color:var(--midnight)}
+.seg button[aria-pressed=true]{background:var(--midnight);color:#fff}
 .swatches{display:flex;align-items:center}
 .swatch-label{display:none;margin-right:6px;font:600 13px/1 var(--b);color:var(--fg-2)}
 .swatch{position:relative;width:42px;height:44px;border:0;background:none;padding:0;cursor:pointer;border-radius:50%}
@@ -267,7 +267,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .ok-badge-wrap{margin-top:6px}
 .ok-badge{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:0 12px;border-radius:999px;background:var(--spark);color:var(--midnight);font:700 13px/1 var(--b)}
 .ok-tick{width:0;height:14px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transition:width var(--m-quick)}
-.ok-card[data-state=confirmed] .ok-badge{background:var(--paper);color:var(--midnight)}
+.ok-card[data-state=confirmed] .ok-badge{background:var(--midnight);color:#fff}
 .ok-card[data-state=confirmed] .ok-tick{width:14px}
 .ok-card.is-springing .ok-badge{animation:spring var(--m-slow) var(--ease-spring) both}
 @keyframes spring{from{transform:scale(.72)}to{transform:none}}
