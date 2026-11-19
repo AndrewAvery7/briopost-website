@@ -6,7 +6,7 @@
   "start_url": "/",
   "scope": "/",
   "display": "browser",
-  "background_color": "#121433",
+  "background_color": "#E8E9F6",
   "theme_color": "#D6D8F0",
   "icons": [
     { "src": "/assets/briopost-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
