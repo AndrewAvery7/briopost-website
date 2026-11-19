@@ -255,23 +255,56 @@
         if (keepScroll) nt.scrollLeft = x;
         nt.addEventListener('scroll', onScroll, { passive: true });
       }
+      target = -1; clearTimeout(settle);
+      mark(nt ? inView() : 0);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { if (target < 0) mark(inView()); }); });
       draw(false);
     }
-    function onScroll() {
-      var tr = track(); if (!tr) return;
-      var figs = tr.querySelectorAll('.bp-slide'), best = 0, bestD = 1e9, mid = tr.scrollLeft + tr.clientWidth / 2;
+    // The dots always show the slide that is actually in view. Arrows, dots and arrow keys move one slide from the one
+    // shown (several slides can be on screen at once on wide pages, so the scroll position alone cannot name "the"
+    // slide: the last slides can never be centered). Swipes and scrolls update the dots from the scroll position.
+    var target = -1, settle = 0;
+    function slideList() { var tr = track(); return tr ? Array.prototype.slice.call(tr.querySelectorAll('.bp-slide')) : []; }
+    function maxScroll(tr) { return tr.scrollWidth - tr.clientWidth; }
+    function nearest() {
+      var tr = track(), figs = slideList(); if (!tr || !figs.length) return 0;
+      var mid = tr.scrollLeft + tr.clientWidth / 2, best = 0, bestD = 1e9;
       figs.forEach(function (f, i) { var d = Math.abs(f.offsetLeft + f.offsetWidth / 2 - mid); if (d < bestD) { bestD = d; best = i; } });
-      if (best !== current) {
-        current = best;
-        out.querySelectorAll('.bp-dots button').forEach(function (b, i) { if (i === current) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
-      }
+      return best;
+    }
+    function inView() {
+      var tr = track(), figs = slideList(); if (!tr || !figs.length) return 0;
+      if (tr.scrollLeft <= 1) return 0;
+      if (tr.scrollLeft >= maxScroll(tr) - 1 && maxScroll(tr) > 1) return figs.length - 1;
+      return nearest();
+    }
+    function mark(i) {
+      current = i;
+      out.querySelectorAll('.bp-dots button').forEach(function (b, k) { if (k === i) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+      var n = slideList().length, prev = out.querySelector('.bp-arrow[data-step="-1"]'), next = out.querySelector('.bp-arrow[data-step="1"]');
+      // The arrows wrap (5 to 1, 1 to 5), so they are never disabled at the ends.
+      if (prev) prev.disabled = n < 2;
+      if (next) next.disabled = n < 2;
+    }
+    function onScroll() {
+      if (target >= 0) return; // our own scroll is still settling
+      mark(inView());
     }
     function go(i) {
-      var tr = track(); if (!tr) return;
-      var figs = tr.querySelectorAll('.bp-slide');
-      current = Math.max(0, Math.min(figs.length - 1, i));
-      var f = figs[current];
-      tr.scrollTo({ left: f.offsetLeft - (tr.clientWidth - f.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
+      var tr = track(), figs = slideList(); if (!tr || !figs.length) return;
+      i = Math.max(0, Math.min(figs.length - 1, i));
+      var f = figs[i];
+      // Where the slide sits centered; the track cannot go past its ends, so on wide pages the first and last slides
+      // cannot be centered and several slides share one stop.
+      var want = Math.max(0, Math.min(maxScroll(tr), f.offsetLeft - (tr.clientWidth - f.offsetWidth) / 2));
+      target = i; mark(i);
+      tr.scrollTo({ left: want, behavior: reduce ? 'auto' : 'smooth' });
+      clearTimeout(settle);
+      settle = setTimeout(function () {
+        var t = track(); target = -1; if (!t) return;
+        // The track stopped where the asked-for slide can be centered (or as near as it can get): keep the dot on it.
+        mark(Math.abs(t.scrollLeft - want) <= 2 ? i : inView());
+      }, reduce ? 50 : 900);
     }
 
     // On a phone the sample sits above "Shape it": after shaping, bring the new first slide back into view (only in
@@ -303,7 +336,7 @@
       } else if (b.hasAttribute('data-chart')) {
         state.chart = b.getAttribute('data-chart'); paint(true); draw(true);
       } else if (b.hasAttribute('data-step')) {
-        go(current + Number(b.getAttribute('data-step')));
+        var len = slideList().length; go((current + Number(b.getAttribute('data-step')) + len) % len);
       } else if (b.hasAttribute('data-slide')) {
         go(Number(b.getAttribute('data-slide')));
       } else if (b.hasAttribute('data-vote')) {
@@ -326,9 +359,20 @@
       if (n < 0 && e.key !== 'ArrowLeft') return;
       e.preventDefault(); n = (n + tabs.length) % tabs.length; tabs[n].focus(); tabs[n].click();
     });
+    // Arrow keys, Home and End on the focused track move one slide from the one shown.
+    demo.addEventListener('keydown', function (e) {
+      var t = track(); if (!t || e.target !== t) return;
+      var n = -1;
+      if (e.key === 'ArrowRight') n = current + 1; else if (e.key === 'ArrowLeft') n = current - 1;
+      else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = slideList().length - 1;
+      else return;
+      e.preventDefault(); go(Math.max(0, n));
+    });
     var ta = demo.querySelector('textarea'), count = demo.querySelector('.thought-count');
     if (ta && count) { var upd = function () { count.textContent = ta.value.length + ' / ' + ta.maxLength; }; ta.addEventListener('input', upd); upd(); }
     var tr0 = track(); if (tr0) tr0.addEventListener('scroll', onScroll, { passive: true });
+    mark(tr0 ? inView() : 0);
+    setTimeout(function () { if (target < 0) mark(inView()); }, 0);
     draw(false);
   }
 

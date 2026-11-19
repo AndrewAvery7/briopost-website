@@ -127,7 +127,7 @@
 
     var finish = function (status, email, quiet, body) {
       var panel = form.parentElement;
-      if (panel.classList.contains('form-panel')) panel.style.minHeight = panel.getBoundingClientRect().height + 'px'; // keep the panel the same height, so nothing below jumps
+      if (panel.classList.contains('form-panel') || panel.classList.contains('join-panel')) panel.style.minHeight = panel.getBoundingClientRect().height + 'px'; // keep the panel the same height, so nothing below jumps
       form.hidden = true;
       if (status === 'already_confirmed' && testerReady(body)) {
         doneTitle.textContent = 'Your beta account is ready.';
@@ -150,7 +150,7 @@
           : '. Click it to confirm your email. If it isn’t there in a few minutes, check your spam folder.'));
       }
       done.hidden = false;
-      if (!quiet) doneTitle.focus();
+      if (!quiet) { doneTitle.focus(); if (doneTitle.scrollIntoView) doneTitle.scrollIntoView({ block: 'center', behavior: 'instant' }); }
     };
 
     form.addEventListener('submit', function (event) {

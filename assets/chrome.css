@@ -180,3 +180,16 @@ html:not(.js) .d5 .nav ul{flex-wrap: wrap; gap: 4px 18px;}
 @media (max-width:1099px){.d6 .foot-col-guides{order:2}.d6 .foot-col:has(#f-tools),.d6 .foot-col:has(#f-for){order:3}}
 @media (min-width:1100px){.d6 .foot-grid{grid-template-columns:minmax(0,1fr) minmax(0,2.2fr) repeat(3,minmax(0,1fr));column-gap:clamp(28px,3vw,56px)}.d6 .foot-col-guides{grid-column:auto}.d6 .foot-col-guides ul{display:block;columns:2;column-gap:28px}.d6 .foot-col-guides li{break-inside:avoid;margin-bottom:8px}}
 .d6 .foot-col a{display:inline-block;padding-block:3px}
+
+/* Round 1 fixes (F2): touch targets, current page, skip link, short-screen menu, footer grid at 1920 */
+.d5 .nav a{display:inline-flex;align-items:center;min-height:44px}
+.d5 .nav a[aria-current=page]{background-size:100% 2px}
+.d5 .signin-link{display:inline-flex;align-items:center;min-height:44px}
+.d5 .menu-panel{max-height:calc(100vh - 92px);max-height:calc(100dvh - 92px);overflow-y:auto;overscroll-behavior:contain}
+.d5 .menu-panel a[aria-current=page]:not(.btn){background:var(--h100)}
+.d6 .wrap{max-width:1640px;padding-inline:clamp(16px,4vw,64px)}
+.d6 .foot-col ul{gap:0}
+.d6 .foot-col a{display:inline-flex;align-items:center;min-height:44px;padding-block:0}
+.d6 .foot-col-guides li{margin-bottom:0}
+.skip:focus{top:92px}
+.skip:focus-visible{outline:3px solid var(--mid);outline-offset:3px;box-shadow:0 0 0 6px #fff}

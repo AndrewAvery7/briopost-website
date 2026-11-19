@@ -107,44 +107,10 @@
     $$('.ss .wave').forEach(function (w) { wio.observe(w); });
   }
 
-  /* ---- Format carousels (sample.js): the dots always show the slide that is actually in view.
-     Arrows, dots and arrow keys move exactly one slide from the one in view; swipes and scrolls update the dots. ---- */
+  /* ---- Format demos, home-page extras. The carousel arrows, dots and keys live in sample.js (shared by every page with a sample). ---- */
   $$('.bp-demo').forEach(function (demo) {
     var out = $('.bp-output', demo);
     if (!out) return;
-    function track() { return $('.bp-track', out); }
-    function slides() { var t = track(); return t ? $$('.bp-slide', t) : []; }
-    function inView() {
-      var t = track(), s = slides(); if (!t || !s.length) return 0;
-      var mid = t.scrollLeft + t.clientWidth / 2, best = 0, bd = 1e9;
-      s.forEach(function (f, i) { var d = Math.abs(f.offsetLeft + f.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = i; } });
-      return best;
-    }
-    function mark(i) {
-      $$('.bp-dots button', out).forEach(function (b, k) { if (k === i) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
-      var prev = $('.bp-arrow[data-step="-1"]', out), next = $('.bp-arrow[data-step="1"]', out), n = slides().length;
-      // The arrows wrap (5 to 1, 1 to 5), so they are never disabled at the ends.
-      if (prev) prev.disabled = n < 2;
-      if (next) next.disabled = n < 2;
-    }
-    var target = -1;
-    function sync() { var i = inView(); if (target >= 0) { if (i !== target) { mark(target); return; } target = -1; } mark(i); }
-    function go(i) {
-      var t = track(), s = slides(); if (!t || !s.length) return;
-      i = Math.max(0, Math.min(s.length - 1, i));
-      var f = s[i];
-      target = i; mark(i);
-      t.scrollTo({ left: f.offsetLeft - (t.clientWidth - f.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
-      clearTimeout(go.t); go.t = setTimeout(function () { target = -1; sync(); }, reduce ? 50 : 900);
-    }
-    demo.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-step],[data-slide]');
-      if (!b || !out.contains(b)) return;
-      e.stopPropagation(); // sample.js keeps its own count, which can drift; this one reads the slide in view
-      var cur = target >= 0 ? target : inView();
-      var len = slides().length;
-      go(b.hasAttribute('data-step') ? (cur + Number(b.getAttribute('data-step')) + len) % len : Number(b.getAttribute('data-slide')));
-    }, true);
     // A format switch fades the new output in (the stage keeps its size, so nothing below moves). Chart kinds,
     // votes and Shape it redraw without the fade.
     var fadeT = 0;
@@ -178,22 +144,6 @@
       var orient = function () { vlist.setAttribute('aria-orientation', mq.matches ? 'vertical' : 'horizontal'); };
       orient(); if (mq.addEventListener) mq.addEventListener('change', orient);
     }
-    demo.addEventListener('keydown', function (e) {
-      var t = track(); if (!t || e.target !== t) return;
-      var cur = target >= 0 ? target : inView(), n = -1;
-      if (e.key === 'ArrowRight') n = cur + 1; else if (e.key === 'ArrowLeft') n = cur - 1;
-      else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = slides().length - 1;
-      if (n < 0 && e.key !== 'ArrowLeft') return;
-      e.preventDefault(); go(Math.max(0, n));
-    });
-    var st = 0;
-    demo.addEventListener('scroll', function (e) {
-      if (!e.target.classList || !e.target.classList.contains('bp-track')) return;
-      cancelAnimationFrame(st); st = requestAnimationFrame(sync);
-    }, true);
-    // sample.js redraws the output (format, chart kind, Shape it): read the position again once it has settled
-    new MutationObserver(function () { target = -1; requestAnimationFrame(function () { requestAnimationFrame(sync); }); }).observe(out, { childList: true });
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(sync, 0); }); else setTimeout(sync, 0);
   });
 
   /* ---- Make it yours: the same design in another brand kit ---- */

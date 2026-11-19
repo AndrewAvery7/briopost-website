@@ -1669,3 +1669,6 @@ footer.foot .foot-brand img{width:228px;height:auto}footer.foot .foot-brand p{po
 #main .rs-bar{grid-template-columns:24% 1fr;gap:4%}#main .rs-bar b{order:-1}#main .rs-bars{gap:12%;margin-bottom:8%}
 /* highlight reaches past slanted last letters (owner 2026-11-19) */
 #try-demo .fx-span.fxs-highlight{padding:0 .2em 0 .06em;margin-right:-.14em}
+
+/* Without JavaScript the brand-kit chooser would be buttons that do nothing: show only the picture */
+html:not(.js) #main [data-kits] .kit-list{display:none}

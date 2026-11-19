@@ -65,6 +65,12 @@
       });
       var n = shownC + shownG;
       empty.hidden = n > 0;
+      if (n === 0) {
+        // Say which filters are set, so the empty page is never a dead end: the button clears the field and the format.
+        var msg = empty.firstChild, clearBtn = $('[data-clear]', empty);
+        if (msg && msg.nodeType === 3) msg.nodeValue = (fmt === 'g' ? 'None of the graphics on this page' : fmt === 'c' ? 'None of the carousel designs on this page' : 'None of the designs on this page') + ' are tagged for that field yet. ';
+        if (clearBtn) clearBtn.textContent = fmt === 'all' ? 'Show every field' : 'Show every field and format';
+      }
       if (more && moreBtn) { more.hidden = match <= n; moreBtn.textContent = 'Show all ' + match + ' designs'; }
       var parts = [];
       if (fmt !== 'g') parts.push(shownC + ' carousel ' + (shownC === 1 ? 'design' : 'designs'));
@@ -95,7 +101,11 @@
     if (phone.addEventListener) phone.addEventListener('change', function () { apply(false); });
     sel.addEventListener('change', function () { prof = sel.value; apply(true); });
     var clr = $('[data-clear]', empty);
-    if (clr) clr.addEventListener('click', function () { sel.value = ''; prof = ''; apply(true); sel.focus(); });
+    if (clr) clr.addEventListener('click', function () {
+      sel.value = ''; prof = ''; fmt = 'all';
+      $$('[data-fmt]', filters).forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.fmt === 'all')); });
+      apply(true); sel.focus();
+    });
     apply(false);
   }
 

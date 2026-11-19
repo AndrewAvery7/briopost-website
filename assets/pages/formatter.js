@@ -62,7 +62,9 @@
     return base;
   }
   function plain(text) {
-    return Array.from(text).map(function (ch) { var f = info(ch); return f ? f.base : ch; }).join('');
+    // Back to plain letters; the "• " and "1. " list markers at the start of lines go too.
+    return Array.from(text).map(function (ch) { var f = info(ch); return f ? f.base : ch; }).join('')
+      .split('\n').map(function (line) { return line.replace(/^(\s*)(?:•|\d{1,3}\.)[ \t]+/, '$1'); }).join('\n');
   }
   // Turn bold or italic on for the whole selection, or off when every letter in it already has it.
   function toggle(text, which) {
@@ -132,9 +134,9 @@
     } else if (kind === 'plain') {
       if (a === b) { a = 0; b = value.length; }
       var p = plain(value.slice(a, b));
-      if (p === value.slice(a, b)) { say('There is no bold or italic text to remove.'); return; }
+      if (p === value.slice(a, b)) { say('There is no bold, italic or list styling to remove.'); return; }
       replace(a, b, p);
-      say('Styling removed.');
+      say('Styling removed (bold, italic and list markers).');
       tell('plain');
     }
   }
