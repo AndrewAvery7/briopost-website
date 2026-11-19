@@ -14,7 +14,7 @@
 
 ## Facts
 
-- Status: a free beta, by invitation. People can ask to join on the home page; Briopost confirms their email and sends beta invitations in small groups. A personal invitation link gives a test account after the email is confirmed.
+- Status: a free beta, by invitation. People can ask to join on the home page; Briopost confirms their email and sends beta invitations in small groups. A personal invitation link gives a beta account after the email is confirmed.
 - Cost: the beta is free and includes AI credits. Pricing will be shared before anyone pays. Before each AI action, Briopost shows its cost.
 - AI: included, paid for with AI credits. A user can also bring their own Claude, OpenAI or fal key.
 - Not yet: posting to LinkedIn Company Pages and live statistics from a member's own LinkedIn both wait on LinkedIn's approval. Uploading LinkedIn's own analytics export works today.
@@ -23,7 +23,8 @@
 
 ## Pages
 
-- [Home](https://briopost.com/): what Briopost does, an interactive sample carousel, how it works, templates, questions and the beta tester sign-up.
+- [Home](https://briopost.com/): what Briopost does, an interactive sample carousel in four formats, how it works, your brand kit, the calendar and your OK, what AI costs, the plans (no prices), questions and the beta tester sign-up.
+- [Everything Briopost does](https://briopost.com/features/): the full feature list, grouped as Create, Design, Plan and approve, Measure, Stay in control, Connect, Teams, and what is coming later.
 - [LinkedIn carousel maker](https://briopost.com/linkedin-carousel-maker/): turn a few words, notes, a link or a PDF into an editable carousel in your brand; cost shown before each AI step; nothing posts without your OK.
 - [LinkedIn carousel templates](https://briopost.com/linkedin-carousel-templates/): a selection of 42 real designs from the studio (150 carousel designs and 100 graphic designs in all), filterable by format and by 28 fields, and one design shown in three brand kits.
 - [How to make a LinkedIn carousel](https://briopost.com/how-to-make-a-linkedin-carousel/): a seven-step guide, from planning one idea and writing the cover hook to exporting a PDF, posting it as a document and writing the caption.
