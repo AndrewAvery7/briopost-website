@@ -55,7 +55,7 @@
 .is-drawn .c-area,.is-drawn .c-dot,.is-drawn .c-val{opacity:1}
 .s-chart-kinds{display:flex;justify-content:center;gap:6px;margin-top:10px}
 .s-chart-kinds button{min-height:36px;padding:6px 12px;border-radius:999px;border:1px solid var(--line,#454b8f);background:transparent;color:inherit;font:600 13px/1 var(--sk-b,Inter)}
-.s-chart-kinds button[aria-pressed=true]{background:var(--paper,#f6f4ef);color:var(--card,#fcfbf8);border-color:var(--paper,#f6f4ef)}
+.s-chart-kinds button[aria-pressed=true]{background:var(--midnight,#121433);color:#fff;border-color:var(--midnight,#121433)}
 
 /* 3. Comparison with ticks and crosses. */
 .s-compare{display:grid;grid-template-columns:1fr 1fr;gap:calc(26 * var(--u))}
@@ -149,3 +149,4 @@
   .s,.c-bar,.c-line,.c-area,.c-dot,.c-val,.bp-poll-options button::before{transition:none!important}
   .c-bar{transform:none}.c-line{stroke-dashoffset:0}.c-area,.c-dot,.c-val{opacity:1}
 }
+.bp-arrow svg{width:20px;height:20px;margin:auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.bp-arrow[data-step="-1"] svg{transform:scaleX(-1)}
