@@ -637,3 +637,9 @@ h1{font-size:var(--t-display);line-height:1;letter-spacing:-.03em}
 .form-msg.is-error,.field-error{color:var(--error)}
 .notice{background:var(--card);box-shadow:var(--shadow-1),inset 4px 0 0 var(--midnight);color:var(--midnight)}
 @media (min-width:768px){.doc{background:var(--card);border-radius:var(--r-card);box-shadow:var(--shadow-1)}}
+/* The questions band: the pale haze band of the home page, not the old paper band. */
+.section-faq{background:var(--h50);color:var(--midnight)}
+.section-faq .eyebrow,.section-faq .lead{color:var(--fg-2)}
+.section-faq .faq{border-top-color:var(--line-soft)}
+.section-faq .faq details{border-bottom-color:var(--line-soft)}
+.section-faq .faq details p{color:var(--fg-2)}
