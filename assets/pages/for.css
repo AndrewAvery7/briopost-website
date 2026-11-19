@@ -79,3 +79,7 @@
 .cta-actions{display:grid;gap:14px;align-content:start;justify-items:start}
 .cta-actions .signin{margin:0}
 @media (min-width:960px){.cta-grid{grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:var(--s-9);align-items:center}}
+
+/* Topic switch: a clear selected state on the light page. */
+.for-demo .seg{background:var(--h100);border-color:var(--h300)}
+.for-demo .seg button[aria-pressed=true]{background:var(--fg);color:var(--card)}
