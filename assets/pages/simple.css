@@ -1,0 +1,9 @@
+/* Simple pages: /beta/ (beta.css), /never/, /contact/, /privacy/, /terms/, /email-policy/, /waitlist/*, 404.
+   Loaded after site.css and chrome.css. The .doc and .action-card layouts come from site.css. */
+.doc{--doc-rule:var(--line-soft)}
+.doc h2{margin-top:40px;padding-top:4px}
+.doc a:not(.btn):not(.button){text-decoration-color:var(--spark);text-decoration-thickness:2px;text-underline-offset:3px}
+.doc .status{border-left:4px solid var(--spark);background:var(--h50);box-shadow:none}
+.doc :focus-visible,.action-card :focus-visible{outline:3px solid var(--midnight);outline-offset:2px}
+.action-card .back{text-decoration-color:var(--spark);text-decoration-thickness:2px;text-underline-offset:3px}
+@media(max-width:767px){.doc{padding-inline:var(--gutter)}}
