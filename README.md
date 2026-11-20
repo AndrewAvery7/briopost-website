@@ -23,7 +23,7 @@ Every hand-written page shares one header, one footer and one stylesheet. The fo
 - `partials/header.html`: skip link, logo, menu (Features, Templates, How it works, FAQ, Free tools) and the "Become a beta tester" button. It adds the `js` class to `<html>`; without JavaScript, `html:not(.js)` rules apply and the menu simply wraps.
 - `partials/footer.html`: the guide, tool and profession pages, the legal links, "Independent of LinkedIn..." and "© 2026 Briopost LLC · Post with brio.".
 - `assets/sample/`: the interactive sample (`sample.js`, `sample.css`, `img/`, `playfair-latin.woff2`). Pictures load from `/assets/sample/img/`. `sample.js`'s `render()` also runs in Node.
-- `assets/designs/`: real carousel covers from the studio (400 x 501 WebP). Add more here when a page needs them.
+- `assets/designs/`: real carousel covers and graphics from the studio (400 x 500 WebP; the four `kit-` pictures 420 x 526). Add more here when a page needs them.
 - `assets/pages/`: page-specific styles and scripts (`guides.css` for guide pages, `tools.css` + `tools-extra.css` for the free tools, `brand.css` for `/linkedin-brand-kit/`, one script per tool).
 - Wide screens: from 1600 px the content column grows (`--maxw` 1360 px, then 1480 px from 1840 px) so a 1920 px screen is not mostly margin; text keeps its own line length.
 
