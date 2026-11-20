@@ -17,9 +17,10 @@ const expect = (ok, what) => { if (!ok) problems.push(what); };
 
 function runAnalytics(page, referrer = '') {
   const appended = [];
-  const window = { addEventListener() {}, removeEventListener() {} };
+  const window = { addEventListener() {}, removeEventListener() {}, requestIdleCallback: fn => fn() };
   const document = {
     referrer,
+    readyState: 'complete',
     createElement: () => ({}),
     head: { appendChild: s => appended.push(s.src) },
     addEventListener() {},

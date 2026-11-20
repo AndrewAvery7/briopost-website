@@ -59,10 +59,23 @@
   // Every later event uses the cleaned addresses too.
   gtag('set', referrer ? { page_location: config.page_location, page_referrer: referrer } : { page_location: config.page_location });
   gtag('config', GA_MEASUREMENT_ID, config);
-  var tag = document.createElement('script');
-  tag.async = true;
-  tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_MEASUREMENT_ID);
-  document.head.appendChild(tag);
+  // Google's own script (about 150 KB) loads only after the page has loaded and painted, so it never competes with the
+  // page's fonts, styles and first picture. Everything sent before then waits in dataLayer and goes out once it loads.
+  var tagAdded = false;
+  function addTag() {
+    if (tagAdded) return;
+    tagAdded = true;
+    var tag = document.createElement('script');
+    tag.async = true;
+    tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_MEASUREMENT_ID);
+    document.head.appendChild(tag);
+  }
+  function afterPaint() {
+    if (window.requestIdleCallback) window.requestIdleCallback(addTag, { timeout: 2000 });
+    else setTimeout(addTag, 1);
+  }
+  if (document.readyState === 'complete') afterPaint();
+  else window.addEventListener('load', afterPaint);
 
   function track(name, data) {
     try { gtag('event', name, data || {}); } catch (e) { /* analytics must never break the page */ }
