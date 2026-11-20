@@ -16,7 +16,7 @@
 
 - Status: a free beta, by invitation. People can ask to join on the home page; Briopost confirms their email and sends beta invitations in small groups. A personal invitation link gives a beta account after the email is confirmed.
 - Cost: the beta is free and includes AI credits. Pricing will be shared before anyone pays. Before each AI action, Briopost shows its cost.
-- AI: included, paid for with AI credits. A user can also bring their own Claude or OpenAI key.
+- AI: included, paid for with AI credits. A user can also bring their own Claude or OpenAI key, or any service that works like OpenAI's, such as DeepSeek or Kimi.
 - Not yet: posting to LinkedIn Company Pages and live statistics from a member's own LinkedIn both wait on LinkedIn's approval. Uploading LinkedIn's own analytics export works today.
 - Who it is for: consultants and coaches, founders and business owners, marketers and agencies, and job seekers who post on LinkedIn.
 - Contact: info@briopost.com
