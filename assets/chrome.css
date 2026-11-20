@@ -206,3 +206,15 @@ footer.foot .foot-brand p{margin-top:10px;padding-bottom:10px;font-size:1rem}
 .d6 .foot-col a{min-height:28px;padding-block:3px;line-height:1.3;font-size:.9375rem}
 .d6 .foot-base{margin-top:28px;padding-top:16px}
 @media (max-width:1099px){.d6 .foot-grid{row-gap:24px}.d6 .foot-col a{min-height:32px;padding-block:5px}}
+
+/* The header stays at the top while the page scrolls (owner, 2026-11-19). The header partial wraps it in
+   <div class="src d5">, so that wrapper is the sticky element. Without JavaScript the menu links wrap under the logo and
+   the header is taller, so it scrolls away as before. Jump links land below the header. */
+.src.d5:has(> .site-head){position:sticky;top:0;z-index:50}
+html:not(.js) .src.d5:has(> .site-head){position:static}
+[id]{scroll-margin-top:100px}
+@media (max-width:480px){[id]{scroll-margin-top:88px}}
+/* The features page's "On this page" bar sits just under the header. */
+@media (min-width:961px){.fx-page .f-nav{top:108px}}
+@media (max-width:960px){.fx-page .f-nav{top:84px;z-index:40}#main .fx-page .f-sec{scroll-margin-top:156px}}
+@media (max-width:480px){.fx-page .f-nav{top:72px}#main .fx-page .f-sec{scroll-margin-top:144px}}
