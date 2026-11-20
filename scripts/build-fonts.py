@@ -15,10 +15,14 @@ from fontTools.varLib import instancer
 from fontTools import subset
 d=sys.argv[1]; out=sys.argv[2]
 U="U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+2713,U+FEFF,U+FFFD"
+# Only the OpenType features browsers apply by default, plus tnum/lnum (font-variant-numeric in the CSS). Optional
+# alternates (cv01-cv13, ss01-ss08, frac, sups, ordn, case, ...) are never switched on by the site; dropping them cut
+# the two files from 130 KB to 98 KB (2026-11-20) with pixel-identical text.
+FEATURES=['ccmp','locl','mark','mkmk','kern','liga','clig','calt','rvrn','rlig','tnum','lnum']
 jobs=[(d+'/inter-Inter[opsz,wght].ttf',{'wght':(400,800),'opsz':14},out+'/inter-var.woff2'),
       (d+'/bricolagegrotesque-BricolageGrotesque[opsz,wdth,wght].ttf',{'wght':(500,800),'wdth':100,'opsz':(12,96)},out+'/bricolage-var.woff2')]
 for src,limits,dst in jobs:
     f=TTFont(src); f=instancer.instantiateVariableFont(f,limits); import io; b=io.BytesIO(); f.save(b); b.seek(0); f=TTFont(b)
-    opts=subset.Options(); opts.flavor='woff2'; opts.layout_features=['*']; opts.name_IDs=['*']; opts.name_languages=['*']; opts.notdef_outline=True
+    opts=subset.Options(); opts.flavor='woff2'; opts.layout_features=FEATURES; opts.name_IDs=['*']; opts.name_languages=['*']; opts.notdef_outline=True
     s=subset.Subsetter(opts); s.populate(unicodes=subset.parse_unicodes(U)); s.subset(f)
     f.flavor='woff2'; f.save(dst); import os; print(dst, os.path.getsize(dst))

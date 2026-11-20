@@ -67,11 +67,13 @@ No video is currently embedded or served from the public website. The film maste
 
 ## Fonts
 
-Inter and Bricolage Grotesque are self-hosted (`assets/inter-var.woff2`, `assets/bricolage-var.woff2`, SIL Open Font License). Outside requests: the waitlist API, the Cloudflare Web Analytics beacon, and Google Analytics once its ID is set (below). `scripts/build-fonts.py` rebuilds them from the google/fonts repository.
+Inter and Bricolage Grotesque are self-hosted (`assets/inter-var.woff2`, `assets/bricolage-var.woff2`, SIL Open Font License). Outside requests: the waitlist API, the Cloudflare Web Analytics beacon, and Google Analytics once its ID is set (below). `scripts/build-fonts.py` rebuilds them from the google/fonts repository, keeping Latin characters and only the OpenType features browsers apply by default plus `tnum`/`lnum` (98 KB for both).
 
 ## Waitlist
 
 Visitors read "beta tester" wording everywhere ("Become a beta tester", "Free beta, by invitation."); the ids (`hw-*`, `wl-*`), the `/waitlist/...` addresses, the event names and the API keep the older name. The two home page forms (`hw-form` in the hero, `wl-form` with the optional role in `#waitlist`), `/waitlist/confirm/` and `/waitlist/unsubscribe/` call the waitlist API at `https://app.briopost.com/api/waitlist` (set in each page's `data-api` attribute; code in `assets/waitlist.js`). Until `GET /status` answers `open: true`, the form stays disabled and shows "Sign-ups open shortly."
+
+A beta tester's personal link (`/?ref=beta-testers&invite=<code>`) carries a single-use code. `waitlist.js` reads it, keeps it in the tab's sessionStorage (`bp-invite`) and removes it from the address bar with `history.replaceState`, so a refresh still works (the `ref` stays in the address) while the code is not left in the address, history or what later scripts read. It is sent only with the sign-up itself and forgotten once the sign-up succeeds.
 
 ## Screenshots
 
@@ -87,7 +89,7 @@ Events it sends (all only when the ID is set):
 
 | Event | When |
 | --- | --- |
-| `page_view` | Every page (GA's own). `?ref=tag` links count as source `tag`, medium `referral`, campaign `ref_link` unless the link already has `utm_` tags. The confirm/unsubscribe `?token=` is removed before anything is sent. |
+| `page_view` | Every page (GA's own). `?ref=tag` links count as source `tag`, medium `referral`, campaign `ref_link` unless the link already has `utm_` tags. The address sent to Google is rebuilt from an allowlist (`utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `utm_id`, `gclid`, `gbraid`, `wbraid`, `ref`): every other field, including the confirm/unsubscribe `?token=` and a beta tester's `?invite=` code, is dropped, and `page_location` / `page_referrer` are always set explicitly. `scripts/test-analytics-privacy.mjs` (run by the check) proves it. |
 | `waitlist_form_start` | First time someone clicks into a waitlist form (`form_location`: `hero` or `waitlist_section`). |
 | `generate_lead` and `sign_up` | A new sign-up the server accepted ("Check your inbox"). Mark `generate_lead` as a key event in GA. |
 | `waitlist_already_joined` | The address was already confirmed. |
@@ -110,7 +112,7 @@ Events it sends (all only when the ID is set):
 ## Search engines
 
 - Every indexed page has a unique title and description, a canonical `https://briopost.com/.../` address matching `sitemap.xml`, Open Graph and Twitter tags, and `lang="en-US"`. `/waitlist/confirm/`, `/waitlist/unsubscribe/` and `404.html` are `noindex, follow` and stay out of the sitemap.
-- `sitemap.xml` lists each indexed page with `<lastmod>`; the check fails if a page's "Last updated" date is newer than its `lastmod`, so update both together. `robots.txt` names the sitemap.
+- `sitemap.xml` lists each indexed page with `<lastmod>`; the check fails if a page's "Last updated" date is newer than its `lastmod`, so update both together. It also fails if a page's `index.html` has a git commit (or, locally, an uncommitted change) dated after its `lastmod`; set `lastmod` to the date the message names (CI checks out the full history for this). `robots.txt` names the sitemap.
 - Structured data (JSON-LD): Organization (Briopost LLC), WebSite, WebPage (with an ImageObject as `primaryImageOfPage`), SoftwareApplication, FAQPage on the home page; BreadcrumbList on inner pages. A FAQPage must repeat the page's visible `<details><summary>`/`<p>` questions and answers word for word, in order; `scripts/check.mjs` compares them.
 - `404.html` is what GitHub Pages shows for any missing address, so its links all start with `/`.
 - `site.webmanifest` and `assets/icon-*.png` (drawn by `scripts/render-link-card.py`) give phones and browsers the app icon.
