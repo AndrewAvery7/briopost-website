@@ -59,4 +59,4 @@
   .header .button-small{padding:0 12px;font-size:13px}
 }
 
-.beta-open{margin-top:28px}
+.beta-open{margin-top:clamp(36px,4vw,52px);padding-bottom:clamp(40px,5vw,72px)}
