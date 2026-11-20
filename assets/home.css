@@ -900,23 +900,30 @@ html:not(.js) .hb .js-only{display: none !important;}
 .hb .pause[aria-pressed="true"] .ico-play{display: block;}
 .hb .it.is-cur .fc-name::after{transform: scaleX(1);}
 .js .hb .it{cursor: pointer;}
-.hb .obj-b1 .bstage{--cw: clamp(180px, min(17vw, calc((100svh - 400px) / 1.5)), 268px);}
+.hb .obj-b1 .bstage{--cw: clamp(180px, min(17vw, calc((100svh - 400px) / 1.5)), 268px); --up: 1.06;}
 .hb .obj-b1 .grp{--sf: .5; position: relative; height: calc(var(--cw) * 1.62);}
 .hb .obj-b1 .grp[data-n="4"]{--sf: .66;}
 .hb .obj-b1 .grp[data-n="3"]{--sf: .88;}
-.hb .obj-b1 .it{position: absolute; left: calc(50% - var(--cw) / 2); top: calc(var(--cw) * .1);
+/* Sharp front card: every card is drawn at the front card's size (--up) and the cards behind are shrunk.
+   Chrome draws a moving card once at its starting size, so a card that grows while it moves looks soft;
+   one that only shrinks stays sharp. translate keeps the stack where it was before the cards got bigger. */
+.hb .obj-b1 .it{--cwo: var(--cw); position: absolute; left: calc(50% - var(--cw) * var(--up) / 2); top: calc(var(--cw) * .1);
+  translate: 0 calc(-120% * (var(--up) - 1) / var(--up));
   transform-origin: 50% 120%;
-  transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .025)) rotate(calc(var(--c) * 2.4deg));
-  transition: transform .75s var(--ease) var(--dl), opacity .45s var(--ease) var(--dl);}
-.hb .obj-b1 .it .fc{--cw: inherit; box-shadow: var(--shadow-2); transition: box-shadow .5s var(--ease);}
-.hb .obj-b1 .it.is-cur{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--cw) * -.06)) rotate(0deg); transition-delay: 0s;} /* No scale on the moving cards: Chrome draws a moving card once at its starting size, so growing it looks soft until the move ends. */
+  transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .025)) rotate(calc(var(--c) * 2.4deg)) scale(calc(1 / var(--up)));
+  transition: transform .9s var(--glide) var(--dl), opacity .45s var(--glide) var(--dl);}
+.hb .obj-b1{--glide: cubic-bezier(.45, .05, .25, 1);}
+/* Once a format's cards have fanned out, they move together with no stagger. */
+.hb .obj-b1 .grp.is-set .it{--dl: 0ms;}
+.hb .obj-b1 .it .fc{--cw: calc(var(--cwo) * var(--up)); box-shadow: var(--shadow-2); transition: box-shadow .5s var(--ease);}
+.hb .obj-b1 .it.is-cur{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--cw) * -.06)) rotate(0deg); transition-delay: 0s;}
 .hb .obj-b1 .it.is-cur .fc{box-shadow: 0 0 0 2px var(--mid), var(--shadow-2);}
 .js .hb .obj-b1 .grp:not(.is-on) .it{transform: translateY(calc(var(--cw) * .04)); opacity: 0; transition: transform .45s var(--ease), opacity .3s var(--ease);}
 html:not(.js) .hb .obj-b .bstage{--cw: 150px; display: grid; gap: 16px;}
 html:not(.js) .hb .grp{grid-area: auto; height: auto !important; display: block !important;}
 html:not(.js) .hb .grp-name{font-weight: 650; font-size: .95rem; margin-bottom: 8px;}
 html:not(.js) .hb .obj-b .items{display: flex !important; flex-wrap: wrap; gap: 10px; width: auto !important; justify-content: flex-start;}
-html:not(.js) .hb .obj-b .it{position: static; transform: none !important;}
+html:not(.js) .hb .obj-b .it{position: static; transform: none !important; translate: none;}
 html:not(.js) .hb .obj-b .it .fc{--cw: 150px;}
 @media (max-width: 1180px){
 .hb .hero-grid{grid-template-columns: minmax(0, 1fr);}
@@ -935,11 +942,11 @@ html:not(.js) .hb .obj-b .it .fc{--cw: 150px;}
 .hb .tab-name{align-items: center;}
 .hb .tab-name small{font-size: .68rem;}
 .hb .pause{min-height: 44px; justify-content: center;}
-.hb .obj-b1 .bstage{--cw: 42vw;}
+.hb .obj-b1 .bstage{--cw: 42vw; --up: 1.04;}
 .hb .obj-b1 .grp{--sf: .29;}
 .hb .obj-b1 .grp[data-n="4"]{--sf: .4;}
 .hb .obj-b1 .grp[data-n="3"]{--sf: .56;}
-.hb .obj-b1 .it{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .02)) rotate(calc(var(--c) * 2deg));}
+.hb .obj-b1 .it{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .02)) rotate(calc(var(--c) * 2deg)) scale(calc(1 / var(--up)));}
 .hb .fc{font-size: max(10.5px, calc(var(--cw) / 15.5));}
 }
 @media (min-width: 1700px){
@@ -1324,11 +1331,11 @@ section{scroll-margin-top: 12px;}
 .hb .obj-b1 .bstage{--cw: clamp(170px, 23vw, 240px);}
 }
 @media (max-width: 760px){
-.hb .obj-b1 .bstage{--cw: 40vw;}
+.hb .obj-b1 .bstage{--cw: 40vw; --up: 1.04;}
 .hb .obj-b1 .grp{--sf: .25;}
 .hb .obj-b1 .grp[data-n="4"]{--sf: .34;}
 .hb .obj-b1 .grp[data-n="3"]{--sf: .48;}
-.hb .obj-b1 .it{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .02)) rotate(calc(var(--c) * 1.6deg));}
+.hb .obj-b1 .it{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .02)) rotate(calc(var(--c) * 1.6deg)) scale(calc(1 / var(--up)));}
 .hb .obj-b1 .it.is-cur{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--cw) * -.05)) rotate(0deg);}
 .hb .tabs-row{flex-direction: row; align-items: center; gap: 8px;}
 .hb .tabs{flex: 1; border-radius: 22px;}
