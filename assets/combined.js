@@ -39,7 +39,7 @@
   var PER = 1700;
   $$('[data-b]').forEach(function (obj) {
     var tabs = $$('.tab', obj), grps = $$('.grp', obj), pauseBtn = $('.pause', obj);
-    var fi = 0, ii = 0, elapsed = 0, last = 0, vis = false, raf = 0;
+    var fi = 0, ii = 0, elapsed = 0, last = 0, vis = false, raf = 0, setTimer = 0;
     function its() { return $$('.it', grps[fi]); }
     function total() { return its().length * PER; }
     function setItem(k) {
@@ -50,7 +50,9 @@
     function setFormat(n, focus) {
       fi = n; elapsed = 0;
       tabs.forEach(function (t, k) { var on = k === n; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
-      grps.forEach(function (g, k) { var on = k === n; g.classList.toggle('is-on', on); g.setAttribute('aria-hidden', String(!on)); });
+      grps.forEach(function (g, k) { var on = k === n; g.classList.toggle('is-on', on); g.classList.remove('is-set'); g.setAttribute('aria-hidden', String(!on)); });
+      /* The new format's cards fan out one after another; after that, card changes move together (is-set). */
+      clearTimeout(setTimer); setTimer = setTimeout(function () { if (fi === n) grps[n].classList.add('is-set'); }, 1300);
       setItem(0); paint();
       if (focus) tabs[n].focus();
     }
