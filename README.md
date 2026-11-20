@@ -73,6 +73,8 @@ Inter and Bricolage Grotesque are self-hosted (`assets/inter-var.woff2`, `assets
 
 Visitors read "beta tester" wording everywhere ("Become a beta tester", "Free beta, by invitation."); the ids (`hw-*`, `wl-*`), the `/waitlist/...` addresses, the event names and the API keep the older name. The two home page forms (`hw-form` in the hero, `wl-form` with the optional role in `#waitlist`), `/waitlist/confirm/` and `/waitlist/unsubscribe/` call the waitlist API at `https://app.briopost.com/api/waitlist` (set in each page's `data-api` attribute; code in `assets/waitlist.js`). Until `GET /status` answers `open: true`, the form stays disabled and shows "Sign-ups open shortly."
 
+A beta tester's personal link (`/?ref=beta-testers&invite=<code>`) carries a single-use code. `waitlist.js` reads it, keeps it in the tab's sessionStorage (`bp-invite`) and removes it from the address bar with `history.replaceState`, so a refresh still works (the `ref` stays in the address) while the code is not left in the address, history or what later scripts read. It is sent only with the sign-up itself and forgotten once the sign-up succeeds.
+
 ## Screenshots
 
 Real app screenshots live in `assets/shots/` and are placed in the `#studio` section of `index.html`; to add one, copy an `<li>` line there. The `#templates` block shows eight covers from `assets/designs/` and links to `/linkedin-carousel-templates/`.
@@ -87,7 +89,7 @@ Events it sends (all only when the ID is set):
 
 | Event | When |
 | --- | --- |
-| `page_view` | Every page (GA's own). `?ref=tag` links count as source `tag`, medium `referral`, campaign `ref_link` unless the link already has `utm_` tags. The confirm/unsubscribe `?token=` is removed before anything is sent. |
+| `page_view` | Every page (GA's own). `?ref=tag` links count as source `tag`, medium `referral`, campaign `ref_link` unless the link already has `utm_` tags. The address sent to Google is rebuilt from an allowlist (`utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `utm_id`, `gclid`, `gbraid`, `wbraid`, `ref`): every other field, including the confirm/unsubscribe `?token=` and a beta tester's `?invite=` code, is dropped, and `page_location` / `page_referrer` are always set explicitly. `scripts/test-analytics-privacy.mjs` (run by the check) proves it. |
 | `waitlist_form_start` | First time someone clicks into a waitlist form (`form_location`: `hero` or `waitlist_section`). |
 | `generate_lead` and `sign_up` | A new sign-up the server accepted ("Check your inbox"). Mark `generate_lead` as a key event in GA. |
 | `waitlist_already_joined` | The address was already confirmed. |

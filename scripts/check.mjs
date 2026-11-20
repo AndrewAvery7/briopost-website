@@ -189,6 +189,12 @@ const gaId=(analytics.match(/const GA_MEASUREMENT_ID = "([^"]*)";/)||[])[1];
 if(gaId===undefined)fail('assets/analytics.js must keep the line: const GA_MEASUREMENT_ID = "";');
 if(gaId&&!/^G-[A-Z0-9]{4,20}$/.test(gaId))fail('GA_MEASUREMENT_ID must be empty or look like G-XXXXXXXXXX (found '+gaId+')');
 for(const f of files(root).filter(f=>f.endsWith('.js')&&!f.endsWith('analytics.js')))if(/googletagmanager|google-analytics/.test(read(f)))fail('Only assets/analytics.js may load Google Analytics: '+rel(f));
+// Private query fields (a beta tester's ?invite= code, ?token=, an email, anything unknown) never reach Google Analytics,
+// and waitlist.js takes the invite out of the address bar: scripts/test-analytics-privacy.mjs runs both files in a VM.
+try{execFileSync(process.execPath,[join(root,'scripts','test-analytics-privacy.mjs')],{stdio:'inherit'});}
+catch(e){fail('Analytics privacy test failed (see above)');}
+// The visit counter sends only the path, the referring host and ?ref=; it never reads the invite or token.
+if(/invite|token|location\.(?:href|search)/.test(read('assets/visit.js').replace("new URLSearchParams(location.search).get('ref')",'')))fail('assets/visit.js must send only the path, referring host and ?ref=');
 // Web app manifest and IndexNow key.
 let manifest;
 try{manifest=JSON.parse(read('site.webmanifest'));}catch(e){fail('site.webmanifest is missing or does not parse: '+e.message);}

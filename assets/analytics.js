@@ -29,18 +29,35 @@
   // (or an ad click ID), which Google Analytics reads on its own.
   var ref = (params.get('ref') || '').replace(/[^\w.\-]/g, '').slice(0, 60);
   var tagged = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_id', 'gclid', 'gbraid', 'wbraid'].some(function (k) { return params.has(k); });
-  var url = new URL(location.href);
-  // The confirm and unsubscribe links carry a private ?token=; it never goes to Google.
-  url.searchParams.delete('token');
+  // The address Google sees is rebuilt from an allowlist: only these attribution fields are kept, and every other query
+  // field is dropped (the confirm/unsubscribe ?token=, a beta tester's personal ?invite= code, an email address, and
+  // anything unknown). The #fragment is dropped too. Google never reads the raw address: page_location and
+  // page_referrer are always set explicitly.
+  var KEEP = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id', 'gclid', 'gbraid', 'wbraid', 'ref'];
+  function safeAddress(href) {
+    var src;
+    try { src = new URL(href, location.href); } catch (e) { return ''; }
+    if (!/^https?:$/.test(src.protocol)) return '';
+    var out = new URL(src.origin + src.pathname);
+    KEEP.forEach(function (k) {
+      var v = src.searchParams.get(k);
+      if (v !== null) out.searchParams.set(k, v.slice(0, 200));
+    });
+    return out.href;
+  }
+  var url = new URL(safeAddress(location.href));
   if (ref && !tagged) {
     url.searchParams.set('utm_source', ref);
     url.searchParams.set('utm_medium', 'referral');
     url.searchParams.set('utm_campaign', 'ref_link');
   }
-  if (url.href !== location.href) config.page_location = url.href;
+  config.page_location = url.href;
+  var referrer = document.referrer ? safeAddress(document.referrer) : '';
+  if (referrer) config.page_referrer = referrer;
 
   gtag('js', new Date());
-  if (config.page_location) gtag('set', { page_location: config.page_location }); // every later event uses the cleaned address too
+  // Every later event uses the cleaned addresses too.
+  gtag('set', referrer ? { page_location: config.page_location, page_referrer: referrer } : { page_location: config.page_location });
   gtag('config', GA_MEASUREMENT_ID, config);
   var tag = document.createElement('script');
   tag.async = true;
@@ -203,6 +220,6 @@
 
   // ----- Page not found -----
   if (document.body && document.body.hasAttribute('data-not-found')) {
-    track('page_not_found', { page_path: location.pathname.slice(0, 120), page_referrer: document.referrer ? clean(document.referrer, 200) : '(none)' });
+    track('page_not_found', { page_path: location.pathname.slice(0, 120), page_referrer: referrer ? clean(referrer, 200) : '(none)' });
   }
 })();

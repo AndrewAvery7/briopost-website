@@ -37,10 +37,28 @@
   } catch (e) { source = ''; }
   // A beta tester's personal link also carries ?invite=<code> (one single-use code per person, made in the studio's
   // Settings > Waitlist). It is sent only with the sign-up itself, never with the page-visit counter.
+  // The code is a credential, so once read it is kept in this tab's sessionStorage and taken out of the address bar
+  // (history.replaceState): it is not left in the address, the history, a copied link or what later scripts read. A
+  // refresh keeps ?ref=beta-testers in the address and finds the code again in sessionStorage. If the browser refuses
+  // storage, the code stays in the address so the form still works.
+  var INVITE_KEY = 'bp-invite';
+  var cleanInvite = function (v) { return String(v || '').replace(/[^A-Za-z0-9_\-]/g, '').slice(0, 64); };
   var invite = '';
   try {
-    invite = (new URLSearchParams(location.search).get('invite') || '').replace(/[^A-Za-z0-9_\-]/g, '').slice(0, 64);
-  } catch (e) { invite = ''; }
+    var pageParams = new URLSearchParams(location.search);
+    invite = cleanInvite(pageParams.get('invite'));
+    if (invite) {
+      sessionStorage.setItem(INVITE_KEY, invite);
+      if (sessionStorage.getItem(INVITE_KEY) === invite && window.history && history.replaceState) {
+        pageParams.delete('invite');
+        var rest = pageParams.toString();
+        history.replaceState(history.state, '', location.pathname + (rest ? '?' + rest : '') + location.hash);
+      }
+    } else if (/^(?:beta-testers|ut-classmates)$/i.test(source)) {
+      invite = cleanInvite(sessionStorage.getItem(INVITE_KEY)); // only on a tester link (the same list as TESTER_REFS below)
+    }
+  } catch (e) { /* no storage: keep whatever was read from the address */ }
+  var forgetInvite = function () { try { sessionStorage.removeItem(INVITE_KEY); } catch (e) { /* ignore */ } };
   // The beta tester link: the same form, but confirming the email gives a free test account on
   // my.briopost.com straight away (the API decides; worker/lib/waitlistTesters.ts in the app repo). Keep this list in step
   // with TESTER_SOURCES there. The words change here only so the visitor knows what they are signing up for.
@@ -193,6 +211,7 @@
         if (r.http === 200 && body.ok && (body.status === 'check_email' || body.status === 'already_confirmed')) {
           // Close every home-page form, so nobody is offered a second sign-up after "Check your inbox."
           homeForms.forEach(function (f) { if (f.finish !== finish) f.finish(body.status, email, true, body); });
+          forgetInvite(); // the code is single-use
           finish(body.status, email, false, body);
           signal({ action: 'joined', form: form.id, status: body.status });
           return;
