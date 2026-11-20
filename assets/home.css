@@ -1676,3 +1676,7 @@ html:not(.js) #main [data-kits] .kit-list{display:none}
    margin keeps the layout exactly where it was. */
 #main .arrow-link,#main .text-link{min-height:44px;margin-block:-11.5px}
 #main .toc-head .arrow-link{margin-top:10.5px}
+/* "Also made for" under the four routes (owner, 2026-11-19). */
+#main .who .who-in{row-gap:28px}
+#main .who .also-for{grid-column:-2/-1;margin-top:0;max-width:52ch;color:var(--ink2);font-size:var(--fs-body);line-height:1.6}
+#main .who .also-for a{display:inline;padding-block:12px;font-weight:650;color:var(--mid);text-decoration-color:var(--spark);text-underline-offset:.22em}
