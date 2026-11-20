@@ -187,12 +187,37 @@ for(const m of sitemap.matchAll(/<url>\s*<loc>([^<]+)<\/loc>\s*(?:<lastmod>([^<]
     if(lastmod<iso)fail('sitemap.xml: lastmod for '+loc+' ('+lastmod+') is older than the page ("Last updated" '+iso+')');
   }
 }
+// sitemap.xml lastmod keeps up with git: no page's index.html may have a commit (or, locally, an uncommitted change)
+// dated after its <lastmod>. Commit dates are the committer's local date (git %cs); CI needs the full history
+// (actions/checkout with fetch-depth: 0).
+{
+  const git=args=>execFileSync('git',args,{cwd:root,encoding:'utf8',stdio:['ignore','pipe','ignore']}).trim();
+  let inGit=false;
+  try{inGit=git(['rev-parse','--is-inside-work-tree'])==='true';}catch(e){}
+  if(!inGit)warnings.push('sitemap.xml lastmod not compared with git (no git history here)');
+  else{
+    if(git(['rev-parse','--is-shallow-repository'])==='true')fail('sitemap.xml lastmod check needs the full git history (in CI: actions/checkout with fetch-depth: 0)');
+    const d=new Date(),today=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const changed=new Set(git(['status','--porcelain','--untracked-files=all']).split('\n').filter(Boolean).map(l=>l.slice(3).replace(/^.* -> /,'').replace(/^"|"$/g,'')));
+    for(const m of sitemap.matchAll(/<url>\s*<loc>([^<]+)<\/loc>\s*<lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod>\s*<\/url>/g)){
+      const page=m[1].slice(SITE.length)+'index.html',lastmod=m[2];
+      const date=changed.has(page)?today:git(['log','-1','--format=%cs','--',page]);
+      if(date&&date>lastmod)fail('sitemap.xml: '+m[1]+' has lastmod '+lastmod+' but '+page+' changed on '+date+(changed.has(page)?' (uncommitted change)':'')+'; set <lastmod>'+date+'</lastmod>');
+    }
+  }
+}
 // Google Analytics: one file, an empty or well-formed Measurement ID, and no other script loads Google.
 const analytics=read('assets/analytics.js');
 const gaId=(analytics.match(/const GA_MEASUREMENT_ID = "([^"]*)";/)||[])[1];
 if(gaId===undefined)fail('assets/analytics.js must keep the line: const GA_MEASUREMENT_ID = "";');
 if(gaId&&!/^G-[A-Z0-9]{4,20}$/.test(gaId))fail('GA_MEASUREMENT_ID must be empty or look like G-XXXXXXXXXX (found '+gaId+')');
 for(const f of files(root).filter(f=>f.endsWith('.js')&&!f.endsWith('analytics.js')))if(/googletagmanager|google-analytics/.test(read(f)))fail('Only assets/analytics.js may load Google Analytics: '+rel(f));
+// Private query fields (a beta tester's ?invite= code, ?token=, an email, anything unknown) never reach Google Analytics,
+// and waitlist.js takes the invite out of the address bar: scripts/test-analytics-privacy.mjs runs both files in a VM.
+try{execFileSync(process.execPath,[join(root,'scripts','test-analytics-privacy.mjs')],{stdio:'inherit'});}
+catch(e){fail('Analytics privacy test failed (see above)');}
+// The visit counter sends only the path, the referring host and ?ref=; it never reads the invite or token.
+if(/invite|token|location\.(?:href|search)/.test(read('assets/visit.js').replace("new URLSearchParams(location.search).get('ref')",'')))fail('assets/visit.js must send only the path, referring host and ?ref=');
 // Web app manifest and IndexNow key.
 let manifest;
 try{manifest=JSON.parse(read('site.webmanifest'));}catch(e){fail('site.webmanifest is missing or does not parse: '+e.message);}
