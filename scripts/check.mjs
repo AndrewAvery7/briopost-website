@@ -52,8 +52,10 @@ for(const file of files(root)){
 // 2. Home page.
 const home=read('index.html');
 if(!home.includes('id="hero-title"'))fail('Unexpected homepage: hero headline missing');
-for(const id of ['how','faq','maker','waitlist','wl-form','wl-name','wl-email','wl-role','wl-website','wl-msg','hw-form','hw-fields','hw-name','hw-email','hw-website','hw-msg','hw-done','hw-done-title','hw-done-text'])if(!home.includes('id="'+id+'"'))fail('Home page is missing #'+id);
-if((home.match(/data-api="https:\/\/app\.briopost\.com\/api\/waitlist"/g)||[]).length!==2)fail('Both waitlist forms (hero and #waitlist) must point at https://app.briopost.com/api/waitlist');
+// The redesign (2026-11-19) has one sign-up form, at the foot of the page (#join, wrapped in #waitlist so the many
+// /#waitlist links keep working); the opening links to it instead of carrying a second form.
+for(const id of ['how','faq','plans','features','join','waitlist','wl-form','wl-fields','wl-name','wl-email','wl-role','wl-website','wl-msg','wl-done','wl-done-title','wl-done-text'])if(!home.includes('id="'+id+'"'))fail('Home page is missing #'+id);
+if((home.match(/data-api="https:\/\/app\.briopost\.com\/api\/waitlist"/g)||[]).length!==1)fail('The home page sign-up form (#waitlist) must point at https://app.briopost.com/api/waitlist, once');
 // AI assistants: llms.txt exists and the home page announces it; FAQ answers are in the structured data.
 if(!existsSync('llms.txt'))fail('Missing llms.txt');
 if(!home.includes('href="llms.txt"'))fail('Home page must link llms.txt');
@@ -61,13 +63,15 @@ if(!home.includes('"FAQPage"'))fail('Home page is missing FAQPage structured dat
 if(!/property="og:image" content="https:\/\/briopost\.com\/assets\/[^"]+"/.test(home))fail('Open Graph image tag missing');
 if(/colours|authoris/i.test(home))fail('Use U.S. spelling on the home page');
 
-// 3. The studio and template sections show real screenshots.
-for(const id of ['studio','templates']){
+// 3. The home page shows the real product: the opening's sample carousel (rendered as HTML, readable without
+// JavaScript) and real studio screenshots in the film poster, plus real design covers in "Make it yours".
+if(!/class="bp-slide"/.test(home))fail('Home page opening is missing the sample carousel slides');
+for(const id of ['brand']){
   const at=home.indexOf('id="'+id+'"');
   const section=at<0?'':home.slice(at,home.indexOf('</section>',at));
-  if(!section.includes('<img '))fail('#'+id+' has no screenshots');
-  if(/<section[^>]*id="(?:studio|templates)"[^>]*\shidden/.test(home))fail('#'+id+' is still hidden');
+  if(!section.includes('<img '))fail('#'+id+' has no real design pictures');
 }
+if(!existsSync('features/index.html'))fail('Missing the features page (/features/)');
 
 // 4. Waitlist pages: present, not indexed, pointed at the live API.
 for(const p of ['waitlist/confirm/index.html','waitlist/unsubscribe/index.html']){

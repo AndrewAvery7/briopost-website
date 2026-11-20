@@ -8,51 +8,55 @@
 @font-face{font-family:Inter;src:url(inter-var.woff2) format('woff2');font-weight:400 800;font-display:swap}
 
 :root{
-  --midnight:var(--brand-midnight,#121433);--deep:var(--brand-deep,#0c0e26);--spark:var(--brand-spark,#ff5b2e);--paper:var(--brand-paper,#f6f4ef);--haze:var(--brand-haze,#7c81c4);
-  --panel:#1a1d47;--line-soft:#2b3068;--field-line:#5a5f9e;
-  --fg:#f6f4ef;--fg-2:#b4b7e0;
+  /* Haze theme (redesign, 2026-11-19): a light lavender page, midnight words, one orange action. Names kept from the
+     old Midnight Stage sheet so the page sheets keep working: --fg is the main text, --fg-2 the quieter text, --panel
+     a card, --deep an inset surface (fields, wells), --paper the strongest mark on the page (now midnight). */
+  --midnight:var(--brand-midnight,#121433);--spark:var(--brand-spark,#ff5b2e);--haze:var(--brand-haze,#7c81c4);
+  --paper:#121433;--deep:#f3f3fa;--panel:#fcfbf8;--card:#fcfbf8;--line-soft:rgba(18,20,51,.12);--field-line:#6b6e8c;
+  --h50:#f3f3fa;--h100:#e8e9f6;--h200:#d9dbf1;--h300:#c3c6e9;--h400:#a6aadb;--h500:#7c81c4;--h700:#464a8c;--spark-tint:#ffb59c;
+  --fg:#121433;--fg-2:#34376a;
   --h:var(--brand-font-heading,"Bricolage Grotesque","Segoe UI",system-ui,sans-serif);--b:var(--brand-font-body,Inter,ui-sans-serif,system-ui,sans-serif);
 
-  --t-display:clamp(40px,2.65vw + 30px,88px);
-  --t-h2:clamp(30px,1.95vw + 22.7px,56px);
-  --t-h3:clamp(21px,.66vw + 18.5px,28px);
-  --t-lead:clamp(18px,.28vw + 17px,21px);
-  --t-body:clamp(16px,.09vw + 15.7px,17px);
-  --t-small:14px;--t-label:12px;
+  --t-display:clamp(2.4rem,1.3rem + 3.6vw,4.8rem);
+  --t-h2:clamp(2rem,1.2rem + 2.6vw,3.6rem);
+  --t-h3:clamp(1.25rem,1.05rem + .7vw,1.75rem);
+  --t-lead:clamp(1.125rem,1.04rem + .3vw,1.25rem);
+  --t-body:1.0625rem;
+  --t-small:.875rem;--t-label:.8125rem;
 
   --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;--s-8:64px;--s-9:96px;--s-10:128px;
-  --gutter:16px;--maxw:1168px;
+  --gutter:clamp(16px,4vw,64px);--maxw:1512px;
 
   --m-quick:140ms;--m-base:260ms;--m-slow:520ms;--m-stage:900ms;
-  --ease-out:cubic-bezier(.2,.8,.2,1);--ease-in-out:cubic-bezier(.65,0,.35,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);--ease-in-out:cubic-bezier(.65,0,.35,1);
   --ease-spring:linear(0,.3 8%,.68 17%,.95 26%,1.1 35%,1.13 41%,1.09 50%,1.02 64%,.995 78%,1);
+  --shadow-1:0 1px 2px rgb(18 20 51/.06),0 8px 24px -8px rgb(18 20 51/.18);
+  --shadow-2:0 2px 4px rgb(18 20 51/.06),0 24px 48px -16px rgb(18 20 51/.28);
+  --r-card:24px;--r-inner:14px;
+  --shadow-card:0 18px 40px -22px rgb(12 14 38/.45),0 3px 8px -4px rgb(12 14 38/.18);
 
   /* Hooks the shared sample reads. */
-  --muted-site:#b4b7e0;--line:#454b8f;--paper-site:#f6f4ef;
-  --error:#ffb4a3;--ok:#7fdcae;
+  --muted-site:#34376a;--line:rgba(18,20,51,.22);--paper-site:#f6f4ef;
+  --error:#a3221b;--ok:#1d6b45;
   /* Older names, kept so beta.css and waitlist.js's inline link color work on the new look. */
-  --navy:var(--midnight);--orange:var(--spark);--muted:var(--fg-2);--panel-2:#1f2358;--ink-3:#8a8ec0;
-  color-scheme:dark;
+  --navy:var(--midnight);--orange:var(--spark);--muted:var(--fg-2);--panel-2:#f3f3fa;--ink-3:#5a5e8c;
+  color-scheme:light;
 }
-@media (min-width:390px){:root{--gutter:20px}}
-@media (min-width:768px){:root{--gutter:32px;--t-label:13px}}
-@media (min-width:1200px){:root{--gutter:56px}}
 /* Wide screens (1600 px and up): let the content column grow so a 1920 px screen is not mostly margin. Text keeps its own
    measure (max-width in ch/em), so only grids, heroes and art get the extra room. */
-@media (min-width:1600px){:root{--maxw:1360px;--gutter:64px}}
-@media (min-width:1840px){:root{--maxw:1480px;--gutter:72px}}
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-padding-top:72px}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-body{margin:0;background:var(--midnight);color:var(--fg);font:400 var(--t-body)/1.6 var(--b);-webkit-font-smoothing:antialiased;overflow-x:clip}
+body{margin:0;background:var(--h100);color:var(--fg);font:400 var(--t-body)/1.6 var(--b);font-feature-settings:"cv11","ss01";-webkit-font-smoothing:antialiased;overflow-x:clip;caret-color:var(--spark)}
+::selection{background:var(--spark-tint);color:var(--midnight)}
 img,video,svg{display:block;max-width:100%}
-h1,h2,h3{font-family:var(--h);font-weight:800;letter-spacing:-.035em;line-height:1.06;text-wrap:balance;margin:0}
+h1,h2,h3{font-family:var(--h);font-weight:700;letter-spacing:-.028em;line-height:1.06;text-wrap:balance;margin:0}
 p{margin:0}
 a{color:inherit;text-underline-offset:.18em;text-decoration-thickness:1px}
 a:hover{text-decoration-thickness:2px}
 button,input,select,textarea{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--spark);outline-offset:3px;border-radius:4px}
+:focus-visible{outline:3px solid var(--midnight);outline-offset:3px;border-radius:6px}
 [hidden]{display:none!important}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .nowrap{white-space:nowrap}
@@ -61,6 +65,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .skip{position:absolute;left:var(--gutter);top:-60px;z-index:100;background:var(--spark);color:var(--midnight);font-weight:700;padding:12px 18px;border-radius:10px;text-decoration:none}
 .skip:focus{top:8px}
+.skip:focus-visible{outline:3px solid var(--midnight);outline-offset:2px}
 .wrap{width:100%;max-width:calc(var(--maxw) + 2 * var(--gutter));margin-inline:auto;padding-inline:var(--gutter)}
 
 /* Eyebrow: a short orange bar plus small capitals. */
@@ -74,54 +79,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .btn-spark{background:var(--spark);color:var(--midnight)}
 .btn-spark:hover{background:#ff7550}
 .btn-ghost{background:transparent;color:var(--fg);border-color:var(--haze)}
-.btn-ghost:hover{border-color:var(--paper)}
-
-/* ---------- Header ---------- */
-.site-head{position:sticky;top:0;z-index:50;background:var(--midnight);border-bottom:1px solid var(--line-soft)}
-.head-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px;max-width:calc(var(--maxw) + 2 * var(--gutter));margin-inline:auto;padding-inline:var(--gutter)}
-.brand{display:block;flex:none;border-radius:6px}
-.brand img{height:28px;width:auto}
-.menu-btn{display:none;align-items:center;gap:10px;min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:transparent;font:600 15px/1 var(--b);cursor:pointer}
-.menu-icon{position:relative;width:16px;height:2px;background:currentColor;border-radius:2px}
-.menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0;width:16px;height:2px;background:currentColor;border-radius:2px;transition:transform var(--m-base) var(--ease-in-out)}
-.menu-icon::before{top:-5px}.menu-icon::after{top:5px}
-.menu-btn[aria-expanded=true] .menu-icon{background:transparent}
-.menu-btn[aria-expanded=true] .menu-icon::before{transform:translateY(5px) rotate(45deg)}
-.menu-btn[aria-expanded=true] .menu-icon::after{transform:translateY(-5px) rotate(-45deg)}
-.site-nav ul{list-style:none;margin:0;padding:0}
-.site-nav a:not(.btn){text-decoration:none;font-weight:600}
-.btn-head{min-height:44px;padding:0 18px;font-size:15px}
-
-/* Phone menu: a panel under the header. Without JavaScript the links simply wrap under the logo. */
-.js .menu-btn{display:inline-flex}
-.js .site-nav{position:absolute;left:0;right:0;top:100%;background:var(--deep);border-bottom:1px solid var(--line-soft);padding:8px var(--gutter) 20px;display:none}
-.js .site-nav.is-open{display:block}
-.js .site-nav li a{display:flex;align-items:center;min-height:52px;border-bottom:1px solid var(--line-soft);font-size:18px}
-.js .site-nav .btn-head{width:100%;margin-top:16px;min-height:52px;font-size:16px}
-/* Without JavaScript (no Menu button): the logo, then one row of links that scrolls sideways on its own, ending with the
-   beta tester button. About 100 px tall on a phone. */
-html:not(.js) .head-inner{height:auto;flex-wrap:wrap;padding-block:8px 0;row-gap:0}
-html:not(.js) .site-nav{display:flex;flex-wrap:nowrap;align-items:center;gap:16px;width:100%;overflow-x:auto;scrollbar-width:none;padding-bottom:6px}
-html:not(.js) .site-nav::-webkit-scrollbar{display:none}
-html:not(.js) .site-nav ul{display:flex;flex-wrap:nowrap;gap:16px;white-space:nowrap}
-html:not(.js) .site-nav li a{display:inline-flex;align-items:center;min-height:44px;font-size:15px}
-html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-size:14px}
-
-/* The full menu needs about 1100 px now that it has five links; below that, the Menu button. */
-@media (min-width:1100px){
-  .head-inner{height:68px}
-  .brand img{height:32px}
-  .js .menu-btn{display:none}
-  .js .site-nav,html:not(.js) .site-nav{position:static;display:flex;align-items:center;gap:28px;padding:0;background:none;border:0}
-  html:not(.js) .site-nav{width:auto;overflow:visible}
-  html:not(.js) .head-inner{flex-wrap:nowrap;padding-block:0;height:68px}
-  html:not(.js) .site-nav .btn-head{min-height:44px;padding:0 18px;font-size:15px}
-  .site-nav ul{display:flex;gap:4px}
-  .js .site-nav li a,html:not(.js) .site-nav li a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border:0;font-size:15px;color:var(--fg-2);border-radius:6px}
-  .site-nav li a:hover{color:var(--fg)}
-  .js .site-nav .btn-head{width:auto;margin:0;min-height:44px;font-size:15px}
-  html{scroll-padding-top:84px}
-}
+.btn-ghost:hover{border-color:var(--midnight)}
 
 /* ---------- 1. Hero / stage ---------- */
 /* The code order is the reading order on a phone: words, sample, sign-up, then the controls under the sample. On a
@@ -143,15 +101,15 @@ html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-
 /* The stage bar: topic and brand switches sit right on the sample. */
 .stage-bar{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;padding:2px;gap:2px;background:var(--deep)}
-.seg button{min-height:40px;min-width:44px;padding:0 9px;border:0;border-radius:6px;background:transparent;color:var(--fg-2);font:600 13px/1 var(--b);cursor:pointer;transition:background-color var(--m-quick),color var(--m-quick)}
+.seg button{min-height:44px;min-width:44px;padding:0 9px;border:0;border-radius:6px;background:transparent;color:var(--fg-2);font:600 13px/1 var(--b);cursor:pointer;transition:background-color var(--m-quick),color var(--m-quick)}
 .seg button:hover{color:var(--fg)}
-.seg button[aria-pressed=true]{background:var(--paper);color:var(--midnight)}
+.seg button[aria-pressed=true]{background:var(--midnight);color:#fff}
 .swatches{display:flex;align-items:center}
 .swatch-label{display:none;margin-right:6px;font:600 13px/1 var(--b);color:var(--fg-2)}
 .swatch{position:relative;width:42px;height:44px;border:0;background:none;padding:0;cursor:pointer;border-radius:50%}
 .swatch::before{content:"";position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:linear-gradient(135deg,var(--sw-bg) 0 54%,var(--sw-ac) 54%);box-shadow:inset 0 0 0 1px rgb(255 255 255/22%);transition:transform var(--m-quick) var(--ease-out)}
 .swatch::after{content:"";position:absolute;left:50%;top:50%;width:36px;height:36px;margin:-18px 0 0 -18px;border-radius:50%;box-shadow:0 0 0 2px transparent;transition:box-shadow var(--m-quick)}
-.swatch[aria-pressed=true]::after{box-shadow:0 0 0 2px var(--paper)}
+.swatch[aria-pressed=true]::after{box-shadow:0 0 0 2px var(--midnight)}
 .swatch:hover::before{transform:scale(1.08)}
 .sw-midnight{--sw-bg:#121433;--sw-ac:#ff5b2e}
 .sw-harbor{--sw-bg:#0f1c2e;--sw-ac:#c9a35b}
@@ -166,7 +124,7 @@ html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-
 .stage .bp-nav{margin-top:2px}
 .stage .bp-arrow{display:none}
 .stage .s-chart-kinds{display:none}
-.stage .s-chart-kinds button{min-height:32px;padding:4px 10px;font-size:12px}
+.stage .s-chart-kinds button{min-height:44px;padding:4px 12px;font-size:13px}
 .stage>.sample-note{margin:8px var(--gutter) 0}
 .sample-note{font:500 14px/1.4 var(--b);color:var(--fg-2)}
 /* Phone: the sample note shares the row with the slide dots, so the sign-up stays on the first screen. */
@@ -201,8 +159,8 @@ html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-
 .field input,.field select,.own textarea{width:100%;background:var(--deep);border:1px solid var(--field-line);border-radius:10px;color:var(--fg);transition:border-color var(--m-quick),box-shadow var(--m-quick)}
 .field input,.field select{height:52px;padding:0 14px;font-size:16px}
 .signup-hero .field input{height:48px;padding:0 12px}
-.field input::placeholder{color:#9599c9}
-.field input:focus,.field select:focus,.own textarea:focus{outline:none;border-color:var(--spark);box-shadow:0 0 0 3px rgb(255 91 46/35%)}
+.field input::placeholder{color:#6b6e8c}
+.field input:focus,.field select:focus,.own textarea:focus{outline:3px solid var(--midnight);outline-offset:1px;border-color:var(--midnight);box-shadow:none}
 .form-msg{font:600 14px/1.4 var(--b);color:var(--paper)}
 .form-msg:empty{display:none}
 .signup-hero .form-msg{margin-top:8px}
@@ -262,7 +220,7 @@ html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-
   .stage .bp-label{font-size:13px}
   .stage .bp-nav{justify-content:flex-start;padding-left:28px}
   .stage .bp-arrow{display:inline-block;cursor:pointer}
-  .stage .bp-arrow:hover{border-color:var(--paper)}
+  .stage .bp-arrow:hover{border-color:var(--midnight)}
   .stage .bp-graphic,.stage .bp-feed{margin-left:28px}
   .stage .bp-graphic{max-width:min(25vw,340px)}
   .stage .bp-graphic+.bp-label,.stage .bp-feed+.bp-label{margin-left:28px}
@@ -311,7 +269,7 @@ html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-
 .ok-badge-wrap{margin-top:6px}
 .ok-badge{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:0 12px;border-radius:999px;background:var(--spark);color:var(--midnight);font:700 13px/1 var(--b)}
 .ok-tick{width:0;height:14px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transition:width var(--m-quick)}
-.ok-card[data-state=confirmed] .ok-badge{background:var(--paper);color:var(--midnight)}
+.ok-card[data-state=confirmed] .ok-badge{background:var(--midnight);color:#fff}
 .ok-card[data-state=confirmed] .ok-tick{width:14px}
 .ok-card.is-springing .ok-badge{animation:spring var(--m-slow) var(--ease-spring) both}
 @keyframes spring{from{transform:scale(.72)}to{transform:none}}
@@ -346,7 +304,7 @@ html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-
 .tpl-row{list-style:none;margin:20px calc(-1 * var(--gutter)) 0;padding:0 var(--gutter) 6px;display:grid;grid-auto-flow:column;grid-auto-columns:42%;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);scrollbar-width:none;overscroll-behavior-x:contain}
 .tpl-row::-webkit-scrollbar{display:none}
 .tpl-row li{scroll-snap-align:start;display:grid;gap:8px;font-size:13px;color:var(--fg-2)}
-.tpl-row img{width:100%;height:auto;border-radius:4px;box-shadow:0 14px 30px rgb(0 0 0/35%)}
+.tpl-row img{width:100%;height:auto;border-radius:4px;box-shadow:var(--shadow-card)}
 .fine{margin-top:10px;font-size:14px;color:var(--fg-2)}
 @media (min-width:768px){.tpl-row{grid-auto-flow:row;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible;margin-inline:0;padding-inline:0}}
 .groups{display:grid;gap:0;margin-top:var(--s-7);border-top:1px solid var(--line-soft)}
@@ -385,7 +343,7 @@ html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-
 }
 
 /* 6. FAQ: the one paper band. */
-.section-faq{background:var(--paper);color:var(--midnight)}
+.section-faq{background:var(--h50);color:var(--midnight)}
 .section-faq .eyebrow,.section-faq .lead{color:#4a4e7a}
 .section-faq :focus-visible{outline-color:var(--midnight)}
 .faq-grid{display:grid;gap:var(--s-6)}
@@ -421,13 +379,6 @@ html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-
   .signup-join{padding:30px}
 }
 
-/* Footer */
-.site-foot{background:var(--deep);border-top:1px solid var(--line-soft);padding:var(--s-7) 0}
-.foot-inner{display:grid;gap:16px;font-size:14px;color:var(--fg-2)}
-.foot-links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:0 4px}
-.foot-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px 0 0;color:var(--fg);text-decoration:none}
-.foot-links a:hover{text-decoration:underline}
-
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:1ms!important;animation-delay:0ms!important;transition-duration:1ms!important}
 }
@@ -435,10 +386,6 @@ html:not(.js) .site-nav .btn-head{flex:none;min-height:40px;padding:0 14px;font-
 /* =====================================================================================================================
    Added for the built site (on top of option A).
    ===================================================================================================================== */
-
-/* Without JavaScript the menu wraps under the logo, so the header scrolls away instead of covering the page. */
-html:not(.js) .site-head{position:static}
-.site-nav a[aria-current=page]{color:var(--fg)}
 
 /* Waiting state: until the sign-up service says it is open, the fields are disabled (assets/waitlist.js). */
 /* Calm, not broken: the notice above the fields says why; the fields stay readable and the button turns quiet. */
@@ -469,7 +416,7 @@ html:not(.js) .site-head{position:static}
 .button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border-radius:10px;border:1px solid var(--spark);background:var(--spark);color:var(--midnight);font:700 16px/1.1 var(--b);text-decoration:none;cursor:pointer;transition:background-color var(--m-quick),border-color var(--m-quick)}
 .button:hover{background:#ff7550;border-color:#ff7550}
 .button-ghost{background:transparent;color:var(--fg);border-color:var(--haze)}
-.button-ghost:hover{background:transparent;border-color:var(--paper)}
+.button-ghost:hover{background:transparent;border-color:var(--midnight)}
 .button-small{min-height:44px;padding:0 16px;font-size:15px}
 .button:disabled{opacity:.55;cursor:not-allowed}
 .button .arrow,.btn .arrow{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -505,7 +452,7 @@ html:not(.js) .site-head{position:static}
   .cal{padding:var(--s-5)}
   .cal-grid{grid-template-columns:repeat(7,minmax(0,1fr))}
   .cal-dow{display:block;font:600 var(--t-label)/1 var(--b);text-transform:uppercase;letter-spacing:.1em;color:var(--fg-2);padding:4px 6px 8px}
-  .day,.day.has-post,.day.open{display:flex;flex-direction:column;gap:6px;min-height:118px;padding:8px;border-radius:8px;background:rgb(255 255 255/.025);box-shadow:inset 0 0 0 1px rgb(46 51 107/.7)}
+  .day,.day.has-post,.day.open{display:flex;flex-direction:column;gap:6px;min-height:118px;padding:8px;border-radius:8px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line-soft)}
   .day.wk{background:transparent}
   .dw{display:none}
   .d{font-size:13px}
@@ -522,9 +469,9 @@ html:not(.js) .site-head{position:static}
 .shots{list-style:none;margin:var(--s-6) calc(-1 * var(--gutter)) 0;padding:0 var(--gutter) 6px;display:grid;grid-auto-flow:column;grid-auto-columns:78%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);scrollbar-width:none;overscroll-behavior-x:contain}
 .shots::-webkit-scrollbar{display:none}
 .shots li{scroll-snap-align:start}
-.shots:focus-visible{outline:2px solid var(--spark);outline-offset:4px}
+.shots:focus-visible{outline:3px solid var(--midnight);outline-offset:4px}
 .shots figure{margin:0;display:grid;gap:10px}
-.shots img{width:100%;height:auto;border-radius:14px;box-shadow:0 0 0 1px var(--line-soft),0 18px 40px rgb(0 0 0/35%)}
+.shots img{width:100%;height:auto;border-radius:14px;box-shadow:0 0 0 1px var(--line-soft),var(--shadow-card)}
 .shots figcaption{font-size:var(--t-small);color:var(--fg-2)}
 @media (min-width:768px){.shots{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible;margin-inline:0;padding-inline:0}}
 @media (min-width:960px){.section-film .shots{grid-column:1/-1;margin-top:0}}
@@ -534,8 +481,8 @@ html:not(.js) .site-head{position:static}
 .designs::-webkit-scrollbar{display:none}
 .designs li{scroll-snap-align:start}
 .designs figure{margin:0;display:grid;gap:8px;font-size:14px;color:var(--fg-2)}
-.designs img{width:100%;height:auto;border-radius:4px;box-shadow:0 14px 30px rgb(0 0 0/35%)}
-.designs:focus-visible{outline:2px solid var(--spark);outline-offset:4px}
+.designs img{width:100%;height:auto;border-radius:4px;box-shadow:var(--shadow-card)}
+.designs:focus-visible{outline:3px solid var(--midnight);outline-offset:4px}
 .tpl-more{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:22px}
 .tpl-more .fine{margin:0}
 @media (min-width:768px){.designs{grid-auto-flow:row;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible;margin-inline:0;padding-inline:0}}
@@ -553,24 +500,6 @@ html:not(.js) .site-head{position:static}
 .maker img{width:48px;height:48px}
 .maker h3{font-size:var(--t-h3);margin-bottom:6px}
 .maker p{color:var(--fg-2)}
-
-/* Footer: the guide pages in a second list. */
-.foot-head{font:700 var(--t-label)/1.2 var(--b);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2);margin-top:8px}
-/* Two columns on a phone (the guides fill down, six and five, so no link sits alone); from 960 px the guides take three
-   columns of four, four and three, and "Made for" sits beside them in one column of four. */
-.foot-nav{display:grid;gap:8px}
-.foot-pages{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
-.foot-guides .foot-pages{grid-template-columns:none;grid-template-rows:repeat(6,auto);grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}
-@media (min-width:960px){
-  .foot-nav{grid-template-columns:minmax(0,3fr) minmax(0,1fr);gap:32px}
-  .foot-guides .foot-pages{grid-template-rows:repeat(4,auto)}
-  .foot-for .foot-pages{grid-template-columns:minmax(0,1fr)}
-}
-.foot-pages a{display:inline-flex;align-items:center;min-height:44px;line-height:1.3;color:var(--fg-2);text-decoration:none}
-.foot-pages a:hover{color:var(--fg);text-decoration:underline}
-.foot-legal{display:grid;gap:6px;padding-top:16px;border-top:1px solid var(--line-soft)}
-.foot-legal .foot-links{margin-bottom:4px}
-.foot-fine{font-size:12px;line-height:1.4;color:var(--fg-2)}
 
 /* ---------- Simple pages: /beta/, /never/, /waitlist/confirm/, /waitlist/unsubscribe/, 404 ---------- */
 .panel{background:var(--panel);border-radius:16px;box-shadow:inset 0 0 0 1px var(--line-soft)}
@@ -612,8 +541,8 @@ html:not(.js) .site-head{position:static}
 .g-art-cap{margin-top:12px;font-size:var(--t-small);line-height:1.45;color:var(--fg-2)}
 .g-art-strip{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:10px;align-items:end;max-width:440px}
 .g-art-strip>*{width:100%;min-width:0}
-.g-art-strip img{width:100%;height:auto;border-radius:4px;box-shadow:0 14px 30px rgb(0 0 0/40%)}
-.g-art-strip .g-art-back{filter:brightness(.62) saturate(.9)}
+.g-art-strip img{width:100%;height:auto;border-radius:4px;box-shadow:0 14px 30px rgb(18 20 51/.42)}
+.g-art-strip .g-art-back{filter:saturate(.9);opacity:.92}
 /* Object pages (text post, calendar, review link): on a phone, a cropped view that fades out. */
 .g-art-crop>:first-child{max-height:236px;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent);mask-image:linear-gradient(180deg,#000 72%,transparent)}
 .g-art .bp-feed{margin:0;max-width:440px;font-size:15px}
@@ -623,7 +552,7 @@ html:not(.js) .site-head{position:static}
 .g-art-review .has-thumb .post-thumb{grid-column:1;grid-row:1/3}
 .g-art-review .has-thumb .g-review-kind,.g-art-review .has-thumb .g-review-text{grid-column:2}
 .g-art-review .has-thumb .g-state{grid-column:3}
-.post-thumb{width:40px;height:auto;border-radius:3px;box-shadow:0 4px 12px rgb(0 0 0/35%)}
+.post-thumb{width:40px;height:auto;border-radius:3px;box-shadow:0 4px 12px -4px rgb(18 20 51/.45)}
 /* The hero's calendar is always a short list of days, at every width. */
 .g-art-cal{max-width:460px}
 .g-art-cal .cal-grid{grid-template-columns:none}
@@ -642,7 +571,7 @@ html:not(.js) .site-head{position:static}
 .g-art-frame p{margin-top:8px;font-size:13px;line-height:1.3;color:var(--fg-2);font-variant-numeric:tabular-nums}
 .g-art-frame strong{display:block;font:800 18px/1.1 var(--h);letter-spacing:-.02em;color:var(--fg)}
 .g-art-shape{aspect-ratio:var(--ar);border-radius:4px;box-shadow:inset 0 0 0 1px var(--haze);background:rgb(124 129 196/.08);overflow:hidden}
-.g-art-frame.is-main .g-art-shape{box-shadow:0 14px 30px rgb(0 0 0/40%)}
+.g-art-frame.is-main .g-art-shape{box-shadow:0 14px 30px rgb(18 20 51/.42)}
 .g-art-fill{width:100%;height:100%;object-fit:cover;display:block}
 @media (min-width:600px){.g-art-crop>:first-child{max-height:300px}}
 @media (min-width:960px){
@@ -656,7 +585,7 @@ html:not(.js) .site-head{position:static}
   .g-art-strip>:first-child{left:20%;width:60%;z-index:3;transform:translateY(-50%)}
   .g-art-strip>:nth-child(2){left:0;width:46%;z-index:1;transform:translateY(-58%) rotate(-5deg)}
   .g-art-strip>:nth-child(3){right:0;width:46%;z-index:2;transform:translateY(-42%) rotate(5deg)}
-  .g-art-strip .g-art-front .s-frame,.g-art-strip img.g-art-front{box-shadow:0 30px 60px rgb(0 0 0/55%)}
+  .g-art-strip .g-art-front .s-frame,.g-art-strip img.g-art-front{box-shadow:0 30px 60px -24px rgb(18 20 51/.55),0 3px 8px -4px rgb(18 20 51/.18)}
   .g-art-crop>:first-child{max-height:none;-webkit-mask-image:none;mask-image:none}
   .g-art-frames{max-width:none;gap:18px}
 }
@@ -688,3 +617,70 @@ html:not(.js) .site-head{position:static}
   .g-actions .btn,.hero-actions .btn,.tp-hero-cta .btn,.cta-actions .btn,.g-cta-side .btn,.ch-end-cta .btn,.tp-join-cta .btn,.tool-card .btn{width:100%}
   .cta-actions,.g-cta-side{justify-items:stretch}
 }
+
+/* =====================================================================================================================
+   Haze theme layer (redesign rollout, 2026-11-19). Brings every inner page in line with the approved home and features
+   pages: pill buttons, cards on a light page, a soft "hall" light behind each page opening.
+   ===================================================================================================================== */
+.btn,.button{border-radius:999px;font-weight:650;padding:.7em 1.35em;transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out),background-color .2s}
+.btn-spark,.button:not(.button-ghost){background:var(--spark);color:var(--midnight);border-color:transparent;box-shadow:0 1px 0 rgb(255 255 255/.35) inset,0 10px 22px -10px rgb(204 64 24/.7)}
+.btn-spark:hover,.button:not(.button-ghost):hover{background:#ff6a40;border-color:transparent;transform:translateY(-1px);box-shadow:0 1px 0 rgb(255 255 255/.35) inset,0 14px 26px -10px rgb(204 64 24/.8)}
+.btn-ghost,.button-ghost{background:var(--card);color:var(--midnight);border-color:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.btn-ghost:hover,.button-ghost:hover{background:#fff;border-color:transparent;box-shadow:inset 0 0 0 1.5px var(--midnight)}
+.eyebrow{color:var(--fg-2);font-weight:650}
+/* Page openings: the soft light of the approved features page. */
+.g-hero,.page-hero,.tp-hero,.ch-hero,.tool-hero,.for-hero,.beta-hero{position:relative;isolation:isolate;
+  background:radial-gradient(ellipse 36% 70% at 78% 20%,rgb(255 255 255/.7),transparent 70%),linear-gradient(180deg,var(--h200),#d2d5ef)}
+h1{font-size:var(--t-display);line-height:1;letter-spacing:-.03em}
+/* Cards and wells. */
+.panel,.doc .status{box-shadow:var(--shadow-1)}
+.field input,.field select,.own textarea{background:#fff;color:var(--midnight);border:1.5px solid var(--field-line);border-radius:12px}
+.field select{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23121433' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") right 14px center/18px no-repeat}
+.form-msg.is-error,.field-error{color:var(--error)}
+.notice{background:var(--card);box-shadow:var(--shadow-1),inset 4px 0 0 var(--midnight);color:var(--midnight)}
+@media (min-width:768px){.doc{background:var(--card);border-radius:var(--r-card);box-shadow:var(--shadow-1)}}
+/* The questions band: the pale haze band of the home page, not the old paper band. */
+.section-faq{background:var(--h50);color:var(--midnight)}
+.section-faq .eyebrow,.section-faq .lead{color:var(--fg-2)}
+.section-faq .faq{border-top-color:var(--line-soft)}
+.section-faq .faq details{border-bottom-color:var(--line-soft)}
+.section-faq .faq details p{color:var(--fg-2)}
+
+/* ---------- Review round 1 (F1 styling, 2026-11-19) ---------- */
+/* Section rhythm of the approved pages (64 to 128 px was the old dark design's). */
+.section{padding-block:clamp(48px,5.4vw,84px)}
+
+/* The questions band: the title on one line above the list, so no title word is left alone in a narrow column. */
+.faq-grid .section-head h2{font-size:var(--t-h2);text-wrap:balance}
+@media (min-width:768px){
+  .faq-grid{grid-template-columns:minmax(0,1fr);gap:var(--s-6)}
+  .faq-grid .section-head{max-width:none}
+  .faq-grid .faq{max-width:60rem}
+}
+
+/* One closing "Become a beta tester" band on every inner page, the look of the home and features .backcover: the deep
+   haze band, no diagonal and no orange tab, the words on the left and the action on a real card on the right (guides
+   .g-cta-side; /for/, free tools, templates and the choose page .cta-card). One card width everywhere. The eyebrow
+   "Free beta, by invitation" stays as the inner-page variant (it is part of each page's copy). */
+.g-cta,.cta-band,.tp-join{position:relative;overflow:hidden;isolation:isolate;background:var(--h300);padding-block:clamp(56px,6vw,104px)}
+.g-cta::before,.g-cta::after{content:none}
+.g-cta .section-head h2,.cta-band .section-head h2,.tp-join .section-head h2{font-size:clamp(2rem,1.3rem + 3.2vw,4.4rem);line-height:.98;letter-spacing:-.035em;max-width:14ch}
+.g-cta .lead,.cta-band .lead,.tp-join .lead{color:var(--midnight);max-width:34ch}
+.g-cta .eyebrow,.cta-band .eyebrow,.tp-join .eyebrow{color:var(--midnight)}
+.cta-band .cta-grid,.tp-join .tp-join-wrap,.g-cta .g-cta-inner{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s-6);align-items:center}
+.cta-band .section-head,.tp-join .section-head{margin:0}
+.g-cta-side,.cta-card{display:grid;gap:16px;align-content:start;justify-items:start;padding:clamp(22px,3vw,44px);border-radius:var(--r-card);background:var(--card);box-shadow:var(--shadow-2)}
+.cta-card .ticks,.g-cta-side .ticks{margin:0}
+.cta-card .cta-actions{display:grid;gap:14px;justify-items:start}
+.cta-card .cta-actions .signin,.cta-card .tp-join-cta,.cta-card .ch-end-cta{margin:0}
+.cta-card .tp-join-strip{width:100%;gap:10px}
+.cta-card .tp-join-strip li:nth-child(even){transform:none}
+@media (min-width:960px){
+  .cta-band .cta-grid,.tp-join .tp-join-wrap,.g-cta .g-cta-inner{grid-template-columns:minmax(0,1fr) minmax(0,560px);column-gap:var(--s-8);row-gap:0}
+}
+@media (max-width:479px){.cta-card .cta-actions,.cta-card{justify-items:stretch}}
+
+/* Touch targets in page content: small text links get a 44 px tall target without moving the layout. */
+.crumbs a,.ch-crumbs a,.tp-crumbs a,a.dl,a.back{display:inline-block;min-height:0;padding-block:13px;margin-block:-13px}
+.g-list li>a:only-child{display:inline-block;padding-block:8px;margin-block:-8px}
+.g-toc a{padding-block:10px}

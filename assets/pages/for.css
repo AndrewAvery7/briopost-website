@@ -21,35 +21,46 @@
 .who-list strong{color:var(--fg)}
 @media (min-width:960px){.g-hero-grid>.who-list{grid-column:1;grid-row:2;align-self:start}}
 
-/* The sample carousel on a deep floor. */
+/* The sample carousel on a light card (the slides stay their own dark, saturated objects). */
 .for-demo{margin-top:var(--s-6)}
 .for-demo .stage-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
-.for-demo .bp-output{position:relative;margin:12px calc(-1 * var(--gutter)) 0;padding:14px 0 4px;background:radial-gradient(70% 60% at 30% 104%,color-mix(in srgb,var(--sk-accent) 17%,transparent),transparent 72%),var(--deep);
-  --slide-w:min(64vw,300px);--slide-gap:12px;--track-pad:var(--gutter)}
-.for-demo .bp-track{scroll-padding-inline:var(--gutter)}
-.for-demo .bp-label{font-size:12px;margin-top:8px;text-align:left}
-.for-demo .bp-arrow{display:none}
+.for-demo .bp-output{position:relative;margin:12px 0 0;padding:16px 0 6px;border-radius:var(--r-card);background:var(--card);box-shadow:var(--shadow-1);
+  --muted-site:var(--fg-2);--line:var(--h400);
+  --slide-w:min(64vw,300px);--slide-gap:12px;--track-pad:16px}
+.for-demo .bp-track{scroll-padding-inline:16px}
+.for-demo .bp-label{font-size:12px;margin-top:8px;text-align:left;color:var(--fg-2)}
+.for-demo .bp-arrow{color:var(--fg);background:var(--card);border-color:var(--h400);cursor:pointer}
+.for-demo .bp-arrow:hover{border-color:var(--fg)}
 .for-demo .s-chart-kinds{display:none}
-.for-demo .sample-note{margin-top:10px}
+.for-demo .s-chart-kinds button{color:var(--fg);background:var(--card);border-color:var(--h400)}
+.for-demo .s-chart-kinds button[aria-pressed=true]{background:var(--fg);color:var(--card);border-color:var(--fg)}
+.for-demo .bp-tabs{display:flex;flex-wrap:wrap;gap:6px;padding:5px;border-radius:14px;background:var(--h100);width:fit-content;max-width:100%;border-bottom:0}
+.for-demo .bp-tabs button{border-radius:10px;margin-bottom:0;border:0;color:var(--fg-2)}
+.for-demo .bp-tabs button:hover{color:var(--fg);background:rgb(255 255 255/.6)}
+.for-demo .bp-tabs [aria-selected=true]{background:var(--spark);color:var(--midnight)}
+.for-demo .bp-own-note{color:var(--fg-2)}
+/* One sample frame on every page (as on the guides): arrows on phones too, and midnight dots. */
+.for-demo .bp-dots button::after{background:var(--field-line)}
+.for-demo .bp-dots button[aria-current="true"]::after{background:var(--midnight)}
+.for-demo .sample-note{margin-top:12px}
 @media (min-width:768px){
   .for-demo .swatch-label{display:inline}
-  .for-demo .bp-output{margin-inline:0;border-radius:16px;padding:22px 0 14px;--slide-w:clamp(260px,26vw,340px);--slide-gap:18px;--track-pad:28px}
+  .for-demo .bp-output{padding:26px 0 16px;--slide-w:clamp(260px,26vw,340px);--slide-gap:18px;--track-pad:28px}
   .for-demo .bp-track{scroll-padding-inline:28px}
   .for-demo .bp-label{font-size:13px}
-  .for-demo .bp-arrow{display:inline-block;cursor:pointer}
 }
 
 /* Five post ideas. */
 .ideas{list-style:none;margin:var(--s-7) 0 0;padding:0;display:grid;gap:var(--s-5);counter-reset:idea}
-.idea{counter-increment:idea;display:grid;gap:10px;padding:22px 18px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line-soft)}
+.idea{counter-increment:idea;display:grid;gap:10px;padding:22px 18px;border-radius:var(--r-card);background:var(--card);box-shadow:var(--shadow-1)}
 .idea h3{display:flex;gap:12px;align-items:baseline;font-size:var(--t-h3)}
-.idea h3::before{content:counter(idea,decimal-leading-zero);font:700 14px/1 var(--b);letter-spacing:.06em;color:var(--spark);font-variant-numeric:tabular-nums}
+.idea h3::before{content:counter(idea,decimal-leading-zero);font:700 14px/1 var(--b);letter-spacing:.06em;color:var(--h700);font-variant-numeric:tabular-nums}
 .idea p{color:var(--fg-2);max-width:40em}
-.idea .opener{margin-top:2px;padding:2px 0 2px 14px;border-left:3px solid var(--haze);color:var(--fg);font-size:16px;line-height:1.5}
+.idea .opener{margin-top:2px;padding:2px 0 2px 14px;border-left:3px solid var(--h400);color:var(--fg);font-size:16px;line-height:1.5}
 .idea .opener span{display:block;font:700 var(--t-label)/1.3 var(--b);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2);margin-bottom:4px}
 .idea .fmt{font-size:var(--t-small);color:var(--fg-2)}
 .idea .fmt strong{color:var(--fg);font-weight:600}
-@media (min-width:768px){.ideas{grid-template-columns:repeat(2,minmax(0,1fr))}.idea:last-child{grid-column:1/-1}}
+@media (min-width:768px){.ideas{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:960px){.idea{padding:28px}}
 
 /* Features that matter most: reuse .groups from site.css, plus a short note. */
@@ -60,13 +71,29 @@
 /* Related pages. */
 .related{display:grid;gap:12px;margin-top:var(--s-6)}
 .related ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
-.related a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);text-decoration:none;font-weight:600;font-size:15px}
-.related a:hover{border-color:var(--paper)}
+.related a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;background:var(--card);box-shadow:var(--shadow-1);color:var(--fg);text-decoration:none;font-weight:600;font-size:15px}
+.related a:hover{background:var(--h50);box-shadow:0 0 0 1px var(--fg)}
 .related h3{font:700 var(--t-label)/1.2 var(--b);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
 
 /* Closing call to action. */
-.cta-band{background:var(--deep);border-top:1px solid var(--line-soft)}
 .cta-grid{display:grid;gap:var(--s-6)}
 .cta-actions{display:grid;gap:14px;align-content:start;justify-items:start}
 .cta-actions .signin{margin:0}
 @media (min-width:960px){.cta-grid{grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:var(--s-9);align-items:center}}
+
+/* Topic switch on the light page (the selected state comes from site.css, the same on every page). */
+.for-demo .seg{background:var(--h100);border-color:var(--h300)}
+
+/* "More from Briopost" continues the questions band (one band, not two thin ones); on a computer its title sits left of
+   the links so the row is not half empty. */
+#faq+#more{background:var(--h50);padding-top:0}
+#faq:has(+#more){padding-bottom:var(--s-7)}
+#faq+#more>.wrap{padding-top:var(--s-4)}
+@media (min-width:960px){
+  #faq+#more>.wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1.6fr);column-gap:var(--s-8);align-items:start}
+  #faq+#more .related{margin-top:0}
+  /* A "keep reading" heading, not a section title: a step smaller, so "More from Briopost." stays on one line. */
+  #faq+#more .section-head h2{font-size:clamp(2rem,.6rem + 2.6vw,3rem)}
+}
+/* The labels over the pill rows get room to breathe. */
+#more .related h3{margin-bottom:12px}

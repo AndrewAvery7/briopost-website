@@ -111,12 +111,12 @@
     var startedAt = Date.now();
     var busy = false;
     if (testerLink) {
-      submitHTML = submitHTML.replace(/Become a beta tester|Save my spot/, 'Get my test account');
+      submitHTML = submitHTML.replace(/Become a beta tester|Save my spot/, 'Become a beta tester');
       submit.innerHTML = submitHTML;
       var offer = document.getElementById(prefix === 'hw' ? 'hw-offer' : 'wl-consent');
       var next = el('next'); // "We email you to confirm. Then we send beta invitations...": not for an invited tester
       if (next) next.hidden = true;
-      if (offer) offer.textContent = 'You\u2019re invited to test Briopost. Enter your first name and email, confirm your email, and your free test account is ready. Testing is free, with AI credits included. We\u2019ll only email you about your test account and Briopost\u2019s launch.';
+      if (offer) offer.textContent = 'You\u2019re invited to be a Briopost beta tester. Enter your first name and email, confirm your email, and your free beta account is ready. The beta is free, with AI credits included. We\u2019ll only email you about your beta account and Briopost\u2019s launch.';
     }
 
     var say = function (text, kind) {
@@ -145,16 +145,16 @@
 
     var finish = function (status, email, quiet, body) {
       var panel = form.parentElement;
-      if (panel.classList.contains('form-panel')) panel.style.minHeight = panel.getBoundingClientRect().height + 'px'; // keep the panel the same height, so nothing below jumps
+      if (panel.classList.contains('form-panel') || panel.classList.contains('join-panel')) panel.style.minHeight = panel.getBoundingClientRect().height + 'px'; // keep the panel the same height, so nothing below jumps
       form.hidden = true;
       if (status === 'already_confirmed' && testerReady(body)) {
-        doneTitle.textContent = 'Your test account is ready.';
+        doneTitle.textContent = 'Your beta account is ready.';
         doneText.textContent = 'Sign in with ' + email + ' (Google, LinkedIn, or an emailed sign-in link). We also emailed you the address.';
         appendLink(doneText, body.tester.signInUrl, 'Open Briopost');
         appendGuide(doneText);
       } else if (status === 'already_confirmed') {
         doneTitle.textContent = 'You’ve already signed up.';
-        doneText.textContent = testerLink ? 'Nothing else to do. We’ll email you about your test account shortly.' : 'Nothing else to do. We send beta invitations in small groups, and we’ll email you about yours.';
+        doneText.textContent = testerLink ? 'Nothing else to do. We’ll email you about your beta account shortly.' : 'Nothing else to do. We send beta invitations in small groups, and we’ll email you about yours.';
       } else {
         doneTitle.textContent = 'Check your inbox.';
         doneText.textContent = '';
@@ -164,11 +164,11 @@
         strong.textContent = email;
         doneText.appendChild(strong);
         doneText.appendChild(document.createTextNode(testerLink
-          ? '. Click it to confirm your email, and your test account is ready. If it isn’t there in a few minutes, check your spam folder.'
+          ? '. Click it to confirm your email, and your beta account is ready. If it isn’t there in a few minutes, check your spam folder.'
           : '. Click it to confirm your email. If it isn’t there in a few minutes, check your spam folder.'));
       }
       done.hidden = false;
-      if (!quiet) doneTitle.focus();
+      if (!quiet) { doneTitle.focus(); if (doneTitle.scrollIntoView) doneTitle.scrollIntoView({ block: 'center', behavior: 'instant' }); }
     };
 
     form.addEventListener('submit', function (event) {
@@ -292,11 +292,11 @@
             if (action === 'confirm' && body.ok && body.tester) {
               // A tester link: the test account is ready (or, if setting it up failed, the Briopost team was told and will add it).
               if (testerReady(body)) {
-                show('ok', 'Your Briopost test account is ready. Sign in with the email address you used (Google, LinkedIn, or an emailed sign-in link). We also emailed you the address.');
+                show('ok', 'Your Briopost beta account is ready. Sign in with the email address you used (Google, LinkedIn, or an emailed sign-in link). We also emailed you the address.');
                 appendLink(out, body.tester.signInUrl, 'Open Briopost');
                 appendGuide(out);
               } else {
-                show('ok', 'You’re confirmed. We’re setting up your test account and will email you the sign-in address shortly.');
+                show('ok', 'You’re confirmed. We’re setting up your beta account and will email you the sign-in address shortly.');
               }
             } else {
               show(texts[status][0], texts[status][1]);

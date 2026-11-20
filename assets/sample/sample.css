@@ -12,7 +12,7 @@
 .bp-demo[data-brand=daylight],.bp-still[data-brand=daylight]{--sk-bg:#f3f5f7;--sk-surface:#ffffff;--sk-text:#111c24;--sk-muted:#4b5965;--sk-accent:#0f766e;--sk-accent-text:#ffffff;--sk-border:#dde3e8;--sk-soft:rgb(15 118 110/12%);--sk-h:Inter,system-ui,sans-serif;--sk-hw:800;--sk-scrim:17 28 36}
 
 /* The slide frame: true export proportions, 4:5 or 1:1. */
-.s-frame{container-type:inline-size;position:relative;aspect-ratio:4/5;width:100%;overflow:hidden;border-radius:4px;box-shadow:0 1px 0 rgb(255 255 255/6%),0 18px 40px rgb(0 0 0/38%)}
+.s-frame{container-type:inline-size;position:relative;aspect-ratio:4/5;width:100%;overflow:hidden;border-radius:4px;box-shadow:0 1px 0 rgb(255 255 255/6%),0 16px 28px -16px rgb(18 20 51/.45)}
 .s-frame[data-size=square]{aspect-ratio:1}
 .s{--u:calc(100cqw / 1080);position:absolute;inset:0;background:var(--sk-bg);color:var(--sk-text);font-family:var(--sk-b);display:flex;flex-direction:column;
   transition:background-color var(--m-slow,520ms) var(--ease-in-out,ease) calc(var(--i,0) * 90ms),color var(--m-slow,520ms) var(--ease-in-out,ease) calc(var(--i,0) * 90ms)}
@@ -54,8 +54,8 @@
 .is-drawn .c-line{stroke-dashoffset:0}
 .is-drawn .c-area,.is-drawn .c-dot,.is-drawn .c-val{opacity:1}
 .s-chart-kinds{display:flex;justify-content:center;gap:6px;margin-top:10px}
-.s-chart-kinds button{min-height:36px;padding:6px 12px;border-radius:999px;border:1px solid var(--line,#454b8f);background:transparent;color:inherit;font:600 13px/1 var(--sk-b,Inter)}
-.s-chart-kinds button[aria-pressed=true]{background:var(--paper,#f6f4ef);color:#121433;border-color:var(--paper,#f6f4ef)}
+.s-chart-kinds button{min-height:44px;padding:6px 12px;border-radius:999px;border:1px solid var(--line,#454b8f);background:transparent;color:inherit;font:600 13px/1 var(--sk-b,Inter)}
+.s-chart-kinds button[aria-pressed=true]{background:var(--midnight,#121433);color:#fff;border-color:var(--midnight,#121433)}
 
 /* 3. Comparison with ticks and crosses. */
 .s-compare{display:grid;grid-template-columns:1fr 1fr;gap:calc(26 * var(--u))}
@@ -105,7 +105,7 @@
 .s-graphic-line{font-size:calc(92 * var(--u))}
 
 /* The text post and poll, in a generic feed card (not LinkedIn's look). */
-.bp-feed{max-width:520px;margin-inline:auto;background:#fff;color:#1d1f2b;border-radius:12px;padding:18px 20px 12px;font:400 15px/1.55 Inter,system-ui,sans-serif;box-shadow:0 18px 40px rgb(0 0 0/30%)}
+.bp-feed{max-width:520px;margin-inline:auto;background:#fff;color:#1d1f2b;border-radius:12px;padding:18px 20px 12px;font:400 15px/1.55 Inter,system-ui,sans-serif;box-shadow:0 16px 28px -16px rgb(18 20 51/.45)}
 .bp-feed header{display:flex;gap:10px;align-items:center;margin-bottom:12px}
 .bp-feed header .s-avatar{--u:.04px;width:40px;height:40px;font-size:14px}
 .bp-feed header strong{display:block;font-size:15px}
@@ -126,7 +126,7 @@
 /* The carousel track: native swipe and scroll snap; works without JavaScript. */
 .bp-track{display:grid;grid-auto-flow:column;grid-auto-columns:var(--slide-w,min(80%,360px));gap:var(--slide-gap,16px);overflow-x:auto;scroll-snap-type:x mandatory;padding:6px var(--track-pad,10%) 14px;scrollbar-width:none;overscroll-behavior-x:contain}
 .bp-track::-webkit-scrollbar{display:none}
-.bp-track:focus-visible{outline:2px solid #ff5b2e;outline-offset:4px}
+.bp-track:focus-visible{outline:3px solid var(--midnight,#121433);outline-offset:4px}
 .bp-slide{margin:0;scroll-snap-align:center}
 .bp-label{margin:10px 0 0;font:500 13px/1.4 Inter,system-ui,sans-serif;color:var(--muted-site,#b4b7e0);text-align:center}
 .bp-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px}
@@ -149,3 +149,4 @@
   .s,.c-bar,.c-line,.c-area,.c-dot,.c-val,.bp-poll-options button::before{transition:none!important}
   .c-bar{transform:none}.c-line{stroke-dashoffset:0}.c-area,.c-dot,.c-val{opacity:1}
 }
+.bp-arrow svg{width:20px;height:20px;margin:auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.bp-arrow[data-step="-1"] svg{transform:scaleX(-1)}
