@@ -8,7 +8,7 @@ Run `node scripts/build-pages.mjs` after changing a page or a partial (see "Page
 
 ## Link card
 
-When briopost.com is shared in a text, post or chat, apps show `assets/briopost-link-card.png` (1200 x 630, set in the `og:` and `twitter:` tags in `index.html`). Since 2026-11-13 it is the brand kit's share image (`docs/brand/kit/social/share-image-1200x630.png` in the app repo); copy that file again when the kit changes. `scripts/link-card.html` and `python scripts/render-link-card.py` still draw `assets/apple-touch-icon.png` and the `icon-*.png` files, but the card they draw is the older "Coming soon" design: do not copy it over the brand kit card.
+When briopost.com is shared in a text, post or chat, apps show `assets/briopost-share-card.png` (1200 x 630, set in the `og:` and `twitter:` tags of every page). Since 2026-11-20 it is the same card as the studio sites (the owner-approved card with the large logo): it is made in the app repo by `node scripts/og/render.mjs` (`public/briopost-og.png`); copy that file here when it changes, under a new name if apps should drop their saved previews. `scripts/link-card.html` and `python scripts/render-link-card.py` still draw `assets/apple-touch-icon.png` and the `icon-*.png` files, but the card they draw (`assets/briopost-link-card.png`, no longer used) is the older "Coming soon" design: do not use it.
 
 ## Logo
 
