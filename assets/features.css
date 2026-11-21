@@ -387,3 +387,6 @@ html.cv-off #main .fx-page .f-sec,html:not(.js) #main .fx-page .f-sec{content-vi
 #main .backcover .notice{background: var(--h100); color: var(--mid); border-left: 4px solid var(--mid); border-radius: 0 10px 10px 0;}
 /* footer logo: option D (owner pick 2026-11-19) */
 footer.foot .foot-brand img{width:228px;height:auto}footer.foot .foot-brand p{position:relative;padding-bottom:12px;font-size:1.0625rem;color:#f3f3fa;font-weight:600}footer.foot .foot-brand p::after{content:"";position:absolute;left:0;bottom:0;width:40px;height:4px;border-radius:2px;background:#ff5b2e}
+/* footer logo: soft lavender glow behind the icon (same as the film's logo slides) */
+footer.foot .foot-brand a{position:relative;display:inline-block;isolation:isolate}
+footer.foot .foot-brand a::before{content:"";position:absolute;z-index:-1;pointer-events:none;left:calc(9.33% - 23.4%);top:50%;width:46.8%;aspect-ratio:1;transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle,rgba(160,166,240,.42) 0%,rgba(140,146,222,.20) 34%,rgba(124,129,196,.06) 56%,rgba(18,20,51,0) 70%)}
