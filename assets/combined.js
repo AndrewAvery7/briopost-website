@@ -87,9 +87,15 @@
     watch(obj, function (v) { vis = v; if (v && !raf) { last = 0; raf = requestAnimationFrame(tick); } });
   });
 
-  /* ---- Film poster: until the film exists, Play says so ---- */
-  var play = $('.play'), filmStatus = $('#film-status');
-  if (play && filmStatus) play.addEventListener('click', function () { filmStatus.textContent = 'The film is coming soon. Until then, this poster is made from the real studio.'; });
+  /* ---- The film: a large Play button over the cover; it hides while the film plays and returns when it ends ---- */
+  var film = document.getElementById('briopost-film'), filmPlay = $('.film-play');
+  if (film && filmPlay) {
+    var showPlay = function (on) { filmPlay.hidden = !on; };
+    film.controls = false;   // a clean cover with one Play button; the browser's own controls appear once the film starts
+    filmPlay.addEventListener('click', function () { film.controls = true; var p = film.play(); if (p && p.catch) p.catch(function () {}); });
+    film.addEventListener('play', function () { film.controls = true; showPlay(false); });
+    film.addEventListener('ended', function () { showPlay(true); });
+  }
 
   /* ---- How it works, step 3: Give my OK on the sample post, and take it back ---- */
   $$('[data-ok]').forEach(function (card) {

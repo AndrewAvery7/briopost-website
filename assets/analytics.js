@@ -137,6 +137,22 @@
   }
   ['focusin', 'input', 'change'].forEach(function (type) { document.addEventListener(type, formStart, true); });
 
+  // ----- The home page film (#briopost-film): started, halfway, finished, once each per page view. Nothing about the
+  // visitor. Media events do not bubble, so these listen on the way down (capture), like the click tracking below.
+  var filmSent = {};
+  function filmOnce(e, key, name, extra) {
+    var t = e.target;
+    if (!t || t.id !== 'briopost-film' || filmSent[key]) return;
+    filmSent[key] = 1;
+    track(name, Object.assign({ video_title: 'briopost_overview' }, extra || {}));
+  }
+  document.addEventListener('play', function (e) { filmOnce(e, 'start', 'video_start'); }, true);
+  document.addEventListener('timeupdate', function (e) {
+    var t = e.target;
+    if (t && t.duration && t.currentTime / t.duration >= 0.5) filmOnce(e, 'half', 'video_progress', { video_percent: 50 });
+  }, true);
+  document.addEventListener('ended', function (e) { filmOnce(e, 'done', 'video_complete'); }, true);
+
   // ----- Clicks: calls to action, PDF downloads, outside links, email links, the interactive sample -----
   // Listened to on the way down (capture), before assets/sample/sample.js redraws the sample and replaces the clicked button.
   document.addEventListener('click', function (e) {
