@@ -59,7 +59,9 @@ Not built on purpose: data reports (Briopost has no public, sourced data yet; bu
 
 ## Film production
 
-No video is currently embedded or served from the public website. The film masters, source project, captions and local review package remain available in the private Briopost app repository under `docs/films/beta-overview/` and `docs/films/home-loop/`. Publish a film to the site only after the website rebuild is ready and the release is explicitly approved.
+The home page film (section `.film`, `<video id="briopost-film">`) plays `assets/film/`: `briopost-film-1080.mp4` (desktop, about 45 MB), `briopost-film-720.mp4` (phones up to 700 px wide, about 25 MB), the cover `briopost-film-poster-1600.webp` / `-800.webp` (the opening logo slide) and the captions `briopost-film.en.vtt`. Both MP4s are H.264 with the index at the front (`+faststart`), so they start playing before they finish downloading; `preload="none"` means nothing downloads until someone presses play. `assets/analytics.js` records `video_start`, `video_progress` (50%) and `video_complete`, nothing about the visitor.
+
+The master (2:36, 1920x1080, 24 fps), the editable Remotion project, the real product captures, the AI footage and the narration and music are archived outside this repo (see the archive README in `OneDrive\Videos\Briopost film archive\`). To change the film: edit and render the master there, then re-encode the two web files with the commands in that README and replace the files here.
 
 ## Beta tester guide
 
