@@ -218,3 +218,6 @@ html:not(.js) .src.d5:has(> .site-head){position:static}
 @media (min-width:961px){.fx-page .f-nav{top:108px}}
 @media (max-width:960px){.fx-page .f-nav{top:84px;z-index:40}#main .fx-page .f-sec{scroll-margin-top:156px}}
 @media (max-width:480px){.fx-page .f-nav{top:72px}#main .fx-page .f-sec{scroll-margin-top:144px}}
+/* footer logo: soft lavender glow behind the icon (same as the film's logo slides) */
+footer.foot .foot-brand a{position:relative;display:inline-block;isolation:isolate}
+footer.foot .foot-brand a::before{content:"";position:absolute;z-index:-1;pointer-events:none;left:calc(9.33% - 23.4%);top:50%;width:46.8%;aspect-ratio:1;transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle,rgba(160,166,240,.42) 0%,rgba(140,146,222,.20) 34%,rgba(124,129,196,.06) 56%,rgba(18,20,51,0) 70%)}
