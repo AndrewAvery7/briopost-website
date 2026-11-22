@@ -126,5 +126,31 @@
         cur = next;
       });
     });
+
+    /* Rotate through the four kits on their own, as on the home page: every 2.5 s while the section is on screen;
+       holds while the pointer or keyboard focus is inside; stops once the visitor picks a kit; Pause / Play button;
+       off under reduced motion. */
+    var kbtns = $$('button', kseg), kAuto = $('.tp-kit-auto'), kBox = stage.closest('section') || stage;
+    var reduceKit = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceKit && kbtns.length > 1) {
+      var kIn = false, kHeld = false, kPaused = false, kStopped = false;
+      var kLabel = function () { if (!kAuto) return; var on = !kPaused && !kStopped; kAuto.setAttribute('aria-pressed', on ? 'false' : 'true'); kAuto.setAttribute('aria-label', on ? 'Pause the brand kit rotation' : 'Play the brand kit rotation'); $('span', kAuto).textContent = on ? 'Pause' : 'Play'; kAuto.classList.toggle('is-paused', !on); };
+      kbtns.forEach(function (b) { b.addEventListener('click', function (e) { if (e.isTrusted) { kStopped = true; kLabel(); } }); });
+      [kseg, stage].forEach(function (el) {
+        el.addEventListener('mouseenter', function () { kHeld = true; });
+        el.addEventListener('mouseleave', function () { kHeld = false; });
+        el.addEventListener('focusin', function () { kHeld = true; });
+        el.addEventListener('focusout', function () { kHeld = false; });
+      });
+      if (kAuto) {
+        kAuto.hidden = false;
+        kAuto.addEventListener('click', function () { if (kStopped || kPaused) { kStopped = false; kPaused = false; } else { kPaused = true; } kLabel(); });
+        kLabel();
+      }
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) { es.forEach(function (e) { kIn = e.isIntersecting; }); }, { threshold: 0.35 }).observe(kBox);
+      } else { kIn = true; }
+      setInterval(function () { if (kIn && !kHeld && !kPaused && !kStopped) kbtns[(cur + 1) % kbtns.length].click(); }, 2500);
+    }
   }
 })();
