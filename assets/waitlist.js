@@ -64,6 +64,10 @@
   // with TESTER_SOURCES there. The words change here only so the visitor knows what they are signing up for.
   var TESTER_REFS = ['beta-testers', 'ut-classmates'];   // ut-classmates: the older link, still accepted
   var testerLink = TESTER_REFS.indexOf(source.toLowerCase()) !== -1 && invite.length > 0;  // the tag alone grants nothing (FX-03)
+  // Open beta (the app's launch switch "open_beta", read from /status): every confirmed sign-up gets a beta account, so
+  // every visitor sees the tester wording.
+  var openBeta = false;
+  var asTester = function () { return testerLink || openBeta; };
   // The sign-in address the API sends back is used only if it is one of Briopost's own app addresses.
   var safeSignIn = function (url) {
     return typeof url === 'string' && /^https:\/\/(my|staging)\.briopost\.com\/$/.test(url) ? url : 'https://my.briopost.com/';
@@ -110,14 +114,16 @@
     var doneText = el('done-text');
     var startedAt = Date.now();
     var busy = false;
-    if (testerLink) {
+    var invited = function () {
       submitHTML = submitHTML.replace(/Become a beta tester|Save my spot/, 'Become a beta tester');
       submit.innerHTML = submitHTML;
       var offer = document.getElementById(prefix === 'hw' ? 'hw-offer' : 'wl-consent');
       var next = el('next'); // "We email you to confirm. Then we send beta invitations...": not for an invited tester
       if (next) next.hidden = true;
-      if (offer) offer.textContent = 'You\u2019re invited to be a Briopost beta tester. Enter your first name and email, confirm your email, and your free beta account is ready. The beta is free, with AI credits included. We\u2019ll only email you about your beta account and Briopost\u2019s launch.';
-    }
+      if (offer) offer.textContent = (testerLink ? 'You\u2019re invited to be a Briopost beta tester. ' : 'Join the Briopost beta. ')
+        + 'Enter your first name and email, confirm your email, and your free beta account is ready. The beta is free, with AI credits included. We\u2019ll only email you about your beta account and Briopost\u2019s launch.';
+    };
+    if (testerLink) invited();
 
     var say = function (text, kind) {
       msg.textContent = text || '';
@@ -154,7 +160,7 @@
         appendGuide(doneText);
       } else if (status === 'already_confirmed') {
         doneTitle.textContent = 'You’ve already signed up.';
-        doneText.textContent = testerLink ? 'Nothing else to do. We’ll email you about your beta account shortly.' : 'Nothing else to do. We send beta invitations in small groups, and we’ll email you about yours.';
+        doneText.textContent = asTester() ? 'Nothing else to do. We’ll email you about your beta account shortly.' : 'Nothing else to do. We send beta invitations in small groups, and we’ll email you about yours.';
       } else {
         doneTitle.textContent = 'Check your inbox.';
         doneText.textContent = '';
@@ -163,7 +169,7 @@
         strong.className = 'copyable';
         strong.textContent = email;
         doneText.appendChild(strong);
-        doneText.appendChild(document.createTextNode(testerLink
+        doneText.appendChild(document.createTextNode(asTester()
           ? '. Click it to confirm your email, and your beta account is ready. If it isn’t there in a few minutes, check your spam folder.'
           : '. Click it to confirm your email. If it isn’t there in a few minutes, check your spam folder.'));
       }
@@ -236,7 +242,7 @@
       });
     });
 
-    return { api: api, open: open, closed: showClosed, finish: finish };
+    return { api: api, open: open, closed: showClosed, finish: finish, invited: invited };
   }
 
   var homeForms = ['hw', 'wl'].map(setupForm).filter(Boolean);
@@ -244,7 +250,8 @@
     // Ask the API whether sign-ups are open. Until it answers yes, the forms stay disabled.
     call(homeForms[0].api, '/status', { method: 'GET' }, 8000).then(function (r) {
       var isOpen = r.http === 200 && r.body && r.body.open === true;
-      homeForms.forEach(function (f) { if (isOpen) f.open(); else f.closed(); });
+      openBeta = isOpen && r.body.openBeta === true;
+      homeForms.forEach(function (f) { if (isOpen) { f.open(); if (openBeta && !testerLink) f.invited(); } else f.closed(); });
     }).catch(function () { homeForms.forEach(function (f) { f.closed(); }); });
   }
 
@@ -304,6 +311,10 @@
                 show('ok', 'Your Briopost beta account is ready. Sign in with the email address you used (Google, LinkedIn, or an emailed sign-in link). We also emailed you the address.');
                 appendLink(out, body.tester.signInUrl, 'Open Briopost');
                 appendGuide(out);
+              } else if (body.tester.status === 'list_full') {
+                // The beta testers list is full (100 places): they stay on the list for the next opening.
+                settle('You’re on the list.');
+                show('ok', 'We’ve reached the maximum number of beta testers for now. You’re on the list, and we’ll email you as soon as a place opens.');
               } else {
                 settle('You’re confirmed.');
                 show('ok', 'We’re setting up your beta account and will email you the sign-in address shortly.');
