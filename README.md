@@ -63,6 +63,10 @@ The home page film (section `.film`, `<video id="briopost-film">`) plays `assets
 
 The master (2:36, 1920x1080, 24 fps), the editable Remotion project, the real product captures, the AI footage and the narration and music are archived outside this repo (see the archive README in `OneDrive\Videos\Briopost film archive\`). To change the film: edit and render the master there, then re-encode the two web files with the commands in that README and replace the files here.
 
+## Film page for sharing
+
+`/film/` shows only the film, full screen on a dark background, with no header, footer or menu (listed in `BARE` in `scripts/build-pages.mjs`). It is the address to text or share: its link card is the usual `briopost-share-card.png` with the title "Watch the Briopost film". It is `noindex` and not in the sitemap. `assets/pages/film.js` tries to start the film with the sound on; browsers that refuse sound without a tap (iPhones and most phones) get one "Play with sound" button instead. The player keeps the id `briopost-film`, so analytics counts it like the home page film. When the film's `?v=` tag changes, change it here too.
+
 ## Beta tester guide
 
 `/beta/` (noindex, not in the sitemap): sign-in steps, five things to try (ticks kept in the visitor's browser only, `assets/beta.js`), how to send feedback (info@briopost.com) and short answers that match Terms section 17. The tester sign-up messages in `assets/waitlist.js` link to it, and so does the test-account email in the app.
