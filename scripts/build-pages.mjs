@@ -23,6 +23,8 @@ const Sample = require(join(root, 'assets/sample/sample.js'));
 
 const GENERATED = new Set(['privacy/index.html', 'terms/index.html', 'email-policy/index.html', 'contact/index.html']);
 const SKIP_DIRS = new Set(['.git', 'node_modules', 'scripts', 'partials', '.github']);
+// Pages that deliberately show no site header or footer: /film/ is the film on its own, made to be texted.
+const BARE = new Set(['film/index.html']);
 
 const read = (f) => readFileSync(f, 'utf8');
 // Partials are stored with LF; a trailing newline is dropped so the marker pair reads <!--HEADER-->\n...\n<!--/HEADER-->.
@@ -72,7 +74,7 @@ for (const abs of pages(root)) {
   const file = relative(root, abs).split('\\').join('/');
   const text = read(abs);
   const lacks = ['HEADER', 'FOOTER'].filter((n) => !text.includes('<!--' + n + '-->') || !text.includes('<!--/' + n + '-->'));
-  if (lacks.length) missing.push(file + ' (no ' + lacks.join(' or ') + ' markers)');
+  if (lacks.length && !BARE.has(file)) missing.push(file + ' (no ' + lacks.join(' or ') + ' markers)');
   const next = fill(text, file);
   if (next === text) continue;
   if (check) stale.push(file);
