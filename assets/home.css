@@ -1693,10 +1693,6 @@ html:not(.js) #main [data-kits] .kit-list{display:none}
 /* the film (2026-11-21): the real player sits in the poster frame */
 .d5 .film-player{background: var(--mid, #121433);}
 .d5 .film-player video{position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: contain; background: #121433;}
-#main .film .film-play{top: 79%; width: clamp(52px, 5.6vw, 76px); height: clamp(52px, 5.6vw, 76px); padding: 0; justify-content: center; border-radius: 50%; z-index: 2;}
-#main .film .film-play svg{width: 38%; height: 38%; margin: 0; fill: #fff;}
-#main .film .film-play[hidden]{display: none;}
-@media (max-width: 700px){#main .film .film-play{top: 83%; width: 44px; height: 44px;}}
 /* footer logo: soft lavender glow behind the icon (same as the film's logo slides) */
 footer.foot .foot-brand a{position:relative;display:inline-block;isolation:isolate}
 footer.foot .foot-brand a::before{content:"";position:absolute;z-index:-1;pointer-events:none;left:calc(9.33% - 23.4%);top:50%;width:46.8%;aspect-ratio:1;transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle,rgba(160,166,240,.42) 0%,rgba(140,146,222,.20) 34%,rgba(124,129,196,.06) 56%,rgba(18,20,51,0) 70%)}
