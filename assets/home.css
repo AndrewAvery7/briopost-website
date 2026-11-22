@@ -1244,6 +1244,9 @@ section{scroll-margin-top: 12px;}
 #main .apps .ticks{margin-top: 24px;}
 #main .apps .store-badges{margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;}
 #main .apps .store-badges img{display: block; height: 48px; width: auto;}
+#main .apps .store-badge{position:relative;display:block;overflow:hidden;border-radius:6px;isolation:isolate}
+#main .apps .store-badge::before{content:"";position:absolute;z-index:1;left:50%;top:50%;width:150%;height:25px;background:var(--brand-spark,#ff5b2e);transform:translate(-50%,-50%) rotate(-17deg)}
+#main .apps .store-badge-label{position:absolute;z-index:2;left:50%;top:50%;color:#fff;font:800 15px/1 Arial,sans-serif;letter-spacing:.025em;text-transform:uppercase;white-space:nowrap;transform:translate(-50%,-50%) rotate(-17deg)}
 #main .phone-fig{margin: 0; display: grid; place-items: center;}
 #main .phone{position: relative; width: min(300px, 74vw); aspect-ratio: 1 / 1.82;}
 #main .phone-frame{position: absolute; inset: 0; width: 100%; height: 100%; fill: var(--card); stroke: var(--mid); stroke-width: 3; stroke-linecap: round; filter: drop-shadow(0 24px 30px rgba(18, 20, 51, .22));}
