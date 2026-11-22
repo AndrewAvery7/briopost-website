@@ -259,6 +259,14 @@
     var token = '';
     try { token = (new URLSearchParams(location.search).get('token') || '').trim(); } catch (e) { token = ''; }
     var label = button.textContent;
+    var heading = card.querySelector('h1');
+    var lead = card.querySelector('.lead');
+    // After it worked, the heading and the line under it say what happened (go-live trial run, 22 Nov 2026: a tester
+    // read "We send beta invitations in small groups" right above "Your Briopost beta account is ready").
+    var settle = function (title) {
+      if (heading && title) heading.textContent = title;
+      if (lead) lead.hidden = true;
+    };
     var texts = action === 'confirm' ? {
       confirmed: ['ok', 'You’re confirmed. Thank you! We send beta invitations in small groups, and we’ll email you about yours.'],
       already_confirmed: ['ok', 'You’re already confirmed. Nothing else to do.'],
@@ -292,13 +300,16 @@
             if (action === 'confirm' && body.ok && body.tester) {
               // A tester link: the test account is ready (or, if setting it up failed, the Briopost team was told and will add it).
               if (testerReady(body)) {
+                settle('You’re in.');
                 show('ok', 'Your Briopost beta account is ready. Sign in with the email address you used (Google, LinkedIn, or an emailed sign-in link). We also emailed you the address.');
                 appendLink(out, body.tester.signInUrl, 'Open Briopost');
                 appendGuide(out);
               } else {
-                show('ok', 'You’re confirmed. We’re setting up your beta account and will email you the sign-in address shortly.');
+                settle('You’re confirmed.');
+                show('ok', 'We’re setting up your beta account and will email you the sign-in address shortly.');
               }
             } else {
+              if (status !== 'invalid') settle(action === 'confirm' ? 'You’re confirmed.' : 'You’re unsubscribed.');
               show(texts[status][0], texts[status][1]);
             }
             button.hidden = true;
