@@ -66,6 +66,9 @@ html:not(.js) .needs-js{display:none!important}
 .preview-note{margin-top:12px;font-size:var(--t-small);color:var(--fg-2);max-width:40em}
 
 /* ---------- Size checker ---------- */
+.sc-mode{display:grid;gap:8px;justify-items:start}
+.sc-mode .tool-label{margin-bottom:0}
+.sc-mode .seg button{padding:0 16px;font-size:14px}
 .sc-drop{position:relative;display:grid;gap:12px;justify-items:start;padding:22px 18px;border-radius:14px;border:2px dashed var(--field-line);background:#fff;transition:border-color var(--m-quick),background-color var(--m-quick)}
 .sc-drop.is-over{border-color:var(--midnight);background:var(--h50)}
 .sc-pick{position:relative;display:inline-flex}

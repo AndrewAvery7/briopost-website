@@ -3,6 +3,9 @@
    with createImageBitmap (or an <img> as a fallback). PDFs are read by a small plain-JS reader: it follows the page
    tree from the catalog (/Root -> /Pages -> /Kids) to count pages and read each page's /MediaBox and /Rotate, and it
    opens compressed object streams with the browser's own DecompressionStream. No libraries, no network.
+   Two modes, switched by the Carousel / Graphic buttons (data-check-mode) or started with data-mode="graphic" on the
+   tool: Carousel judges against portrait 4:5, square 1:1 and story 9:16; Graphic against the five graphic sizes.
+   The same markup and script run on the tool page and on the guides that carry the checker.
    Tells the analytics file what happened through a page event (briopost:tool); never the file or its name. */
 (function () {
   'use strict';
@@ -13,6 +16,9 @@
   var out = document.getElementById('sc-result');
   var MAX_BYTES = 100 * 1024 * 1024;
   var lastPreview = null; // the local blob: address of the picture shown, released when the next file is picked
+  var lastFile = null; // what the last file measured, so switching between Carousel and Graphic re-checks it
+  // Carousel (the default) or Graphic. A page can start in Graphic with data-mode="graphic" on the tool.
+  var mode = root.getAttribute('data-mode') === 'graphic' ? 'graphic' : 'carousel';
 
   var SIZES = [
     { key: 'portrait', name: 'portrait', ratioName: '4:5', w: 1080, h: 1350, kind: 'carousel' },
@@ -20,6 +26,14 @@
     { key: 'story', name: 'story', ratioName: '9:16', w: 1080, h: 1920, kind: 'carousel' },
     { key: 'wide', name: 'wide graphic', ratioName: '16:9', w: 1920, h: 1080, kind: 'graphic' },
     { key: 'banner', name: 'profile banner', ratioName: '4:1', w: 1584, h: 396, kind: 'graphic' }
+  ];
+  // The five sizes Briopost makes graphics in (the same list as /linkedin-graphics/).
+  var GRAPHICS = [
+    { key: 'portrait', name: 'portrait', ratioName: '4:5', w: 1080, h: 1350 },
+    { key: 'square', name: 'square', ratioName: '1:1', w: 1080, h: 1080 },
+    { key: 'story', name: 'story', ratioName: '9:16', w: 1080, h: 1920 },
+    { key: 'landscape', name: 'landscape', ratioName: '16:9', w: 1920, h: 1080 },
+    { key: 'banner', name: 'profile banner', ratioName: '4:1', w: 1584, h: 396 }
   ];
 
   function tell(detail) {
@@ -88,6 +102,7 @@
       var near = compareTo(w, h, carousels);
       var cr = cropTo(w, h, near);
       lines.push('For a carousel, the closest is ' + near.name + ' ' + near.ratioName + '. Cropping to ' + num(cr[0]) + '\u00a0\u00d7\u00a0' + num(cr[1]) + unit + ' gives that shape.');
+      lines.push('Checking a single graphic instead? Choose Graphic above.');
     } else {
       var n2 = compareTo(w, h, carousels);
       var c2 = cropTo(w, h, n2);
@@ -98,15 +113,45 @@
     }
     return { lines: lines, state: state, match: match };
   }
+  // Graphic mode: one picture for a post (or the profile banner), judged against the five graphic sizes.
+  function graphicVerdict(w, h, isPdf) {
+    var s = compareTo(w, h, GRAPHICS), same = Math.abs(Math.log((w / h) / (s.w / s.h))) < 0.01;
+    var px = function (x) { return x.w + ' × ' + x.h; };
+    var lines = [], state = 'warn', match = 'graphic_' + (same ? s.key : 'none'); // analytics keeps 20 characters
+    if (isPdf) {
+      lines.push('A graphic is posted as a picture (PNG or JPG), not a PDF. Save the page as a picture and check that, or choose Carousel above to check a carousel PDF.');
+      if (same) lines.push('The page has the ' + s.ratioName + ' shape of a ' + s.name + ' graphic (' + px(s) + ' pixels).');
+      return { lines: lines, state: state, match: match };
+    }
+    if (same) {
+      state = 'ok';
+      if (w === s.w && h === s.h) lines.push('This matches the ' + s.name + ' ' + s.ratioName + ' graphic size Briopost makes, ' + px(s) + ' pixels, exactly.');
+      else {
+        lines.push('Same ' + s.ratioName + ' shape as the ' + s.name + ' graphics Briopost makes, at a different size.');
+        lines.push(w < s.w
+          ? 'It is ' + num(w) + ' pixels wide. Briopost makes this shape at ' + px(s) + '. Smaller pictures can look soft on large screens, so use a bigger copy if you have one.'
+          : 'It is larger than the ' + px(s) + ' Briopost makes, which is fine: the shape is right.');
+      }
+      if (s.key === 'banner') lines.push('A profile banner goes at the top of your LinkedIn profile, not in a post. You add it there yourself.');
+    } else {
+      var c = cropTo(w, h, s);
+      lines.push('This does not match the graphic sizes Briopost makes: portrait 4:5 (1080 × 1350), square 1:1 (1080 × 1080), story 9:16 (1080 × 1920), landscape 16:9 (1920 × 1080) or profile banner 4:1 (1584 × 396).');
+      lines.push('The closest is ' + s.name + ' ' + s.ratioName + '. Crop it to ' + num(c[0]) + ' × ' + num(c[1]) + ' pixels, or resize it to ' + px(s) + ', to get that shape.');
+    }
+    return { lines: lines, state: state, match: match };
+  }
   function compareTo(w, h, list) {
     var r = w / h, best = list[0], bestD = Infinity;
     list.forEach(function (s) { var d = Math.abs(Math.log(r / (s.w / s.h))); if (d < bestD) { bestD = d; best = s; } });
     return best;
   }
 
-  function showResult(o) {
+  function showResult(o, quiet) {
+    lastFile = o;
     out.innerHTML = '';
-    var v = verdict(o.w, o.h, o.isPdf, !o.isPdf && SIZES.some(function (s) { return s.kind === 'carousel' && s.w === o.w && s.h === o.h; }));
+    var v = mode === 'graphic'
+      ? graphicVerdict(o.w, o.h, o.isPdf)
+      : verdict(o.w, o.h, o.isPdf, !o.isPdf && SIZES.some(function (s) { return s.kind === 'carousel' && s.w === o.w && s.h === o.h; }));
     out.setAttribute('data-state', v.state);
     var h = el('h2', 'sc-title', v.state === 'ok' ? 'This fits.' : 'This needs a change.'); h.tabIndex = -1;
     out.appendChild(h);
@@ -122,7 +167,7 @@
     add('Shape', ratioText(o.w, o.h) + (o.w > o.h ? ' (wider than tall)' : o.w < o.h ? ' (taller than wide)' : ' (square)'));
     out.appendChild(dl);
     v.lines.forEach(function (t) { out.appendChild(el('p', null, t)); });
-    if (o.isPdf && o.pages > 1) {
+    if (o.isPdf && o.pages > 1 && mode === 'carousel') {
       out.appendChild(el('p', 'sc-aside', o.mixed
         ? 'Not every page is the same size. Carousels look best when every page shares one size.'
         : 'All ' + num(o.pages) + ' pages are the same size.'));
@@ -135,6 +180,7 @@
       fig.appendChild(el('figcaption', null, 'Shown on this page only. It never leaves your device.'));
       out.appendChild(fig);
     }
+    if (quiet) return; // re-checked after a mode switch: keep focus on the switch, don't count it again
     h.focus();
     tell({ action: 'checked', kind: o.isPdf ? 'pdf' : 'image', match: v.match, pages: o.isPdf ? (o.pages > 1 ? 'many' : 'one') : '(none)' });
   }
@@ -311,6 +357,23 @@
   }
 
   root.classList.add('is-live');
+  // The Carousel / Graphic switch (optional: older copies of the markup have none and stay in Carousel).
+  var modeButtons = root.querySelectorAll('[data-check-mode]');
+  function setMode(m) {
+    mode = m;
+    root.setAttribute('data-mode', m);
+    modeButtons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-check-mode') === m)); });
+    if (lastFile && !out.hidden && out.getAttribute('data-state') !== 'error') showResult(lastFile, true);
+  }
+  modeButtons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var m = b.getAttribute('data-check-mode');
+      if (m === mode) return;
+      setMode(m);
+      tell({ action: 'mode' });
+    });
+  });
+  setMode(mode);
   input.addEventListener('change', function () { handle(input.files && input.files[0]); });
   ['dragenter', 'dragover'].forEach(function (t) {
     drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add('is-over'); });
