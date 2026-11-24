@@ -52,6 +52,7 @@
 - [LinkedIn hook preview](https://briopost.com/free-tools/linkedin-hook-preview/): free, in-browser preview of up to three opening lines in a phone-width feed post, with the approximate "see more" cut; nothing is sent.
 - [Carousel slide planner](https://briopost.com/free-tools/carousel-slide-planner/): free, in-browser slide-by-slide plan from one idea and a list of points, with words per slide and 4:5, 1:1 or 9:16 outlines; nothing is sent.
 - [Brand color contrast checker](https://briopost.com/free-tools/brand-color-contrast-checker/): free, in-browser contrast check of a text color on a background color (WCAG formula), pass or fail for normal text (4.5:1) and big type (3:1), and the closest passing shade; nothing is sent.
+- [Carousel tool scorecard](https://briopost.com/free-tools/carousel-tool-scorecard/): free, in-browser comparison of up to three LinkedIn carousel or post tools on the ten questions from the how-to-choose checklist (Yes 1, Partly 0.5, out of 10), with a deal-breaker flag for any tool that can post without your OK; nothing is sent.
 - [What we never do](https://briopost.com/never/): the promises Briopost keeps about your LinkedIn account, posts and data.
 - [Privacy Policy](https://briopost.com/privacy/)
 - [Terms](https://briopost.com/terms/)
