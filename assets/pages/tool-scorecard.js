@@ -1,4 +1,5 @@
-/* Free carousel tool scorecard (on /how-to-choose-a-linkedin-carousel-tool/). The visitor names up to three tools and
+/* Free carousel tool scorecard (on /how-to-choose-a-linkedin-carousel-tool/ and its own page,
+   /free-tools/carousel-tool-scorecard/). The visitor names up to three tools and
    answers the page's ten questions for each with Yes, Partly or No; the page adds up a score out of 10 (Yes 1, Partly
    half) and flags a tool that can post without the visitor's OK. Runs only in the browser: nothing is sent or stored.
    Tells the analytics file which control was used through a page event (briopost:tool); never tool names or answers. */
@@ -24,6 +25,7 @@
     { id: 'linkedin', text: 'Posts where you need it to' }
   ];
   var CHOICES = [['yes', 'Yes'], ['part', 'Partly'], ['no', 'No']];
+  var CHECKLIST = '/how-to-choose-a-linkedin-carousel-tool/';
   // Briopost's own answers, as the page states them under "Briopost today".
   var BRIOPOST = ['yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'part'];
   var tools = [];
@@ -86,7 +88,8 @@
       var li = el('li', 'sk-q');
       li.appendChild(el('p', 'sk-q-text', (qi + 1) + '. ' + q.text));
       var link = el('a', 'sk-q-more', 'What to look for');
-      link.href = '#' + q.id;
+      // On the checklist page the question is right there; on the scorecard's own page it opens the checklist.
+      link.href = (document.getElementById(q.id) ? '' : CHECKLIST) + '#' + q.id;
       li.appendChild(link);
       tools.forEach(function (t, ti) {
         var fs = el('fieldset', 'sk-row');
@@ -186,7 +189,7 @@
     }
     tools[i].name = 'Briopost'; tools[i].answers = BRIOPOST.slice();
     build();
-    say('Briopost’s answers added, as this page states them: ' + pts(score(tools[i]).points) + ' of 10.');
+    say('Briopost’s answers added, as the checklist states them: ' + pts(score(tools[i]).points) + ' of 10.');
     tell('example');
   });
   $('sk-copy').addEventListener('click', function () {
