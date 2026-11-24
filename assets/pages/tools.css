@@ -112,6 +112,7 @@ html:not(.js) .needs-js{display:none!important}
 .ba-card figcaption{font:700 var(--t-label)/1.2 var(--b);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2)}
 .ba-card p{color:var(--fg);line-height:1.5}
 .ba-note{margin-top:var(--s-5);color:var(--fg-2);max-width:44rem}
+.ba-card .ba-verdict{font-size:var(--t-small);font-weight:600;color:var(--fg-2)}
 /* The same formatter inside the formatting guide (/linkedin-post-formatting/). */
 .g-tool{margin-top:var(--s-6)}
 .g-how-title{font-size:var(--t-h3);margin-top:var(--s-8)}
