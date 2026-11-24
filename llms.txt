@@ -48,9 +48,10 @@
 - [LinkedIn posts for job seekers](https://briopost.com/for/job-seekers/): five post ideas for people looking for their next role, and how to draft them in Briopost.
 - [Free LinkedIn tools](https://briopost.com/free-tools/): free tools that run in the browser; nothing is sent.
 - [LinkedIn post formatter](https://briopost.com/free-tools/linkedin-post-formatter/): free, in-browser bold and italic (Unicode letters), bullet and numbered lists, a feed preview with the "see more" cut, and a character counter (about 3,000).
-- [LinkedIn carousel size checker](https://briopost.com/free-tools/linkedin-carousel-size-checker/): free, in-browser check of a picture or PDF's size, shape and page count against 1080x1350, 1080x1080 and 1080x1920; nothing is uploaded.
+- [LinkedIn carousel size checker](https://briopost.com/free-tools/linkedin-carousel-size-checker/): free, in-browser check of a picture or PDF's size, shape and page count against the carousel sizes 1080x1350, 1080x1080 and 1080x1920, or (Graphic mode) the graphic sizes including 1920x1080 and the 1584x396 profile banner; nothing is uploaded.
 - [LinkedIn hook preview](https://briopost.com/free-tools/linkedin-hook-preview/): free, in-browser preview of up to three opening lines in a phone-width feed post, with the approximate "see more" cut; nothing is sent.
 - [Carousel slide planner](https://briopost.com/free-tools/carousel-slide-planner/): free, in-browser slide-by-slide plan from one idea and a list of points, with words per slide and 4:5, 1:1 or 9:16 outlines; nothing is sent.
+- [Brand color contrast checker](https://briopost.com/free-tools/brand-color-contrast-checker/): free, in-browser contrast check of a text color on a background color (WCAG formula), pass or fail for normal text (4.5:1) and big type (3:1), and the closest passing shade; nothing is sent.
 - [What we never do](https://briopost.com/never/): the promises Briopost keeps about your LinkedIn account, posts and data.
 - [Privacy Policy](https://briopost.com/privacy/)
 - [Terms](https://briopost.com/terms/)
