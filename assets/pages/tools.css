@@ -51,7 +51,7 @@ html:not(.js) .needs-js{display:none!important}
 
 /* The preview: a plain, generic feed card (deliberately not LinkedIn's look). */
 .preview-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-.preview-head h2{font-size:20px;letter-spacing:-.02em}
+.preview-head h2,.preview-head h3{font-size:20px;letter-spacing:-.02em}
 .feed-card{max-width:560px;border-radius:14px;background:#fbfaf7;color:#1d2033;box-shadow:0 16px 28px -16px rgb(18 20 51/.45),0 0 0 1px rgb(18 20 51/.08);padding:16px 16px 12px;font:400 15px/1.45 var(--b)}
 #formatter[data-view=phone] .feed-card{max-width:380px}
 .feed-top{display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;align-items:center;margin-bottom:12px}
@@ -112,6 +112,9 @@ html:not(.js) .needs-js{display:none!important}
 .ba-card figcaption{font:700 var(--t-label)/1.2 var(--b);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2)}
 .ba-card p{color:var(--fg);line-height:1.5}
 .ba-note{margin-top:var(--s-5);color:var(--fg-2);max-width:44rem}
+/* The same formatter inside the formatting guide (/linkedin-post-formatting/). */
+.g-tool{margin-top:var(--s-6)}
+.g-how-title{font-size:var(--t-h3);margin-top:var(--s-8)}
 .steps-plain{margin:var(--s-5) 0 0;padding-left:1.4em;display:grid;gap:10px;color:var(--fg-2);max-width:44rem}
 .steps-plain li::marker{color:var(--midnight);font-weight:700}
 
