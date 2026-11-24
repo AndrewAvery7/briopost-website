@@ -103,6 +103,15 @@ html:not(.js) .needs-js{display:none!important}
 .note-block h3{font-size:var(--t-h3)}
 .note-block p{color:var(--fg-2)}
 @media (min-width:960px){.notes{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-7) var(--s-8)}}
+/* Formatter how-to: numbered steps, then a before/after example. */
+.how-steps{margin-top:var(--s-6);max-width:44rem}
+.ba-title{font-size:var(--t-h3);margin-top:var(--s-6)}
+.ba{display:grid;gap:var(--s-5);margin-top:var(--s-4)}
+@media (min-width:768px){.ba{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ba-card{margin:0;padding:20px 22px;display:grid;gap:10px;align-content:start}
+.ba-card figcaption{font:700 var(--t-label)/1.2 var(--b);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2)}
+.ba-card p{color:var(--fg);line-height:1.5}
+.ba-note{margin-top:var(--s-5);color:var(--fg-2);max-width:44rem}
 .steps-plain{margin:var(--s-5) 0 0;padding-left:1.4em;display:grid;gap:10px;color:var(--fg-2);max-width:44rem}
 .steps-plain li::marker{color:var(--midnight);font-weight:700}
 
