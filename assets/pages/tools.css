@@ -116,6 +116,34 @@ html:not(.js) .needs-js{display:none!important}
 .ba-card p{color:var(--fg);line-height:1.5}
 .ba-note{margin-top:var(--s-5);color:var(--fg-2);max-width:44rem}
 .ba-card .ba-verdict{font-size:var(--t-small);font-weight:600;color:var(--fg-2)}
+.ba-swatch{padding:14px 16px;border-radius:10px;font-weight:600;line-height:1.4;box-shadow:inset 0 0 0 1px rgb(18 20 51/.08)}
+.ba-swatch.is-white-orange{background:#FF5B2E;color:#FFFFFF}
+.ba-swatch.is-navy-orange{background:#FF5B2E;color:#121433}
+
+/* ---------- Brand color contrast checker (on /linkedin-brand-kit/) ---------- */
+.cc-grid{display:grid;gap:var(--s-6)}
+@media (min-width:900px){.cc-grid{grid-template-columns:minmax(0,340px) minmax(0,1fr);align-items:start}}
+.cc-fields{display:grid;gap:var(--s-4);min-width:0}
+.cc-field .tool-label{margin-bottom:6px}
+.cc-pick{display:flex;align-items:center;gap:10px}
+.cc-pick input[type=color]{flex:none;width:52px;height:48px;padding:3px;border-radius:12px;border:1.5px solid var(--field-line);background:#fff;cursor:pointer}
+.cc-hex{width:9.5em;min-height:48px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--field-line);background:#fff;color:var(--midnight);font:600 16px/1 var(--b);font-variant-numeric:tabular-nums;text-transform:uppercase}
+.cc-hex:focus,.cc-pick input[type=color]:focus-visible{outline:3px solid var(--midnight);outline-offset:1px;border-color:var(--midnight)}
+.cc-hex[aria-invalid=true]{border-color:var(--error)}
+.cc-fields .fmt-actions{margin-top:0}
+.cc-result{display:grid;gap:12px;min-width:0}
+.cc-slide{display:grid;gap:10px;align-content:center;min-height:200px;padding:28px 24px;border-radius:12px;box-shadow:0 16px 28px -16px rgb(18 20 51/.45),0 0 0 1px rgb(18 20 51/.08);background:#FBFAF7;color:#121433}
+.cc-big{font:700 28px/1.15 var(--h);letter-spacing:-.01em}
+.cc-small{font-size:16px;line-height:1.5;max-width:30em}
+.cc-ratio{font:700 22px/1.2 var(--h);font-variant-numeric:tabular-nums}
+.cc-checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.cc-checks li{display:flex;align-items:center;gap:8px;font-weight:600}
+.cc-checks li::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--line)}
+.cc-checks li.is-pass::before{background:var(--ok)}
+.cc-checks li.is-fail{color:var(--error)}
+.cc-checks li.is-fail::before{background:var(--error)}
+.cc-fix{display:grid;gap:10px;justify-items:start;padding:14px 16px;border-radius:12px;background:var(--panel);box-shadow:inset 3px 0 0 var(--spark)}
+.cc-fix[hidden]{display:none}
 /* The same formatter inside the formatting guide (/linkedin-post-formatting/). */
 .g-tool{margin-top:var(--s-6)}
 .g-how-title{font-size:var(--t-h3);margin-top:var(--s-8)}

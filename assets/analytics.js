@@ -97,7 +97,8 @@
   // text or file: only the tool, the action and, for the size checker, which size it matched (graphic_<size> when the
   // checker is set to Graphic; action 'mode' when someone switches between Carousel and Graphic).
   // hook-preview.js and slide-planner.js report the same way (hook_preview, slide_planner).
-  var TOOL_NAMES = { post_formatter: 1, size_checker: 1, hook_preview: 1, slide_planner: 1 };
+  // contrast-checker.js (on the brand kit guide) reports as contrast_checker: only swap, example and suggest.
+  var TOOL_NAMES = { post_formatter: 1, size_checker: 1, hook_preview: 1, slide_planner: 1, contrast_checker: 1 };
   document.addEventListener('briopost:tool', function (e) {
     var d = e.detail || {};
     var tool = TOOL_NAMES.hasOwnProperty(d.tool) ? d.tool : 'post_formatter';
