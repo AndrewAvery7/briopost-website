@@ -32,10 +32,10 @@
 <link rel="preload" href="/assets/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/brand-tokens.css">
 <link rel="stylesheet" href="/assets/site.css"><link rel="stylesheet" href="/assets/chrome.css">
-<link rel="stylesheet" href="/assets/pages/tools.css?v=2026-11-24-tools">
+<link rel="stylesheet" href="/assets/pages/tools.css?v=2026-11-24-graphic">
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/visit.js" defer></script>
-<script src="/assets/pages/size-checker.js" defer></script>
+<script src="/assets/pages/size-checker.js?v=2026-11-24-graphic" defer></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a71b1a473b96486a95287332d69005f2"}'></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://briopost.com/free-tools/linkedin-carousel-size-checker/#webpage","url":"https://briopost.com/free-tools/linkedin-carousel-size-checker/","name":"Free LinkedIn Carousel Size Checker: PDF & Images | Briopost","description":"Check a LinkedIn carousel PDF or slide picture for size, shape and page count, and whether it fits 4:5, 1:1 or 9:16. Free, and nothing is uploaded.","inLanguage":"en-US","isPartOf":{"@type":"WebSite","@id":"https://briopost.com/#website","name":"Briopost","url":"https://briopost.com/"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://briopost.com/assets/briopost-share-card.png","width":1200,"height":630},"breadcrumb":{"@id":"https://briopost.com/free-tools/linkedin-carousel-size-checker/#breadcrumb"},"publisher":{"@type":"Organization","@id":"https://briopost.com/#org","name":"Briopost","legalName":"Briopost LLC","url":"https://briopost.com/"},"about":{"@id":"https://briopost.com/free-tools/linkedin-carousel-size-checker/#tool"}},{"@type":"BreadcrumbList","@id":"https://briopost.com/free-tools/linkedin-carousel-size-checker/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://briopost.com/"},{"@type":"ListItem","position":2,"name":"Free tools","item":"https://briopost.com/free-tools/"},{"@type":"ListItem","position":3,"name":"LinkedIn carousel size checker","item":"https://briopost.com/free-tools/linkedin-carousel-size-checker/"}]},{"@type":"WebApplication","@id":"https://briopost.com/free-tools/linkedin-carousel-size-checker/#tool","name":"LinkedIn carousel size checker","url":"https://briopost.com/free-tools/linkedin-carousel-size-checker/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"inLanguage":"en-US","publisher":{"@type":"Organization","@id":"https://briopost.com/#org","name":"Briopost","legalName":"Briopost LLC","url":"https://briopost.com/"},"description":"Reads a PNG, JPG or WebP picture or a PDF in the browser and reports its size, aspect ratio and page count, and whether it matches the 4:5, 1:1 or 9:16 carousel sizes. Nothing is uploaded.","featureList":["Picture size in pixels","PDF page count and page size","Aspect ratio","Match against 1080 × 1350, 1080 × 1080 and 1080 × 1920"]}]}</script>
 </head>
@@ -85,13 +85,17 @@
     <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/free-tools/">Free tools</a></li><li><span aria-current="page">LinkedIn carousel size checker</span></li></ol></nav>
     <p class="eyebrow">Free tool</p>
     <h1 id="page-title">LinkedIn carousel size checker</h1>
-    <p class="lead">Pick a slide picture or the PDF you plan to post. You’ll see its size, its shape and how many pages it has, and whether it matches the portrait, square or story sizes Briopost makes.</p>
+    <p class="lead">Pick a slide picture or the PDF you plan to post. You’ll see its size, its shape and how many pages it has, and whether it matches the portrait, square or story sizes Briopost makes. Checking a single graphic or a profile banner? Choose Graphic.</p>
   </div>
 </section>
 
 <section class="tool-section" aria-label="The size checker">
   <div class="wrap">
     <div class="tool" id="checker">
+      <div class="sc-mode needs-js">
+        <p class="tool-label" id="sc-mode-label">What are you checking?</p>
+        <div class="seg" role="group" aria-labelledby="sc-mode-label"><button type="button" data-check-mode="carousel" aria-pressed="true">Carousel</button><button type="button" data-check-mode="graphic" aria-pressed="false">Graphic</button></div>
+      </div>
       <div class="sc-drop" id="sc-drop">
         <label class="tool-label" for="sc-file">Choose a picture or a PDF</label>
         <span class="sc-pick"><span class="btn btn-spark" aria-hidden="true">Choose a file</span><input type="file" id="sc-file" accept="image/png,image/jpeg,image/webp,application/pdf,.png,.jpg,.jpeg,.webp,.pdf" aria-describedby="sc-help sc-local"></span>
@@ -154,6 +158,10 @@
       </table>
     </div>
     <div class="notes">
+      <div class="note-block">
+        <h3>Carousel or graphic</h3>
+        <p>Choose Carousel to check a carousel PDF or one of its slides against portrait 4:5, square 1:1 and story 9:16. Choose Graphic to check a single picture for a post, or your profile banner, against the five graphic sizes: portrait 4:5, square 1:1, story 9:16, landscape 16:9 and profile banner 4:1.</p>
+      </div>
       <div class="note-block">
         <h3>Pictures and PDFs are measured differently</h3>
         <p>A picture has a size in pixels. A PDF page has a size in points, a print measure, so a 4:5 page can be 1080&nbsp;×&nbsp;1350 points or 432&nbsp;×&nbsp;540. For a PDF the checker compares the shape, which is what decides how the slides look in the feed.</p>

@@ -94,7 +94,8 @@
 
   // ----- Waitlist (events come from assets/waitlist.js, which says what happened) -----
   // The free tools (assets/pages/formatter.js, size-checker.js) report which control was used. Never the visitor's
-  // text or file: only the tool, the action and, for the size checker, which size it matched.
+  // text or file: only the tool, the action and, for the size checker, which size it matched (graphic_<size> when the
+  // checker is set to Graphic; action 'mode' when someone switches between Carousel and Graphic).
   // hook-preview.js and slide-planner.js report the same way (hook_preview, slide_planner).
   var TOOL_NAMES = { post_formatter: 1, size_checker: 1, hook_preview: 1, slide_planner: 1 };
   document.addEventListener('briopost:tool', function (e) {
