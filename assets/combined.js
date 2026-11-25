@@ -43,22 +43,47 @@
     function its() { return $$('.it', grps[fi]); }
     function total() { return its().length * PER; }
     var phaseTimer = 0, layerTimer = 0;
+    function slotFor(j, k, n) {
+      var d = (j - k + n) % n;
+      return d <= Math.floor((n - 1) / 2) ? d : d - n;
+    }
+    function place(list, k) {
+      list.forEach(function (it, j) {
+        var slot = slotFor(j, k, list.length);
+        it.style.setProperty('--c', String(slot));
+        it.style.setProperty('--d', String(Math.abs(slot)));
+      });
+    }
     function setItem(k, phased) {
-      var from = ii, list = its(); ii = k;
+      var from = ii, list = its(), n = list.length; ii = k;
       clearTimeout(phaseTimer); clearTimeout(layerTimer);
+      var moving = phased && from !== k && list[from] && list[k] && !reduce;
+      var crossing = [];
+      if (moving) list.forEach(function (it, j) {
+        if (j === from || j === k) return;
+        var before = slotFor(j, from, n), after = slotFor(j, k, n);
+        if ((before < 0 && after > 0) || (before > 0 && after < 0)) {
+          it.classList.add('is-back-reset'); crossing.push(it);
+        }
+      });
+      place(list, k);
       list.forEach(function (it, j) {
         it.classList.remove('is-leaving', 'is-arriving');
         it.classList.toggle('is-cur', j === k);
-        it.style.zIndex = String(20 - Math.abs(j - k));
+        it.style.zIndex = String(20 - Math.abs(slotFor(j, k, n)));
       });
+      if (crossing.length) {
+        crossing.forEach(function (it) { void it.offsetWidth; });
+        crossing.forEach(function (it) { it.classList.remove('is-back-reset'); });
+      }
       if (!list[k]) return;
-      if (!phased || from === k || !list[from] || reduce) { list[k].style.zIndex = '32'; return; }
-      /* Keep the incoming card above every supporting card. The old front stays above it until the midpoint. */
+      if (!moving) { list[k].style.zIndex = '32'; return; }
+      /* The old front stays above the incoming card until the midpoint; both stay above the fan. */
       list[from].style.zIndex = '32'; list[k].style.zIndex = '31';
       void list[k].offsetWidth; /* restart the settle after a manual card selection */
       list[from].classList.add('is-leaving'); list[k].classList.add('is-arriving');
       layerTimer = setTimeout(function () {
-        list[from].style.zIndex = String(20 - Math.abs(from - k));
+        list[from].style.zIndex = String(20 - Math.abs(slotFor(from, k, n)));
         list[k].style.zIndex = '32';
       }, 520);
       phaseTimer = setTimeout(function () { list.forEach(function (it) { it.classList.remove('is-leaving', 'is-arriving'); }); }, 1300);
@@ -74,7 +99,7 @@
         grps[n].classList.add('is-set');
         /* The formats now hidden go back to their first card while nobody can see them, so next time they rise in
            already in order. */
-        grps.forEach(function (g, k) { if (k !== n) $$('.it', g).forEach(function (it, j) { it.classList.toggle('is-cur', j === 0); it.style.zIndex = String(30 - j); }); });
+        grps.forEach(function (g, k) { if (k !== n) { var cards = $$('.it', g); place(cards, 0); cards.forEach(function (it, j) { it.classList.toggle('is-cur', j === 0); it.style.zIndex = String(j === 0 ? 32 : 20 - Math.abs(slotFor(j, 0, cards.length))); }); } });
       }, 1300);
       setItem(0); paint();
       if (focus) tabs[n].focus();
@@ -112,7 +137,9 @@
       $('.pause-label', pauseBtn).textContent = paused ? 'Play' : 'Pause';
     });
     if (reduce) { pauseBtn.setAttribute('aria-pressed', 'true'); $('.pause-label', pauseBtn).textContent = 'Play'; }
+    obj.classList.add('is-placing');
     setFormat(0);
+    requestAnimationFrame(function () { obj.classList.remove('is-placing'); });
     function start() { if (vis && !raf) { last = 0; raf = requestAnimationFrame(tick); } }
     watch(obj, function (v) { vis = v; start(); });
     /* Coming back with the Back button restores the page from memory: start the clock again. */
