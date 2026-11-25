@@ -904,8 +904,7 @@ html:not(.js) .hb .js-only{display: none !important;}
 .hb .obj-b1 .grp{--sf: .5; position: relative; height: calc(var(--cw) * 1.62);}
 .hb .obj-b1 .grp[data-n="4"]{--sf: .66;}
 .hb .obj-b1 .grp[data-n="3"]{--sf: .88;}
-/* Keep every card at its final size, so the incoming card never sharpens or pops at the end of the move.
-   The offset preserves the existing position of the front card. */
+/* Keep every card at its final size and move each incoming card into the same centered front position. */
 .hb .obj-b1 .it{--cwo: var(--cw); position: absolute; left: calc(50% - var(--cw) * var(--up) / 2); top: calc(var(--cw) * .1);
   translate: 0 calc(-120% * (var(--up) - 1) / var(--up));
   transform-origin: 50% 120%;
@@ -918,6 +917,8 @@ html:not(.js) .hb .js-only{display: none !important;}
 .hb .obj-b1{--glide: cubic-bezier(.45, .05, .25, 1);}
 /* Once a format's cards have fanned out, they move together with no stagger. */
 .hb .obj-b1 .grp.is-set .it{--dl: 0ms;}
+.hb .obj-b1.is-placing .it,.hb .obj-b1 .it.is-back-reset{transition: none !important;}
+.hb .obj-b1 .it.is-back-reset{opacity: 0;}
 .hb .obj-b1 .it .fc{--cw: calc(var(--cwo) * var(--up)); box-shadow: var(--shadow-2); transition: box-shadow .5s var(--ease);}
 .hb .obj-b1 .it.is-cur{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--cw) * -.06)) rotate(0deg); transition-delay: 0s;}
 /* The position and constant shadow mark the front card without an outline popping on. */
