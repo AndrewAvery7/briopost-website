@@ -23,3 +23,10 @@
 .cmp-facts dt{font-weight:700}
 .cmp-facts dd{margin:0 0 8px;color:var(--fg-2)}
 @media (min-width:700px){.cmp-facts{grid-template-columns:11rem minmax(0,1fr)}.cmp-facts dd{margin:0}}
+/* Tool details as cards, two columns on wide screens, slightly smaller text (owner, 2026-11-25). */
+.cmp-tools{display:grid;gap:var(--s-6);margin-top:var(--s-6);font-size:.9375rem}
+.cmp-tools .cmp-tool{margin:0;padding:var(--s-6);border-top:0;border-radius:var(--r-inner);background:var(--card);box-shadow:var(--shadow-1)}
+.cmp-tools .cmp-tool h3{font-size:1.375rem}
+.cmp-tools .cmp-tool>p{margin:0}
+@media (min-width:700px){.cmp-tools .cmp-facts{grid-template-columns:9rem minmax(0,1fr)}}
+@media (min-width:980px){.cmp-tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
