@@ -1,0 +1,25 @@
+/* Single-competitor pages (aicarousels-alternative, contentdrips-alternative): table, fit cards, sources */
+.cmp-table{min-width:640px}
+.cmp-table thead th:nth-child(n+2){width:38%}
+.cmp-table td:nth-child(2){white-space:normal;font-variant-numeric:normal;color:var(--fg-2)}
+.cmp-fit{display:grid;gap:var(--s-5);margin-top:var(--s-5)}
+.cmp-fit>div{padding:var(--s-5);border-radius:var(--r-card);background:var(--card);box-shadow:var(--shadow-1)}
+.cmp-fit h3{font-size:var(--t-h3);margin-bottom:12px}
+@media (min-width:768px){.cmp-fit{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cmp-sources li{font-size:var(--t-small)}
+.cmp-note{margin-top:var(--s-4);font-size:var(--t-small);color:var(--fg-2)}
+/* Comparison pages (briopost-vs-canva, taplio-alternative): pick cards; the table, note and sources rules above are shared. */
+.cmp-table tbody th{white-space:normal}
+.cmp-picks{display:grid;gap:var(--s-6);grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.cmp-pick{padding:var(--s-6);border-radius:var(--r-inner);background:var(--card);box-shadow:var(--shadow-1)}
+.cmp-pick h3{margin:0 0 var(--s-3)}
+.cmp-sources li{overflow-wrap:anywhere}
+/* Many-tool comparison (best-linkedin-carousel-makers): a wide table and one fact list per tool. */
+.cmp-wide{min-width:1000px;font-size:14px}
+.cmp-wide td:nth-child(2){white-space:normal;font-variant-numeric:normal;color:var(--fg-2)}
+.cmp-tool{margin-top:var(--s-7);padding-top:var(--s-6);border-top:1px solid var(--line-soft)}
+.cmp-tool h3{font-size:var(--t-h3);margin-bottom:8px}
+.cmp-facts{display:grid;gap:6px 20px;margin:var(--s-4) 0 0}
+.cmp-facts dt{font-weight:700}
+.cmp-facts dd{margin:0 0 8px;color:var(--fg-2)}
+@media (min-width:700px){.cmp-facts{grid-template-columns:11rem minmax(0,1fr)}.cmp-facts dd{margin:0}}

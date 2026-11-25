@@ -212,9 +212,9 @@
     }
     var dest;
     try { dest = new URL(link.href, location.href); } catch (err) { return; }
-    if (/\.pdf$/i.test(dest.pathname)) {
+    if (/\.(pdf|csv|xlsx)$/i.test(dest.pathname)) {
       var name = dest.pathname.split('/').pop();
-      track('file_download', { file_name: name, file_extension: 'pdf', link_text: clean(link.textContent, 60), link_url: dest.href });
+      track('file_download', { file_name: name, file_extension: name.split('.').pop().toLowerCase(), link_text: clean(link.textContent, 60), link_url: dest.href });
     } else if (/^https?:$/.test(dest.protocol) && dest.hostname !== location.hostname) {
       track('outbound_click', { link_domain: dest.hostname, link_url: dest.href, link_text: clean(link.textContent, 60), link_location: where(link) });
     }
