@@ -36,15 +36,23 @@
 
   /* ---- Opening (B1, fanned deal): tabs choose a format; its pieces page in order. The clock runs only while the
      opening is on screen, not paused, and not pointed at or focused. ---- */
-  var PER = 1700;
+  var PER = 2200; /* time on each card; the move itself takes 1.2 s (home.css, hb-leave / hb-arrive) */
   $$('[data-b]').forEach(function (obj) {
     var tabs = $$('.tab', obj), grps = $$('.grp', obj), pauseBtn = $('.pause', obj);
     var fi = 0, ii = 0, elapsed = 0, last = 0, vis = false, raf = 0, setTimer = 0;
     function its() { return $$('.it', grps[fi]); }
     function total() { return its().length * PER; }
-    function setItem(k) {
-      ii = k;
-      its().forEach(function (it, j) { it.classList.toggle('is-cur', j === k); it.style.zIndex = String(30 - Math.abs(j - k)); });
+    var phaseTimer = 0;
+    function setItem(k, phased) {
+      var from = ii, list = its(); ii = k;
+      list.forEach(function (it) { it.classList.remove('is-leaving', 'is-arriving'); });
+      if (phased && from !== k && list[from] && !reduce) {
+        void list[k].offsetWidth; /* restart the phase animation if a card is chosen again mid-move */
+        list[from].classList.add('is-leaving'); list[k].classList.add('is-arriving');
+        clearTimeout(phaseTimer);
+        phaseTimer = setTimeout(function () { list.forEach(function (it) { it.classList.remove('is-leaving', 'is-arriving'); }); }, 1300);
+      }
+      list.forEach(function (it, j) { it.classList.toggle('is-cur', j === k); it.style.zIndex = String(30 - Math.abs(j - k)); });
     }
     function paint() { tabs.forEach(function (t, k) { $('.tab-bar i', t).style.transform = 'scaleX(' + (k === fi ? Math.min(1, elapsed / total()) : 0) + ')'; }); }
     function setFormat(n, focus) {
@@ -75,11 +83,11 @@
     function running() { return vis && pauseBtn.getAttribute('aria-pressed') !== 'true' && !held(); }
     function tick(t) {
       raf = 0;
-      var dt = last ? Math.min(100, t - last) : 0; last = t;
+      var dt = last ? Math.min(250, t - last) : 0; last = t; /* a slow phone still keeps time; a long gap (tab switched away) does not skip ahead */
       if (running()) {
         elapsed += dt;
         if (elapsed >= total()) setFormat((fi + 1) % tabs.length);
-        else { var k = Math.floor(elapsed / PER); if (k !== ii) setItem(k); }
+        else { var k = Math.floor(elapsed / PER); if (k !== ii) setItem(k, true); }
         paint();
       }
       if (vis) raf = requestAnimationFrame(tick); else last = 0;
@@ -87,7 +95,7 @@
     tabs.forEach(function (t, i) { t.addEventListener('click', function () { setFormat(i); }); });
     arrows(tabs, function (n) { setFormat(n); });
     grps.forEach(function (g, gi) {
-      $$('.it', g).forEach(function (it, j) { it.addEventListener('click', function () { if (gi === fi) { setItem(j); elapsed = j * PER; paint(); } }); });
+      $$('.it', g).forEach(function (it, j) { it.addEventListener('click', function () { if (gi === fi) { setItem(j, true); elapsed = j * PER; paint(); } }); });
     });
     pauseBtn.addEventListener('click', function () {
       var paused = pauseBtn.getAttribute('aria-pressed') !== 'true';
