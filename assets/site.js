@@ -18,20 +18,6 @@
     panel.addEventListener('focusout', function (e) { var to = e.relatedTarget; if (to && !panel.contains(to) && to !== btn) setMenu(false, false); });
     window.addEventListener('scroll', function () { if (!panel.hidden && window.scrollY > btn.closest('header').offsetHeight + 40) setMenu(false, false); }, { passive: true });
   }
-  // The home page film (#briopost-film). On iPhone the first tap on Play can stall before the film has loaded: Play
-  // flips back to paused at 0:00 and a second tap was needed. If the film pauses at the very start, without having
-  // played, within two seconds of a Play, start it again (once per page view, so a deliberate pause is never fought).
-  var film = document.getElementById('briopost-film');
-  if (film) {
-    var playAt = 0, retried = false;
-    film.addEventListener('play', function () { playAt = Date.now(); });
-    film.addEventListener('pause', function () {
-      if (retried || !playAt || film.ended || film.currentTime > 0.25 || Date.now() - playAt > 2000) return;
-      retried = true;
-      var p = film.play();
-      if (p && p.catch) p.catch(function () {});
-    });
-  }
   // Mark the menu link for the page being read (a link to this page's own address).
   var here = location.pathname;
   document.querySelectorAll('.site-head a[href^="/"]').forEach(function (a) {
