@@ -1467,7 +1467,7 @@ html.cv-off #main > .src > .sec,html:not(.js) #main > .src > .sec{content-visibi
 #main .d3 .formats > div:first-child{display: contents;}
 #main .d3 .formats .fmt-tabs{order: 1;}
 #main .d3 .formats .fmt-stage{order: 2;}
-#main .d3 .formats > div:first-child > .sample-note{order: 3; margin-top: -12px;}
+#main .d3 .formats > div:first-child > .sample-note,#main .d3 .formats > div:first-child > .fmt-foot{order: 3; margin-top: -12px;}
 }
 @media (max-width: 760px){
 #main .d3 .fmt-tabs{display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 0; border: 1px solid var(--line-strong);}
@@ -1617,6 +1617,7 @@ footer.foot .foot-brand img{width:228px;height:auto}footer.foot .foot-brand p{po
 #try-demo .fx-span.fxs-bold{font-weight:850}#try-demo .fx-span.fxs-italic{font-style:italic}#try-demo .fx-span.fxs-underline{text-decoration:underline;text-decoration-color:var(--spark);text-decoration-thickness:.08em;text-underline-offset:.14em}#try-demo .fx-span.fxs-highlight{text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--spark) 75%,transparent);text-decoration-thickness:.38em;text-underline-offset:-.24em;text-decoration-skip-ink:none}
 /* Make it yours: kit rotation Pause/Play */
 #main .kit-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}#main .kit-foot .sample-note{margin:0}#main .kit-auto{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px 0 10px;border-radius:999px;border:1px solid var(--h300,#c3c6e9);background:var(--card,#fcfbf8);color:var(--mid);font:600 .875rem/1 var(--ff-b,Inter,sans-serif);cursor:pointer}#main .kit-auto[hidden]{display:none}#main .kit-auto:hover{border-color:var(--mid)}#main .kit-auto:focus-visible{outline:3px solid var(--mid);outline-offset:2px}#main .kit-auto svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}#main .kit-auto .ico-play{display:none;fill:currentColor;stroke:none}#main .kit-auto.is-paused .ico-play{display:block}#main .kit-auto.is-paused .ico-pause{display:none}
+#main .fmt-foot{margin-top:14px}
 /* cost card rebuild (owner request 2026-11-19) */
 #main .run-field-label{display:block;margin:14px 0 6px;font-size:var(--fs-small,.875rem);font-weight:600;color:var(--mid)}
 #main .run-field{display:flex;align-items:center;gap:10px;padding:0 14px;height:48px;border-radius:12px;background:#fff;box-shadow:inset 0 0 0 1px var(--h400,#a6aadb)}

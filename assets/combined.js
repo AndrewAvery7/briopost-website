@@ -468,3 +468,36 @@
   } else { inView = true; }
   run();
 })();
+
+/* One thought. Four formats: rotate through the four format tabs the same way as Make it yours (owner request).
+   Every 2.5 s while the section is on screen; pauses while the pointer or keyboard focus is inside; stops for good
+   once the visitor picks a format or touches the sample; the same Pause / Play button; off under reduced motion. */
+(function () {
+  var demo = document.getElementById('fmt-demo'); if (!demo) return;
+  var tabs = Array.prototype.slice.call(demo.querySelectorAll('[role=tab][data-format]')); if (tabs.length < 2) return;
+  var toggle = demo.querySelector('.fmt-auto');
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { if (toggle) toggle.hidden = true; return; }
+  var timer = null, inView = false, held = false, paused = false, stopped = false;
+  function current() { for (var i = 0; i < tabs.length; i++) if (tabs[i].getAttribute('aria-selected') === 'true') return i; return 0; }
+  function tick() { if (inView && !held && !paused && !stopped) tabs[(current() + 1) % tabs.length].click(); }
+  function run() { if (!timer) timer = setInterval(tick, 2500); }
+  function label() { if (!toggle) return; var on = !paused && !stopped; toggle.setAttribute('aria-pressed', on ? 'false' : 'true'); toggle.querySelector('span').textContent = on ? 'Pause' : 'Play'; toggle.classList.toggle('is-paused', !on); }
+  function stop() { stopped = true; label(); }
+  // A real click or tap anywhere in the sample (a tab, the carousel arrows, a poll answer) or an arrow key on the tabs
+  // means the visitor has taken over.
+  demo.addEventListener('click', function (e) { if (e.isTrusted && !(toggle && toggle.contains(e.target))) stop(); });
+  demo.addEventListener('keydown', function (e) { if (e.target !== toggle && /^Arrow|^Home$|^End$/.test(e.key)) stop(); });
+  demo.addEventListener('mouseenter', function () { held = true; });
+  demo.addEventListener('mouseleave', function () { held = false; });
+  demo.addEventListener('focusin', function (e) { if (e.target !== toggle) held = true; });
+  demo.addEventListener('focusout', function () { held = false; });
+  if (toggle) {
+    toggle.hidden = false;
+    toggle.addEventListener('click', function () { if (stopped || paused) { stopped = false; paused = false; } else { paused = true; } label(); });
+    label();
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { es.forEach(function (e) { inView = e.isIntersecting; }); }, { threshold: 0.35 }).observe(demo);
+  } else { inView = true; }
+  run();
+})();
