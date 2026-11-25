@@ -38,11 +38,11 @@
   <h1 class="sr-only">The Briopost film</h1>
   <div class="film-stage">
     <!-- The same id as the home page player, so analytics.js counts starts, halfway and finishes here too. -->
-    <video id="briopost-film" controls playsinline preload="none" poster="/assets/film/briopost-film-poster-1600.webp?v=2026-11-21d" width="1920" height="1080">
-      <source src="/assets/film/briopost-film-720.mp4?v=2026-11-25a" type="video/mp4" media="(max-width: 700px)">
-      <source src="/assets/film/briopost-film-1080.mp4?v=2026-11-25a" type="video/mp4">
+    <video id="briopost-film" controls playsinline preload="metadata" poster="/assets/film/briopost-film-poster-1600.webp?v=2026-11-21d" width="1920" height="1080">
       <a href="/assets/film/briopost-film-1080.mp4?v=2026-11-25a">Watch the Briopost film (MP4, 2 min 35 s)</a>
     </video>
+    <script>/* One film file per player: iPhones froze the picture when the player had to choose between two <source> files. */(function(v){if(v)v.src='/assets/film/briopost-film-'+(matchMedia('(max-width: 700px)').matches?'720':'1080')+'.mp4?v=2026-11-25a';})(document.getElementById('briopost-film'));</script>
+    <noscript><a href="/assets/film/briopost-film-1080.mp4?v=2026-11-25a">Watch the Briopost film (MP4, 2 min 35 s)</a></noscript>
     <button class="film-play" type="button" hidden>
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
       <span>Play with sound</span>
