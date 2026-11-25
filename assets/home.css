@@ -913,12 +913,12 @@ html:not(.js) .hb .js-only{display: none !important;}
   transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .025)) rotate(calc(var(--c) * 2.4deg)) scale(calc(1 / var(--up)));
   transition: transform 1.2s var(--glide) var(--dl), translate .7s var(--glide) var(--dl), opacity .5s var(--glide) var(--dl), z-index 0s linear calc(var(--dl) + .5s);}
 /* A card change happens in phases (Andrew, 2026-11-25: the front card used to "pop" as the next one jumped in front):
-   1. the front card steps back, dipping and fading to a ghost, while the next card rises out of the fan;
+   1. the front card steps back, dipping and fading only partly (to 60%, Andrew 2026-11-25: fainter looked odd), while the next card rises out of the fan;
    2. at the half-second mark, while the old card is faint, the two trade places in the stack, so the swap barely shows;
    3. the new card settles at the front and the old one fills back in at its place in the fan. */
 .hb .obj-b1 .it.is-leaving .fc{animation: hb-leave 1.2s cubic-bezier(.4, 0, .3, 1) both;}
 .hb .obj-b1 .it.is-arriving .fc{animation: hb-arrive 1.2s cubic-bezier(.4, 0, .3, 1) both;}
-@keyframes hb-leave{0%{opacity: 1; translate: 0 0;} 38%, 55%{opacity: .22; translate: 0 calc(var(--cw) * .05);} 100%{opacity: 1; translate: 0 0;}}
+@keyframes hb-leave{0%{opacity: 1; translate: 0 0;} 40%, 50%{opacity: .6; translate: 0 calc(var(--cw) * .05);} 100%{opacity: 1; translate: 0 0;}}
 @keyframes hb-arrive{0%{translate: 0 0;} 45%{translate: 0 calc(var(--cw) * -.1);} 100%{translate: 0 0;}}
 @media (prefers-reduced-motion: reduce){.hb .obj-b1 .it.is-leaving .fc,.hb .obj-b1 .it.is-arriving .fc{animation: none;}}
 .hb .obj-b1{--glide: cubic-bezier(.45, .05, .25, 1);}
