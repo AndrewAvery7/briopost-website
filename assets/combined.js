@@ -52,13 +52,25 @@
       tabs.forEach(function (t, k) { var on = k === n; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
       grps.forEach(function (g, k) { var on = k === n; g.classList.toggle('is-on', on); g.classList.remove('is-set'); g.setAttribute('aria-hidden', String(!on)); });
       /* The new format's cards fan out one after another; after that, card changes move together (is-set). */
-      clearTimeout(setTimer); setTimer = setTimeout(function () { if (fi === n) grps[n].classList.add('is-set'); }, 1300);
+      clearTimeout(setTimer); setTimer = setTimeout(function () {
+        if (fi !== n) return;
+        grps[n].classList.add('is-set');
+        /* The formats now hidden go back to their first card while nobody can see them, so next time they rise in
+           already in order. */
+        grps.forEach(function (g, k) { if (k !== n) $$('.it', g).forEach(function (it, j) { it.classList.toggle('is-cur', j === 0); it.style.zIndex = String(30 - j); }); });
+      }, 1300);
       setItem(0); paint();
       if (focus) tabs[n].focus();
     }
+    /* Held only while a mouse that has actually moved is over the cards, or keyboard focus is inside. A pointer that
+       happened to rest there when the page loaded, or a tab that kept focus after a mouse click, used to hold the
+       clock too, so the opening sometimes never started. */
+    var stage = $('.bstage', obj), pointerOn = false;
+    stage.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') pointerOn = true; });
+    stage.addEventListener('pointerleave', function () { pointerOn = false; });
     function held() {
       var a = document.activeElement;
-      return (obj.matches(':hover') && !pauseBtn.matches(':hover')) || (obj.contains(a) && a !== pauseBtn);
+      return pointerOn || (obj.contains(a) && a !== pauseBtn && a.matches(':focus-visible'));
     }
     function running() { return vis && pauseBtn.getAttribute('aria-pressed') !== 'true' && !held(); }
     function tick(t) {
@@ -84,7 +96,10 @@
     });
     if (reduce) { pauseBtn.setAttribute('aria-pressed', 'true'); $('.pause-label', pauseBtn).textContent = 'Play'; }
     setFormat(0);
-    watch(obj, function (v) { vis = v; if (v && !raf) { last = 0; raf = requestAnimationFrame(tick); } });
+    function start() { if (vis && !raf) { last = 0; raf = requestAnimationFrame(tick); } }
+    watch(obj, function (v) { vis = v; start(); });
+    /* Coming back with the Back button restores the page from memory: start the clock again. */
+    window.addEventListener('pageshow', function (e) { if (e.persisted) { pointerOn = false; var r = obj.getBoundingClientRect(); vis = r.bottom > 0 && r.top < innerHeight; start(); } });
   });
 
   /* ---- How it works, step 3: Give my OK on the sample post, and take it back ---- */
