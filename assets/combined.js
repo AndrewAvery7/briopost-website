@@ -36,23 +36,32 @@
 
   /* ---- Opening (B1, fanned deal): tabs choose a format; its pieces page in order. The clock runs only while the
      opening is on screen, not paused, and not pointed at or focused. ---- */
-  var PER = 2200; /* time on each card; the move itself takes 1.2 s (home.css, hb-leave / hb-arrive) */
+  var PER = 2200; /* time on each card; the move itself takes 1.2 s (home.css) */
   $$('[data-b]').forEach(function (obj) {
     var tabs = $$('.tab', obj), grps = $$('.grp', obj), pauseBtn = $('.pause', obj);
     var fi = 0, ii = 0, elapsed = 0, last = 0, vis = false, raf = 0, setTimer = 0;
     function its() { return $$('.it', grps[fi]); }
     function total() { return its().length * PER; }
-    var phaseTimer = 0;
+    var phaseTimer = 0, layerTimer = 0;
     function setItem(k, phased) {
       var from = ii, list = its(); ii = k;
-      list.forEach(function (it) { it.classList.remove('is-leaving', 'is-arriving'); });
-      if (phased && from !== k && list[from] && !reduce) {
-        void list[k].offsetWidth; /* restart the phase animation if a card is chosen again mid-move */
-        list[from].classList.add('is-leaving'); list[k].classList.add('is-arriving');
-        clearTimeout(phaseTimer);
-        phaseTimer = setTimeout(function () { list.forEach(function (it) { it.classList.remove('is-leaving', 'is-arriving'); }); }, 1300);
-      }
-      list.forEach(function (it, j) { it.classList.toggle('is-cur', j === k); it.style.zIndex = String(30 - Math.abs(j - k)); });
+      clearTimeout(phaseTimer); clearTimeout(layerTimer);
+      list.forEach(function (it, j) {
+        it.classList.remove('is-leaving', 'is-arriving');
+        it.classList.toggle('is-cur', j === k);
+        it.style.zIndex = String(20 - Math.abs(j - k));
+      });
+      if (!list[k]) return;
+      if (!phased || from === k || !list[from] || reduce) { list[k].style.zIndex = '32'; return; }
+      /* Keep the incoming card above every supporting card. The old front stays above it until the midpoint. */
+      list[from].style.zIndex = '32'; list[k].style.zIndex = '31';
+      void list[k].offsetWidth; /* restart the settle after a manual card selection */
+      list[from].classList.add('is-leaving'); list[k].classList.add('is-arriving');
+      layerTimer = setTimeout(function () {
+        list[from].style.zIndex = String(20 - Math.abs(from - k));
+        list[k].style.zIndex = '32';
+      }, 520);
+      phaseTimer = setTimeout(function () { list.forEach(function (it) { it.classList.remove('is-leaving', 'is-arriving'); }); }, 1300);
     }
     function paint() { tabs.forEach(function (t, k) { $('.tab-bar i', t).style.transform = 'scaleX(' + (k === fi ? Math.min(1, elapsed / total()) : 0) + ')'; }); }
     function setFormat(n, focus) {
