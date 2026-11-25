@@ -1739,17 +1739,21 @@ footer.foot .foot-brand a::before{content:"";position:absolute;z-index:-1;pointe
 #main .dev-a{animation: dev-float 6.5s ease-in-out infinite;}
 #main .dev-b{animation: dev-float 7.5s ease-in-out -2.4s infinite;}
 /* the story */
-#main .s-ok{display: none;}
-#main .devices.is-ok .s-wait{display: none;}
-#main .devices.is-ok .s-ok{display: inline; animation: dv-in .45s ease both;}
-@keyframes dv-in{from{opacity: 0; transform: translateY(.6cqw);} to{opacity: 1; transform: none;}}
-#main .dv-btn{position: relative; overflow: hidden; transition: background-color .35s, color .35s, transform .15s;}
+/* smoother swaps (owner, 2026-11-25): both wordings share one spot and crossfade, forward and back, so nothing
+   blinks out and the box never changes size mid-swap */
+#main .dv-sw{display: inline-grid; vertical-align: top;}
+#main .dv-btn .dv-sw,#main .dv-sum .dv-sw{justify-items: center;}
+#main .dv-sw > span{grid-area: 1 / 1; transition: opacity .7s cubic-bezier(.4, 0, .2, 1), transform .7s cubic-bezier(.4, 0, .2, 1);}
+#main .s-ok{opacity: 0; transform: translateY(.5cqw);}
+#main .devices.is-ok .s-wait{opacity: 0; transform: translateY(-.5cqw);}
+#main .devices.is-ok .s-ok{opacity: 1; transform: none;}
+#main .dv-btn{position: relative; overflow: hidden; transition: background-color .7s ease, color .7s ease, transform .2s ease;}
 #main .devices.is-tap .dv-btn{transform: scale(.95);}
 #main .devices.is-ok .dv-btn{background: #0b5e58; color: #fff;}
 #main .dv-tap{position: absolute; left: 50%; top: 50%; width: 9cqw; height: 9cqw; margin: -4.5cqw 0 0 -4.5cqw; border-radius: 50%; background: rgb(255 255 255 / 55%); opacity: 0; transform: scale(.2); pointer-events: none;}
 #main .devices.is-tap .dv-tap{animation: dv-tap .6s ease-out;}
 @keyframes dv-tap{0%{opacity: .9; transform: scale(.2);} 100%{opacity: 0; transform: scale(2.6);}}
-#main .dv-state,#main .dv-dot,#main .dv-pill,#main .dv-sum,#main .dv-days span,#main .dv-list li{transition: background-color .4s, color .4s, box-shadow .4s;}
+#main .dv-state,#main .dv-dot,#main .dv-pill,#main .dv-sum,#main .dv-days span,#main .dv-list li{transition: background-color .7s ease, color .7s ease, box-shadow .7s ease;}
 #main .devices.is-ok .dv-state{background: #dcf1ec; color: #0b5e58;}
 #main .devices.is-ok .dv-dot{background: #0b5e58;}
 #main .devices.is-ok .dv-wait{background: #dcf1ec; color: #0b5e58;}
@@ -1762,5 +1766,5 @@ footer.foot .foot-brand a::before{content:"";position:absolute;z-index:-1;pointe
 }
 @media (prefers-reduced-motion: reduce){
 #main .dev-a,#main .dev-b{animation: none;}
-#main .devices.is-ok .s-ok{animation: none;}
+#main .dv-sw > span{transition: none;}
 }
