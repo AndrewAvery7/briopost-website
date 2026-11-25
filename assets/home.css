@@ -911,14 +911,21 @@ html:not(.js) .hb .js-only{display: none !important;}
   translate: 0 calc(-120% * (var(--up) - 1) / var(--up));
   transform-origin: 50% 120%;
   transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .025)) rotate(calc(var(--c) * 2.4deg)) scale(calc(1 / var(--up)));
-  transition: transform .9s var(--glide) var(--dl), opacity .45s var(--glide) var(--dl);}
+  transition: transform .9s var(--glide) var(--dl), translate .7s var(--glide) var(--dl), opacity .5s var(--glide) var(--dl), z-index .9s var(--glide) var(--dl);}
+/* z-index changes with the move (whole numbers, so the two cards trade places halfway through), instead of the card
+   coming forward jumping in front of the others before it has moved. */
 .hb .obj-b1{--glide: cubic-bezier(.45, .05, .25, 1);}
 /* Once a format's cards have fanned out, they move together with no stagger. */
 .hb .obj-b1 .grp.is-set .it{--dl: 0ms;}
 .hb .obj-b1 .it .fc{--cw: calc(var(--cwo) * var(--up)); box-shadow: var(--shadow-2); transition: box-shadow .5s var(--ease);}
 .hb .obj-b1 .it.is-cur{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--cw) * -.06)) rotate(0deg); transition-delay: 0s;}
-.hb .obj-b1 .it.is-cur .fc{box-shadow: 0 0 0 2px var(--mid), var(--shadow-2);}
-.js .hb .obj-b1 .grp:not(.is-on) .it{transform: translateY(calc(var(--cw) * .04)); opacity: 0; transition: transform .45s var(--ease), opacity .3s var(--ease);}
+/* The front card's outline fades in and out with the move instead of switching at its start. */
+.hb .obj-b1 .it .fc::after{content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 2px var(--mid); opacity: 0; pointer-events: none; transition: opacity .6s var(--glide);}
+.hb .obj-b1 .it.is-cur .fc::after{opacity: 1;}
+/* Changing format: the old cards fade where they are and drop a little; the new ones rise into their places one
+   after another. Neither set changes size, so they stay sharp (see above). */
+.js .hb .obj-b1 .grp:not(.is-on) .it{opacity: 0; translate: 0 calc(-120% * (var(--up) - 1) / var(--up) + var(--cw) * .06);
+  transition: translate .5s var(--glide), opacity .35s var(--glide), z-index 0s;}
 html:not(.js) .hb .obj-b .bstage{--cw: 150px; display: grid; gap: 16px;}
 html:not(.js) .hb .grp{grid-area: auto; height: auto !important; display: block !important;}
 html:not(.js) .hb .grp-name{font-weight: 650; font-size: .95rem; margin-bottom: 8px;}
