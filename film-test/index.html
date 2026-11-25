@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Film player test</title>
+<!-- A temporary, unlisted test page: four versions of the film player, to find on a real iPhone which one starts
+     with one tap and keeps the picture moving. Delete this folder once the answer is in (see README). -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#121433">
+<link rel="icon" href="/assets/briopost-icon.svg" type="image/svg+xml">
+<style>
+body{margin:0;padding:16px;font:16px/1.45 system-ui,-apple-system,sans-serif;background:#f4f3fb;color:#121433}
+h1{font-size:1.4rem;margin:0 0 8px} h2{font-size:1rem;margin:0 0 8px} p{margin:0 0 14px}
+.t{background:#fff;border-radius:16px;padding:14px;margin:0 0 18px}
+.box{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#121433}
+.box video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;background:#121433}
+</style>
+<script src="/assets/analytics.js" defer></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a71b1a473b96486a95287332d69005f2"}'></script>
+</head>
+<body>
+<main>
+  <h1>Film player test</h1>
+  <p>For each player: tap Play once, watch about 5 seconds, then pause it before trying the next. Note two things for each letter: did it start on the first tap, and did the picture move past the logo with the sound?</p>
+  <section class="t">
+    <h2>A. Nothing loaded in advance, two sources (what the home page does now)</h2>
+    <div class="box"><video id="test-a" controls playsinline preload="none" poster="/assets/film/briopost-film-poster-800.webp?v=2026-11-21d" width="1280" height="720"><source src="/assets/film/briopost-film-720.mp4?v=2026-11-25a" type="video/mp4" media="(max-width: 700px)"><source src="/assets/film/briopost-film-1080.mp4?v=2026-11-25a" type="video/mp4"></video></div>
+  </section>
+  <section class="t">
+    <h2>B. Length loaded in advance, two sources (this morning&rsquo;s version)</h2>
+    <div class="box"><video id="test-b" controls playsinline preload="metadata" poster="/assets/film/briopost-film-poster-800.webp?v=2026-11-21d" width="1280" height="720"><source src="/assets/film/briopost-film-720.mp4?v=2026-11-25a" type="video/mp4" media="(max-width: 700px)"><source src="/assets/film/briopost-film-1080.mp4?v=2026-11-25a" type="video/mp4"></video></div>
+  </section>
+  <section class="t">
+    <h2>C. Nothing loaded in advance, one source</h2>
+    <div class="box"><video id="test-c" controls playsinline preload="none" poster="/assets/film/briopost-film-poster-800.webp?v=2026-11-21d" width="1280" height="720" src="/assets/film/briopost-film-720.mp4?v=2026-11-25a"></video></div>
+  </section>
+  <section class="t">
+    <h2>D. Length loaded in advance, one source</h2>
+    <div class="box"><video id="test-d" controls playsinline preload="metadata" poster="/assets/film/briopost-film-poster-800.webp?v=2026-11-21d" width="1280" height="720" src="/assets/film/briopost-film-720.mp4?v=2026-11-25a"></video></div>
+  </section>
+</main>
+</body>
+</html>
