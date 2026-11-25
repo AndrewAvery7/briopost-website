@@ -904,35 +904,28 @@ html:not(.js) .hb .js-only{display: none !important;}
 .hb .obj-b1 .grp{--sf: .5; position: relative; height: calc(var(--cw) * 1.62);}
 .hb .obj-b1 .grp[data-n="4"]{--sf: .66;}
 .hb .obj-b1 .grp[data-n="3"]{--sf: .88;}
-/* Sharp front card: every card is drawn at the front card's size (--up) and the cards behind are shrunk.
-   Chrome draws a moving card once at its starting size, so a card that grows while it moves looks soft;
-   one that only shrinks stays sharp. translate keeps the stack where it was before the cards got bigger. */
+/* Keep every card at its final size, so the incoming card never sharpens or pops at the end of the move.
+   The offset preserves the existing position of the front card. */
 .hb .obj-b1 .it{--cwo: var(--cw); position: absolute; left: calc(50% - var(--cw) * var(--up) / 2); top: calc(var(--cw) * .1);
   translate: 0 calc(-120% * (var(--up) - 1) / var(--up));
   transform-origin: 50% 120%;
-  transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .025)) rotate(calc(var(--c) * 2.4deg)) scale(calc(1 / var(--up)));
-  transition: transform 1.2s var(--glide) var(--dl), translate .7s var(--glide) var(--dl), opacity .5s var(--glide) var(--dl), z-index 0s linear calc(var(--dl) + .5s);}
-/* A card change happens in phases (Andrew, 2026-11-25: the front card used to "pop" as the next one jumped in front):
-   1. the front card steps back, dipping and fading only partly (to 60%, Andrew 2026-11-25: fainter looked odd), while the next card rises out of the fan;
-   2. at the half-second mark, while the old card is faint, the two trade places in the stack, so the swap barely shows;
-   3. the new card settles at the front and the old one fills back in at its place in the fan. */
-.hb .obj-b1 .it.is-leaving .fc{animation: hb-leave 1.2s cubic-bezier(.4, 0, .3, 1) both;}
-.hb .obj-b1 .it.is-arriving .fc{animation: hb-arrive 1.2s cubic-bezier(.4, 0, .3, 1) both;}
-@keyframes hb-leave{0%{opacity: 1; translate: 0 0;} 40%, 50%{opacity: .6; translate: 0 calc(var(--cw) * .05);} 100%{opacity: 1; translate: 0 0;}}
-@keyframes hb-arrive{0%{translate: 0 0;} 45%{translate: 0 calc(var(--cw) * -.1);} 100%{translate: 0 0;}}
-@media (prefers-reduced-motion: reduce){.hb .obj-b1 .it.is-leaving .fc,.hb .obj-b1 .it.is-arriving .fc{animation: none;}}
+  transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .025)) rotate(calc(var(--c) * 2.4deg));
+  transition: transform 1.2s var(--glide) var(--dl), translate .7s var(--glide) var(--dl), opacity .5s var(--glide) var(--dl);}
+/* The incoming card gets one tiny, damped settle as it reaches the front. */
+.hb .obj-b1 .it.is-arriving .fc{animation: hb-settle 400ms ease-out 620ms both;}
+@keyframes hb-settle{0%, 30%{translate: 0 0; rotate: 0deg;} 52%{translate: 2px -1px; rotate: .35deg;} 75%{translate: -1px 0; rotate: -.18deg;} 100%{translate: 0 0; rotate: 0deg;}}
+@media (prefers-reduced-motion: reduce){.hb .obj-b1 .it.is-arriving .fc{animation: none;}}
 .hb .obj-b1{--glide: cubic-bezier(.45, .05, .25, 1);}
 /* Once a format's cards have fanned out, they move together with no stagger. */
 .hb .obj-b1 .grp.is-set .it{--dl: 0ms;}
 .hb .obj-b1 .it .fc{--cw: calc(var(--cwo) * var(--up)); box-shadow: var(--shadow-2); transition: box-shadow .5s var(--ease);}
-.hb .obj-b1 .it.is-cur{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--cw) * -.06)) rotate(0deg); transition-delay: 0s, 0s, 0s, .5s;}
-/* The front card's outline fades in and out with the move instead of switching at its start. */
-.hb .obj-b1 .it .fc::after{content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 2px var(--mid); opacity: 0; pointer-events: none; transition: opacity .6s var(--glide);}
-.hb .obj-b1 .it.is-cur .fc::after{opacity: 1;}
+.hb .obj-b1 .it.is-cur{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--cw) * -.06)) rotate(0deg); transition-delay: 0s;}
+/* The position and constant shadow mark the front card without an outline popping on. */
+.hb .obj-b1 .it .fc::after{display: none;}
 /* Changing format: the old cards fade where they are and drop a little; the new ones rise into their places one
    after another. Neither set changes size, so they stay sharp (see above). */
 .js .hb .obj-b1 .grp:not(.is-on) .it{opacity: 0; translate: 0 calc(-120% * (var(--up) - 1) / var(--up) + var(--cw) * .06);
-  transition: translate .5s var(--glide), opacity .35s var(--glide), z-index 0s;}
+  transition: translate .5s var(--glide), opacity .35s var(--glide);}
 html:not(.js) .hb .obj-b .bstage{--cw: 150px; display: grid; gap: 16px;}
 html:not(.js) .hb .grp{grid-area: auto; height: auto !important; display: block !important;}
 html:not(.js) .hb .grp-name{font-weight: 650; font-size: .95rem; margin-bottom: 8px;}
@@ -960,7 +953,7 @@ html:not(.js) .hb .obj-b .it .fc{--cw: 150px;}
 .hb .obj-b1 .grp{--sf: .29;}
 .hb .obj-b1 .grp[data-n="4"]{--sf: .4;}
 .hb .obj-b1 .grp[data-n="3"]{--sf: .56;}
-.hb .obj-b1 .it{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .02)) rotate(calc(var(--c) * 2deg)) scale(calc(1 / var(--up)));}
+.hb .obj-b1 .it{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .02)) rotate(calc(var(--c) * 2deg));}
 .hb .fc{font-size: max(10.5px, calc(var(--cw) / 15.5));}
 }
 @media (min-width: 1700px){
@@ -1354,7 +1347,7 @@ section{scroll-margin-top: 12px;}
 .hb .obj-b1 .grp{--sf: .25;}
 .hb .obj-b1 .grp[data-n="4"]{--sf: .34;}
 .hb .obj-b1 .grp[data-n="3"]{--sf: .48;}
-.hb .obj-b1 .it{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .02)) rotate(calc(var(--c) * 1.6deg)) scale(calc(1 / var(--up)));}
+.hb .obj-b1 .it{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--d) * var(--d) * var(--cw) * .02)) rotate(calc(var(--c) * 1.6deg));}
 .hb .obj-b1 .it.is-cur{transform: translateX(calc(var(--c) * var(--sf) * var(--cw))) translateY(calc(var(--cw) * -.05)) rotate(0deg);}
 .hb .tabs-row{flex-direction: row; align-items: center; gap: 8px;}
 .hb .tabs{flex: 1; border-radius: 22px;}
