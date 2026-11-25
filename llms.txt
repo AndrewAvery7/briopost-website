@@ -42,6 +42,14 @@
 - [Blog post to LinkedIn carousel](https://briopost.com/blog-to-linkedin-carousel/): paste a link to a public article and get a first-draft carousel; paste the text when a site needs a sign-in.
 - [Notes to LinkedIn carousel](https://briopost.com/notes-to-linkedin-carousel/): paste rough notes and get a first-draft carousel you edit.
 - [How to choose a LinkedIn carousel tool](https://briopost.com/how-to-choose-a-linkedin-carousel-tool/): a neutral 10-question checklist (approval before posting, AI costs, brand kit, editor, exports, client approval, privacy, your data, teams, what waits on LinkedIn), with what Briopost does today.
+- [Best LinkedIn carousel makers](https://briopost.com/best-linkedin-carousel-makers/): a sourced comparison of LinkedIn carousel tools (free plan, price, AI, brand kit, exports, posting), checked against each tool's own pages, with "best for" picks by situation.
+- [Briopost vs Canva](https://briopost.com/briopost-vs-canva/): an honest side-by-side for LinkedIn carousels, including when Canva is the better choice.
+- [Taplio alternative](https://briopost.com/taplio-alternative/): how Briopost differs from Taplio, with prices and features from Taplio's own pages.
+- [aiCarousels alternative](https://briopost.com/aicarousels-alternative/): how Briopost differs from aiCarousels, from each tool's own pages.
+- [Contentdrips alternative](https://briopost.com/contentdrips-alternative/): how Briopost differs from Contentdrips, from each tool's own pages.
+- [LinkedIn hook examples](https://briopost.com/linkedin-hook-examples/): 63 original opening lines in nine types, how to write one, common mistakes, and the free hook preview.
+- [LinkedIn post ideas](https://briopost.com/linkedin-post-ideas/): 75 post ideas for job seekers, consultants, founders, marketers and any professional, with the best format for each.
+- [LinkedIn content calendar template](https://briopost.com/linkedin-content-calendar-template/): a free Excel and CSV template (opens in Google Sheets) with a 4-week example plan, plus a printable version.
 - [LinkedIn posts for consultants and coaches](https://briopost.com/for/consultants-and-coaches/): a sample carousel, five post ideas and the Briopost features that matter for consultants and coaches.
 - [LinkedIn posts for founders and business owners](https://briopost.com/for/founders-and-business-owners/): post ideas for founders and owners, and how Briopost keeps posts in your brand with your approval.
 - [LinkedIn content for marketers and agencies](https://briopost.com/for/marketers-and-agencies/): a brand kit per client, workspaces, team roles and client review links; nothing posts without an OK.

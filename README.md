@@ -49,7 +49,9 @@ To add a page:
 
 Search pages (one search each, how-to first, Briopost second, ending at the beta tester action): the carousel maker, templates, how to make a carousel, carousel size, post generator, content calendar, post approval, how to choose a carousel tool, LinkedIn polls, graphics, post formatting, personal branding, how to post a PDF carousel, brand kit, and three input pages (PDF, blog post or link, notes to carousel; each input was checked in the studio code for beta testers on 2026-11-17). Four "Made for" pages and four free tools (post formatter, carousel size checker, hook preview, slide planner). LinkedIn's own limits (post length, poll rules, document size and pages) appear only as quotes or close paraphrases of LinkedIn Help, with the link and the date they were checked.
 
-Not built on purpose: data reports (Briopost has no public, sourced data yet; build them only from real data with sources), comparison pages (no competitor names), pages for Company Page posting or live LinkedIn statistics (both wait on LinkedIn).
+Comparison pages (added 2026-11-25 on the owner's instruction to do all the SEO work): `/best-linkedin-carousel-makers/`, `/briopost-vs-canva/`, `/taplio-alternative/`, `/aicarousels-alternative/`, `/contentdrips-alternative/` (shared styles `assets/pages/compare.css`). Rules: every competitor fact comes from that competitor's own pages, listed under Sources with the date checked; "Not listed" when it can't be verified; fair "pick them if" sections; no logos; a trademark and no-affiliation line. Re-check prices every few months and update the dates. Also added: `/linkedin-hook-examples/`, `/linkedin-post-ideas/`, `/linkedin-content-calendar-template/` (downloads in `assets/downloads/`).
+
+Not built on purpose: data reports (Briopost has no public, sourced data yet; build them only from real data with sources), pages for Company Page posting or live LinkedIn statistics (both wait on LinkedIn).
 
 ## Interactive home page
 
@@ -105,7 +107,7 @@ Events it sends (all only when the ID is set):
 | `demo_interaction` | The sample (`#preview`) and the scripted moments, with `demo_action` and `demo_value` (`(none)` when there is nothing to add). In the sample: `sample_topic` (sales, leadership, career), `brand_switch` (midnight, harbor, daylight), `size_switch` (portrait, square), `chart_kind` (bar, line, area), `shape_own` (never the words), `format_tab` (carousel, graphic, text, poll), `next_slide`, `previous_slide`, `go_to_slide` (slide number), `poll_vote` (the sample option), `poll_reset`. Around it: `give_ok` and `take_back_ok` (the "Give my OK" card), `cost_preview` and `cost_reset` (the cost moment). The calendar has no controls and sends nothing. |
 | `faq_open` | A question opened in the home page FAQ. |
 | `scroll_depth` | 25, 50, 75 and 90 percent of a page read (`percent_scrolled`). |
-| `file_download` | A legal PDF link. |
+| `file_download` | A PDF, CSV or Excel file link (the legal PDFs and the content calendar template). |
 | `outbound_click` / `email_click` | A link to another site / an email link. |
 | `page_not_found` | The 404 page. |
 | `tool_use` | A control in a free tool (`tool_name`: `post_formatter`, `size_checker`, `hook_preview` or `slide_planner`; `tool_action`: e.g. `bold`, `bullets`, `see_more`, `draft_on`, `hook_edit`, `hook_add`, `hook_remove`, `plan_update`, `shape_switch`, `clear`). Never the text. |
