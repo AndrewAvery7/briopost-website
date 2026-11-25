@@ -469,6 +469,42 @@
   run();
 })();
 
+/* Briopost on your phone (owner, 2026-11-25): the two phones lean toward the pointer, and loop one short story while
+   on screen: tap "Give my OK", Thursday's post turns Confirmed on the calendar, then back. Off under reduced motion. */
+(function () {
+  var dev = document.querySelector('[data-devices]'); if (!dev) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var fig = dev.closest('.devices-fig') || dev;
+  // pointer tilt, eased so it never jumps
+  var tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+  function step() {
+    cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+    dev.style.setProperty('--px', cx.toFixed(3)); dev.style.setProperty('--py', cy.toFixed(3));
+    raf = (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) ? requestAnimationFrame(step) : 0;
+  }
+  function aim(x, y) { tx = Math.max(-1, Math.min(1, x)); ty = Math.max(-1, Math.min(1, y)); if (!raf) raf = requestAnimationFrame(step); }
+  if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+    fig.addEventListener('pointermove', function (e) { var r = fig.getBoundingClientRect(); aim((e.clientX - r.left) / r.width * 2 - 1, (e.clientY - r.top) / r.height * 2 - 1); });
+    fig.addEventListener('pointerleave', function () { aim(0, 0); });
+  }
+  // the story: wait 2.2 s, tap, confirmed for 3.8 s, back
+  var inView = false, timers = [];
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function cycle() {
+    timers = []; if (!inView) return;
+    later(function () { dev.classList.add('is-tap'); }, 2200);
+    later(function () { dev.classList.add('is-ok'); }, 2500);
+    later(function () { dev.classList.remove('is-tap'); }, 2900);
+    later(function () { dev.classList.remove('is-ok'); cycle(); }, 6300);
+  }
+  function halt() { timers.forEach(clearTimeout); timers = []; dev.classList.remove('is-tap', 'is-ok'); }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { es.forEach(function (e) {
+      if (e.isIntersecting && !inView) { inView = true; cycle(); } else if (!e.isIntersecting && inView) { inView = false; halt(); }
+    }); }, { threshold: 0.35 }).observe(dev);
+  }
+})();
+
 /* One thought. Four formats: rotate through the four format tabs the same way as Make it yours (owner request).
    Every 2.5 s while the section is on screen; pauses while the pointer or keyboard focus is inside; stops for good
    once the visitor picks a format or touches the sample; the same Pause / Play button; off under reduced motion. */

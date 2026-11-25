@@ -39,12 +39,12 @@
 @font-face { font-family: "Bricolage Grotesque"; src: url("/assets/bricolage-var.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
 @font-face { font-family: "Inter"; src: url("/assets/inter-var.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
 </style>
-<link rel="stylesheet" href="/assets/home.css?v=2026-11-25-formats-60">
+<link rel="stylesheet" href="/assets/home.css?v=2026-11-25-phones-real2">
 <link rel="stylesheet" href="/assets/chrome.css">
 <script>document.documentElement.classList.add('js'); if (location.hash) document.documentElement.classList.add('cv-off');</script>
 <script src="/assets/sample/sample.js" defer></script>
 <script src="/assets/waitlist.js?v=20261122b" defer></script>
-<script src="/assets/combined.js?v=2026-11-25-formats-60" defer></script>
+<script src="/assets/combined.js?v=2026-11-25-phones-real2" defer></script>
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/visit.js" defer></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a71b1a473b96486a95287332d69005f2"}'></script>
@@ -606,7 +606,8 @@
       </div>
     </div>
     <figure class="devices-fig">
-      <div class="devices" role="img" aria-label="Sample: two phones showing the planned Briopost app, one with a post waiting for your OK, one with this week’s calendar. The apps are not available yet.">
+      <div class="devices" data-devices role="img" aria-label="Sample: two phones showing the planned Briopost app, one with a post waiting for your OK, one with this week’s calendar. The apps are not available yet.">
+        <span class="dev-floor" aria-hidden="true"></span>
         <div class="dev dev-b" aria-hidden="true">
           <div class="dev-frame"><span class="dev-key dev-key-1"></span><span class="dev-key dev-key-2"></span>
             <div class="dev-glass">
@@ -615,13 +616,13 @@
                 <p class="dv-status"><span>9:41</span><svg viewBox="0 0 46 12" focusable="false"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="6" width="3" height="6" rx=".8"/><rect x="10" y="3.5" width="3" height="8.5" rx=".8"/><rect x="15" y="1" width="3" height="11" rx=".8"/><rect x="23.5" y="1.5" width="19" height="9" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="25.5" y="3.5" width="13" height="5" rx="1.2"/><rect x="43.6" y="4.3" width="1.6" height="3.4" rx=".8"/></svg></p>
                 <p class="dv-brand"><img src="/assets/briopost-lockup-light.svg" alt="" width="104" height="20" loading="lazy" decoding="async"><span class="dv-sample">Sample</span></p>
                 <p class="dv-h">This week</p>
-                <div class="dv-days"><span>M</span><span class="on">T</span><span>W</span><span class="wait">T</span><span>F</span></div>
+                <div class="dv-days"><span>M</span><span class="on">T</span><span>W</span><span class="wait dv-thu">T</span><span>F</span></div>
                 <ul class="dv-list">
                   <li><span class="dv-day">Tue<b>9:00</b></span><span class="dv-t">Three questions, one picture</span><span class="dv-pill dv-ok">Confirmed</span></li>
-                  <li><span class="dv-day">Thu<b>9:00</b></span><span class="dv-t">Stop pitching. Start asking.</span><span class="dv-pill dv-wait">Needs your OK</span></li>
+                  <li><span class="dv-day">Thu<b>9:00</b></span><span class="dv-t">Stop pitching. Start asking.</span><span class="dv-pill dv-wait"><span class="s-wait">Needs your OK</span><span class="s-ok">Confirmed</span></span></li>
                   <li><span class="dv-day">Fri<b>8:30</b></span><span class="dv-t">How do you open a sales call?</span><span class="dv-pill dv-draft">Draft</span></li>
                 </ul>
-                <p class="dv-sum">3 posts this week · 1 waits for your OK</p>
+                <p class="dv-sum"><span class="s-wait">3 posts this week · 1 waits for your OK</span><span class="s-ok">3 posts this week · all confirmed</span></p>
               </div>
             </div>
           </div>
@@ -633,13 +634,13 @@
                 <span class="dev-island"></span>
                 <p class="dv-status"><span>9:41</span><svg viewBox="0 0 46 12" focusable="false"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="6" width="3" height="6" rx=".8"/><rect x="10" y="3.5" width="3" height="8.5" rx=".8"/><rect x="15" y="1" width="3" height="11" rx=".8"/><rect x="23.5" y="1.5" width="19" height="9" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="25.5" y="3.5" width="13" height="5" rx="1.2"/><rect x="43.6" y="4.3" width="1.6" height="3.4" rx=".8"/></svg></p>
                 <p class="dv-top"><b>Today</b><span class="dv-sample">Sample</span></p>
-                <div class="dv-note"><span class="dv-dot"></span>A post is waiting for your OK</div>
+                <div class="dv-note"><span class="dv-dot"></span><span class="s-wait">A post is waiting for your OK</span><span class="s-ok">All set. Thursday’s post is confirmed</span></div>
                 <div class="dv-card">
                   <p class="dv-when">Thu · 9:00 AM</p>
                   <p class="dv-title">Stop pitching. Start asking.</p>
                   <div class="dv-thumb"><img src="/assets/sample/img/hearth-cafe-540.webp" alt="" width="540" height="670" loading="lazy" decoding="async"></div>
-                  <p class="dv-state">Needs your OK</p>
-                  <span class="dv-btn">Give my OK</span>
+                  <p class="dv-state"><span class="s-wait">Needs your OK</span><span class="s-ok">Confirmed</span></p>
+                  <span class="dv-btn"><span class="s-wait">Give my OK</span><span class="s-ok">✓ Scheduled for Thu 9:00</span><span class="dv-tap"></span></span>
                 </div>
                 <div class="dv-tabs"><span class="on">Today</span><span>Calendar</span><span>Posts</span></div>
               </div>
