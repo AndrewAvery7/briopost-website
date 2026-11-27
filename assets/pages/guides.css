@@ -26,6 +26,7 @@
 .g-prose h3{font-size:var(--t-h3);margin-bottom:10px}
 .g-prose p,.g-prose li{color:var(--fg-2);max-width:40em}
 .g-prose p+p,.g-prose ul+p,.g-prose ol+p,.g-prose p+ul{margin-top:14px}
+.g-prose p+.g-table-wrap,.g-prose .g-table-wrap+p{margin-top:var(--s-4)}
 .g-prose a{color:var(--fg);text-decoration-color:var(--spark)}
 .g-prose strong{color:var(--fg);font-weight:700}
 .g-narrow>*{max-width:46rem}
