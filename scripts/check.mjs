@@ -49,6 +49,21 @@ for(const file of files(root)){
   }
 }
 
+// 1a. Structured data Google would reject. A SoftwareApplication needs a price (offers) and real star ratings or
+// reviews (aggregateRating or review), or Google's rich results test reports an error (Ahrefs, 2026-11-23, 9 pages).
+for(const file of files(root)){
+  if(!file.endsWith('.html')||NOT_PAGES.test(file))continue;
+  for(const m of read(file).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){
+    let data;try{data=JSON.parse(m[1]);}catch(e){fail('Structured data is not valid JSON in '+file);}
+    const nodes=[];const walk=v=>{if(Array.isArray(v))v.forEach(walk);else if(v&&typeof v==='object'){nodes.push(v);Object.values(v).forEach(walk);}};walk(data);
+    for(const n of nodes){
+      const types=[].concat(n['@type']||[]);
+      if(types.some(t=>/^(SoftwareApplication|WebApplication|MobileApplication)$/.test(t))&&!(n.offers&&(n.aggregateRating||n.review)))
+        fail(file+': '+types.join('/')+' needs offers plus aggregateRating or review (real ones only), or remove it');
+    }
+  }
+}
+
 // 1b. Email addresses. briopost.com runs Cloudflare's Email Address Obfuscation, which turns every address it finds in
 // page text or a mailto link into a /cdn-cgi/l/email-protection link. Crawlers (Ahrefs, 2026-11-23) report that link as
 // broken on every page. Any address shown on a page must sit between <!--email_off--> and <!--/email_off-->, which
