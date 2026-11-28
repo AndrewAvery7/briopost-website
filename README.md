@@ -45,6 +45,10 @@ To add a page:
 4. Add the page to `sitemap.xml` (with `<lastmod>`) unless it is `noindex`.
 5. Run `node scripts/build-pages.mjs`, then `node scripts/check.mjs`. Links in the header and footer to pages that are not built yet show as warnings until the page exists (the list is `PLANNED` in `scripts/check.mjs`).
 
+## Email addresses on pages
+
+briopost.com runs Cloudflare's Email Address Obfuscation, which rewrites any address in page text or a `mailto:` link into a `/cdn-cgi/l/email-protection` link. Crawlers cannot follow it and report a broken link on every page (Ahrefs, 2026-11-23). So every address shown on a page goes between `<!--email_off-->` and `<!--/email_off-->` (Cloudflare leaves those alone), for example `<!--email_off--><a href="mailto:info@briopost.com">info@briopost.com</a><!--/email_off-->`. `node scripts/check.mjs` fails on any address outside them. The legal generator in the studio repo wraps the legal pages' text the same way.
+
 ## Page list and what is deliberately not built
 
 Search pages (one search each, how-to first, Briopost second, ending at the beta tester action): the carousel maker, templates, how to make a carousel, carousel size, post generator, content calendar, post approval, how to choose a carousel tool, LinkedIn polls, graphics, post formatting, personal branding, how to post a PDF carousel, brand kit, and three input pages (PDF, blog post or link, notes to carousel; each input was checked in the studio code for beta testers on 2026-11-17). Four "Made for" pages and four free tools (post formatter, carousel size checker, hook preview, slide planner). LinkedIn's own limits (post length, poll rules, document size and pages) appear only as quotes or close paraphrases of LinkedIn Help, with the link and the date they were checked.

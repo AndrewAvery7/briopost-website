@@ -49,6 +49,20 @@ for(const file of files(root)){
   }
 }
 
+// 1b. Email addresses. briopost.com runs Cloudflare's Email Address Obfuscation, which turns every address it finds in
+// page text or a mailto link into a /cdn-cgi/l/email-protection link. Crawlers (Ahrefs, 2026-11-23) report that link as
+// broken on every page. Any address shown on a page must sit between <!--email_off--> and <!--/email_off-->, which
+// Cloudflare leaves alone. The <head> (meta descriptions) and <script> blocks (JSON-LD) are not rewritten, so skip them.
+for(const file of files(root)){
+  if(!file.endsWith('.html')||/[\\/]scripts[\\/]/.test(file))continue;
+  let text=read(file);
+  const head=text.indexOf('</head>');
+  if(head>=0)text=text.slice(head);
+  text=text.replace(/<script\b[\s\S]*?<\/script>/g,'').replace(/<!--email_off-->[\s\S]*?<!--\/email_off-->/g,'');
+  const m=text.match(/mailto:|[a-z0-9.+-]+@[a-z0-9-]+\.[a-z]{2,}/i);
+  if(m)fail('Email address "'+m[0]+'" outside <!--email_off--> ... <!--/email_off--> in '+file+' (Cloudflare would turn it into a broken /cdn-cgi/l/email-protection link)');
+}
+
 // 2. Home page.
 const home=read('index.html');
 if(!home.includes('id="hero-title"'))fail('Unexpected homepage: hero headline missing');
