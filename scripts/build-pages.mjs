@@ -11,7 +11,8 @@
 //
 // The four legal pages (privacy, terms, email-policy, contact) are written by the generator in the studio repo
 // (docs/legal/build_legal.py), which writes empty HEADER/FOOTER markers; this script fills only those markers. Everything between a pair of markers is replaced, so never hand-edit inside them.
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, unlinkSync } from 'node:fs';
+import { splitCss } from './split-css.mjs';
 import { join, relative } from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
@@ -65,7 +66,32 @@ function fill(text, file) {
   }
   out = out.replace(/<!--SAMPLE((?:\s+\w+="[^"]*")*)\s*-->[\s\S]*?<!--\/SAMPLE-->/g,
     (m, args) => '<!--SAMPLE' + args + '-->' + sampleHTML(args, file) + '<!--/SAMPLE-->');
+  out = out.replace(/<!--HOMECSS-->[\s\S]*?<!--\/HOMECSS-->/g,
+    () => '<!--HOMECSS-->' + homeCss.map((p) => '<link rel="stylesheet" href="/' + p.file + '?v=' + p.version + '">').join('') + '<!--/HOMECSS-->');
   return out;
+}
+
+// The home page's stylesheet: assets/home.css is the file to edit; the page loads compact pieces of it (see
+// scripts/split-css.mjs), each under the 15 kB checkers allow, with a ?v= tag taken from the piece's content so
+// browsers and Cloudflare fetch the new pieces whenever home.css changes.
+const homeCss = splitCss(read(join(root, 'assets/home.css')), 'assets/home.css');
+const cssStale = [];
+{
+  const wanted = new Set(homeCss.map((p) => p.file));
+  for (const p of homeCss) {
+    let current = null;
+    try { current = read(join(root, p.file)); } catch {}
+    if (current !== null && current.replace(/\r\n/g, '\n') === p.text) continue; // ignore Windows line endings from git
+    if (check) cssStale.push(p.file);
+    else { writeFileSync(join(root, p.file), p.text); console.log('built ' + p.file + ' (' + p.compressed + ' bytes compressed)'); }
+  }
+  for (const e of readdirSync(join(root, 'assets'))) {
+    const f = 'assets/' + e;
+    if (/^home\.min-\d+\.css$/.test(e) && !wanted.has(f)) {
+      if (check) cssStale.push(f + ' (no longer needed)');
+      else { unlinkSync(join(root, f)); console.log('removed ' + f); }
+    }
+  }
 }
 
 const stale = [], missing = [];
@@ -85,6 +111,7 @@ if (missing.length) {
   console.error('Pages without the shared header/footer markers:\n  - ' + missing.join('\n  - '));
 }
 if (check) {
+  stale.push(...cssStale);
   if (stale.length) console.error('Out of date (run node scripts/build-pages.mjs):\n  - ' + stale.join('\n  - '));
   if (stale.length || missing.length) process.exit(1);
   console.log('Shared page parts are up to date.');
