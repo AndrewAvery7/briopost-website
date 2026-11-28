@@ -81,9 +81,7 @@ const cssStale = [];
   for (const p of homeCss) {
     let current = null;
     try { current = read(join(root, p.file)); } catch {}
-    if (current !== null && current.replace(/
-/g, '
-') === p.text) continue; // ignore Windows line endings from git
+    if (current !== null && current.replace(/\r\n/g, '\n') === p.text) continue; // ignore Windows line endings from git
     if (check) cssStale.push(p.file);
     else { writeFileSync(join(root, p.file), p.text); console.log('built ' + p.file + ' (' + p.compressed + ' bytes compressed)'); }
   }
